@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="XFactoryNET.Custom.MM1.WcfService.OdlService" CodeBehind="OdlService.svc.cs" %>

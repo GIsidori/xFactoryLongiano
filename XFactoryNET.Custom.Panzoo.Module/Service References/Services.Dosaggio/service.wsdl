@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SvcDosaggio" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ISvcDosaggio_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
+        </msb:BinaryEncoding>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256>
+                </sp:Basic256>
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict>
+                </sp:Strict>
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing>
+        </wsaw:UsingAddressing>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISvcDosaggio_Arresta_InputMessage">
+    <wsdl:part name="parameters" element="tns:Arresta" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_Arresta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ArrestaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_Avvia_InputMessage">
+    <wsdl:part name="parameters" element="tns:Avvia" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_Avvia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AvviaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_CurrMisc_InputMessage">
+    <wsdl:part name="parameters" element="tns:CurrMisc" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_CurrMisc_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CurrMiscResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_GetPeso_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPeso" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_GetPeso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPesoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_IdOdL_InputMessage">
+    <wsdl:part name="parameters" element="tns:IdOdL" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_IdOdL_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IdOdLResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_NrIngrediente_InputMessage">
+    <wsdl:part name="parameters" element="tns:NrIngrediente" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_NrIngrediente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NrIngredienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_NrMisc_InputMessage">
+    <wsdl:part name="parameters" element="tns:NrMisc" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_NrMisc_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NrMiscResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_QtàEstratta_InputMessage">
+    <wsdl:part name="parameters" element="tns:QtàEstratta" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_QtàEstratta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:QtàEstrattaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_Running_InputMessage">
+    <wsdl:part name="parameters" element="tns:Running" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_Running_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RunningResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_StatoBilancia_InputMessage">
+    <wsdl:part name="parameters" element="tns:StatoBilancia" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_StatoBilancia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StatoBilanciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_StopMisc_InputMessage">
+    <wsdl:part name="parameters" element="tns:StopMisc" />
+  </wsdl:message>
+  <wsdl:message name="ISvcDosaggio_StopMisc_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StopMiscResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ISvcDosaggio">
+    <wsdl:operation name="Arresta">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISvcDosaggio/Arresta" message="tns:ISvcDosaggio_Arresta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISvcDosaggio/ArrestaResponse" message="tns:ISvcDosaggio_Arresta_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Avvia">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISvcDosaggio/Avvia" message="tns:ISvcDosaggio_Avvia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISvcDosaggio/AvviaResponse" message="tns:ISvcDosaggio_Avvia_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CurrMisc">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISvcDosaggio/CurrMisc" message="tns:ISvcDosaggio_CurrMisc_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISvcDosaggio/CurrMiscResponse" message="tns:ISvcDosaggio_CurrMisc_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPeso">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISvcDosaggio/GetPeso" message="tns:ISvcDosaggio_GetPeso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISvcDosaggio/GetPesoResponse" message="tns:ISvcDosaggio_GetPeso_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IdOdL">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISvcDosaggio/IdOdL" message="tns:ISvcDosaggio_IdOdL_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISvcDosaggio/IdOdLResponse" message="tns:ISvcDosaggio_IdOdL_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NrIngrediente">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISvcDosaggio/NrIngrediente" message="tns:ISvcDosaggio_NrIngrediente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISvcDosaggio/NrIngredienteResponse" message="tns:ISvcDosaggio_NrIngrediente_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NrMisc">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISvcDosaggio/NrMisc" message="tns:ISvcDosaggio_NrMisc_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISvcDosaggio/NrMiscResponse" message="tns:ISvcDosaggio_NrMisc_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="QtàEstratta">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISvcDosaggio/QtàEstratta" message="tns:ISvcDosaggio_QtàEstratta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISvcDosaggio/QtàEstrattaResponse" message="tns:ISvcDosaggio_QtàEstratta_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Running">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISvcDosaggio/Running" message="tns:ISvcDosaggio_Running_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISvcDosaggio/RunningResponse" message="tns:ISvcDosaggio_Running_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StatoBilancia">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISvcDosaggio/StatoBilancia" message="tns:ISvcDosaggio_StatoBilancia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISvcDosaggio/StatoBilanciaResponse" message="tns:ISvcDosaggio_StatoBilancia_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StopMisc">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISvcDosaggio/StopMisc" message="tns:ISvcDosaggio_StopMisc_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISvcDosaggio/StopMiscResponse" message="tns:ISvcDosaggio_StopMisc_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ISvcDosaggio" type="tns:ISvcDosaggio">
+    <wsp:PolicyReference URI="#NetTcpBinding_ISvcDosaggio_policy">
+    </wsp:PolicyReference>
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Arresta">
+      <soap12:operation soapAction="http://tempuri.org/ISvcDosaggio/Arresta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Avvia">
+      <soap12:operation soapAction="http://tempuri.org/ISvcDosaggio/Avvia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CurrMisc">
+      <soap12:operation soapAction="http://tempuri.org/ISvcDosaggio/CurrMisc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPeso">
+      <soap12:operation soapAction="http://tempuri.org/ISvcDosaggio/GetPeso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IdOdL">
+      <soap12:operation soapAction="http://tempuri.org/ISvcDosaggio/IdOdL" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NrIngrediente">
+      <soap12:operation soapAction="http://tempuri.org/ISvcDosaggio/NrIngrediente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NrMisc">
+      <soap12:operation soapAction="http://tempuri.org/ISvcDosaggio/NrMisc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QtàEstratta">
+      <soap12:operation soapAction="http://tempuri.org/ISvcDosaggio/QtàEstratta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Running">
+      <soap12:operation soapAction="http://tempuri.org/ISvcDosaggio/Running" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StatoBilancia">
+      <soap12:operation soapAction="http://tempuri.org/ISvcDosaggio/StatoBilancia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopMisc">
+      <soap12:operation soapAction="http://tempuri.org/ISvcDosaggio/StopMisc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SvcDosaggio">
+    <wsdl:port name="NetTcpBinding_ISvcDosaggio" binding="tns:NetTcpBinding_ISvcDosaggio">
+      <soap12:address location="net.tcp://localhost:8523/XFactoryNET/SvcDosaggio" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:8523/XFactoryNET/SvcDosaggio</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

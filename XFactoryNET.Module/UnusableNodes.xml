@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <DetailView Id="OdlDosaggio_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Odl_col1">
+              <LayoutGroup Id="Autob6984f21-7a6a-4e69-a7a2-ac9f829e6fd3">
+                <LayoutGroup Id="Autoa4228fd1-fbb6-4da5-b549-483019a741ac">
+                  <LayoutGroup Id="Item3">
+                    <LayoutItem Id="DescrizioneFormula" ViewItem="DescrizioneFormula" />
+                  </LayoutGroup>
+                  <LayoutGroup Id="Item2">
+                    <LayoutItem Id="DescrizioneArticolo" ViewItem="DescrizioneArticolo" />
+                  </LayoutGroup>
+                </LayoutGroup>
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

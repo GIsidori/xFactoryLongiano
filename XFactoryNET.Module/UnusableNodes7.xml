@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <DetailView Id="Lotto_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Autob957afd2-5182-429a-8349-0dccecf10716">
+              <LayoutGroup Id="Auto2ffcb2d2-0bbc-4299-aa39-b4564265c515">
+                <LayoutGroup Id="Auto475058cb-6c36-4a91-ac87-d6bd31c2b155">
+                  <LayoutItem Id="Odl" ViewItem="Odl" />
+                </LayoutGroup>
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

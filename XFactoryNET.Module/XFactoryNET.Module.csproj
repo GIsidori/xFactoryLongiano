@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{966C9A58-C82C-46FF-8FF3-C314AE6C8A25}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XFactoryNET.Module</RootNamespace>
+    <AssemblyName>XFactoryNET.Module</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'EasyTest|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\EasyTest\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;EASYTEST</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>XFactoryNET.Win_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DatabaseUserSettings">
+      <HintPath>..\Lib\DatabaseUserSettings.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v14.1.Core, Version=14.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v14.1, Version=14.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.ExpressApp.ReportsV2.v14.1, Version=14.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.ExpressApp.Security.v14.1, Version=14.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.ExpressApp.Validation.v14.1, Version=14.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.ExpressApp.ViewVariantsModule.v14.1, Version=14.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.ExpressApp.Xpo.v14.1">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Office.v14.1.Core, Version=14.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.PivotGrid.v14.1.Core, Version=14.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v14.1.Core">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.Data.v14.1">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.ExpressApp.v14.1">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.Persistent.Base.v14.1">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.Persistent.BaseImpl.v14.1">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v14.1.Core, Version=14.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Sparkline.v14.1.Core, Version=14.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v14.1, Version=14.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpo.v14.1">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v14.1, Version=14.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGauges.v14.1.Core, Version=14.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v14.1, Version=14.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v14.1.Extensions, Version=14.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="System">
+      <Name>System</Name>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessObjects\Allegato.cs" />
+    <Compile Include="BusinessObjects\Apparato.cs" />
+    <Compile Include="BusinessObjects\Articolo.cs" />
+    <Compile Include="BusinessObjects\BaseXPCustomObject.cs" />
+    <Compile Include="BusinessObjects\BaseXPObject.cs" />
+    <Compile Include="BusinessObjects\Bilancia.cs" />
+    <Compile Include="BusinessObjects\OdlEntrataSacchi.cs" />
+    <Compile Include="BusinessObjects\OdlInsilaggio.cs" />
+    <Compile Include="BusinessObjects\OdlScaricoRinfusa.cs" />
+    <Compile Include="BusinessObjects\OdlPellet.cs" />
+    <Compile Include="BusinessObjects\OdlCaricoRinfusa.cs" />
+    <Compile Include="BusinessObjects\Lavorazione.cs" />
+    <Compile Include="BusinessObjects\Classe.cs" />
+    <Compile Include="BusinessObjects\BaseArticolo.cs" />
+    <Compile Include="BusinessObjects\Componente.cs" />
+    <Compile Include="BusinessObjects\Confezione.cs" />
+    <Compile Include="BusinessObjects\DettaglioAllegato.cs" />
+    <Compile Include="BusinessObjects\FormaFisica.cs" />
+    <Compile Include="BusinessObjects\Formula.cs" />
+    <Compile Include="BusinessObjects\Gruppo.cs" />
+    <Compile Include="BusinessObjects\Insaccatrice.cs" />
+    <Compile Include="BusinessObjects\LookupTable.cs" />
+    <Compile Include="BusinessObjects\Lotto.cs" />
+    <Compile Include="BusinessObjects\Magazzino.cs" />
+    <Compile Include="BusinessObjects\Mixer.cs" />
+    <Compile Include="BusinessObjects\Modalita.cs" />
+    <Compile Include="BusinessObjects\Odl.cs" />
+    <Compile Include="BusinessObjects\OdlDosaggio.cs" />
+    <Compile Include="BusinessObjects\OdlInsacco.cs" />
+    <Compile Include="BusinessObjects\OdlUscitaSacchi.cs" />
+    <Compile Include="BusinessObjects\OrdineCarico.cs" />
+    <Compile Include="BusinessObjects\OrdineCliente.cs" />
+    <Compile Include="BusinessObjects\OrdineProduzione.cs" />
+    <Compile Include="BusinessObjects\Percorso.cs" />
+    <Compile Include="BusinessObjects\Pesa.cs" />
+    <Compile Include="BusinessObjects\Pressa.cs" />
+    <Compile Include="BusinessObjects\Silos.cs" />
+    <Compile Include="BusinessObjects\TipoMateriale.cs" />
+    <Compile Include="BusinessObjects\Trasporto.cs" />
+    <Compile Include="BusinessObjects\Azienda.cs" />
+    <Compile Include="Controllers\OdlViewController.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\OdlViewController.Designer.cs">
+      <DependentUpon>OdlViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\XFactoryViewController.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\XFactoryViewController.Designer.cs">
+      <DependentUpon>XFactoryViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\Vincolo.cs" />
+    <Compile Include="IModelCustomListView.cs" />
+    <Compile Include="MessageBoxClass.cs" />
+    <Compile Include="Reports\ReportMedicati.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\ReportMedicati.Designer.cs">
+      <DependentUpon>ReportMedicati.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ReportOdl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\ReportOdl.Designer.cs">
+      <DependentUpon>ReportOdl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils.cs" />
+    <Compile Include="XFactoryNETModule.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XFactoryNETModule.Designer.cs">
+      <DependentUpon>XFactoryNETModule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DatabaseUpdate\Updater.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controllers\OdlViewController.resx">
+      <DependentUpon>OdlViewController.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\XFactoryViewController.resx">
+      <DependentUpon>XFactoryViewController.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model.DesignedDiffs.xafml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ReportMedicati.resx">
+      <DependentUpon>ReportMedicati.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ReportOdl.resx">
+      <DependentUpon>ReportOdl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XFactoryNETModule.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>XFactoryNETModule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BusinessObjects\Apparato.cd" />
+    <None Include="BusinessObjects\Articolo.cd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="BusinessObjects\Lotti.cd" />
+    <None Include="BusinessObjects\Odl.cd" />
+    <None Include="BusinessObjects\Ordini.cd" />
+    <None Include="DatabaseUpdate\ReadMe.txt" />
+    <EmbeddedResource Include="Model.DesignedDiffs.Localization.it-IT.xafml">
+      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="XFactoryNET.Win_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BusinessObjects\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Controllers\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FunctionalTests\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FunctionalTests\Sample.ets" />
+    <None Include="Images\ReadMe.txt" />
+    <EmbeddedResource Include="Model.DesignedDiffs.Localization.it.xafml">
+      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FunctionalTests\Config.xml" />
+    <EmbeddedResource Include="Images\DisplayInColorHS.png" />
+    <EmbeddedResource Include="Images\EditTableHS.png" />
+    <EmbeddedResource Include="Images\PageWidthHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XFactoryNET.Common\XFactoryNET.Common.csproj">
+      <Project>{2A02CD98-DA52-4B8A-8AC3-EA84243F219A}</Project>
+      <Name>XFactoryNET.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

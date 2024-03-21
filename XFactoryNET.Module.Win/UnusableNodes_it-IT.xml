@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <DetailView Id="XFactoryNET.Module.BusinessObjects.Bilancia_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main" Caption="Main">
+          <LayoutGroup Id="SimpleEditors" Caption="SimpleEditors">
+            <LayoutGroup Id="Apparato" Caption="Apparato">
+              <LayoutGroup Id="Apparato_col1" Caption="Apparato_col1" />
+              <LayoutGroup Id="Apparato_col2" Caption="Apparato_col2" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Bilancia" Caption="Impostazioni">
+              <LayoutGroup Id="Bilancia_col1" Caption="Bilancia_col1" />
+              <LayoutGroup Id="Bilancia_col2" Caption="Bilancia_col2" />
+            </LayoutGroup>
+            <LayoutGroup Id="Gruppi" Caption="Gruppi" />
+            <LayoutGroup Id="Destinazioni" Caption="Destinazioni" />
+            <LayoutGroup Id="Prelievi" Caption="Prelievi" />
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="XFactoryNET.Module.BusinessObjects.Silos_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main" Caption="Main">
+          <LayoutGroup Id="SimpleEditors" Caption="SimpleEditors">
+            <LayoutGroup Id="AreaStoccaggio" Caption="AreaStoccaggio">
+              <LayoutGroup Id="Autodc83bfcc-92b3-4524-bb51-0468e687c541" Caption="" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Item1" Caption="Impostazioni">
+              <LayoutGroup Id="Silos" Caption="Silos">
+                <LayoutGroup Id="Silos_col1" Caption="Silos_col1">
+                  <LayoutGroup Id="Auto3d52e19c-dcd4-448e-9cbf-71f23ce9aeed" Caption="Auto3d52e19c-dcd4-448e-9cbf-71f23ce9aeed(16)" />
+                </LayoutGroup>
+                <LayoutGroup Id="Silos_col2" Caption="Silos_col2" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="Destinazioni" Caption="Destinazioni" />
+            <LayoutGroup Id="Prelievi" Caption="Prelievi" />
+            <LayoutGroup Id="Gruppi" Caption="Gruppi" />
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

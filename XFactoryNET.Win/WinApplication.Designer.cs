@@ -1,0 +1,115 @@
+namespace XFactoryNET.Win
+{
+    partial class XFactoryNETWindowsFormsApplication
+    {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.module1 = new DevExpress.ExpressApp.SystemModule.SystemModule();
+            this.module2 = new DevExpress.ExpressApp.Win.SystemModule.SystemWindowsFormsModule();
+            this.sqlConnection1 = new System.Data.SqlClient.SqlConnection();
+            this.conditionalAppearanceModule1 = new DevExpress.ExpressApp.ConditionalAppearance.ConditionalAppearanceModule();
+            this.securityModule1 = new DevExpress.ExpressApp.Security.SecurityModule();
+            this.module3 = new XFactoryNET.Module.XFactoryNETModule();
+            this.module4 = new XFactoryNET.Module.Win.XFactoryNETWindowsFormsModule();
+            this.securityStrategyComplex1 = new DevExpress.ExpressApp.Security.SecurityStrategyComplex();
+            this.authenticationStandard1 = new DevExpress.ExpressApp.Security.AuthenticationStandard();
+            this.validationModule1 = new DevExpress.ExpressApp.Validation.ValidationModule();
+            this.validationWindowsFormsModule1 = new DevExpress.ExpressApp.Validation.Win.ValidationWindowsFormsModule();
+            this.viewVariantsModule1 = new DevExpress.ExpressApp.ViewVariantsModule.ViewVariantsModule();
+            this.databaseUserSettingsModule1 = new DatabaseUserSettings.DatabaseUserSettingsModule();
+            this.reportsModuleV21 = new DevExpress.ExpressApp.ReportsV2.ReportsModuleV2();
+            this.reportsWindowsFormsModuleV21 = new DevExpress.ExpressApp.ReportsV2.Win.ReportsWindowsFormsModuleV2();
+            ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
+            // 
+            // sqlConnection1
+            // 
+            this.sqlConnection1.ConnectionString = "Integrated Security=SSPI;Pooling=false;Data Source=.\\SQLEXPRESS;Initial Catalog=X" +
+    "FactoryNET";
+            this.sqlConnection1.FireInfoMessageEventOnUserErrors = false;
+            // 
+            // securityStrategyComplex1
+            // 
+            this.securityStrategyComplex1.Authentication = this.authenticationStandard1;
+            this.securityStrategyComplex1.RoleType = typeof(DevExpress.ExpressApp.Security.Strategy.SecuritySystemRole);
+            this.securityStrategyComplex1.UserType = typeof(DevExpress.ExpressApp.Security.Strategy.SecuritySystemUser);
+            // 
+            // authenticationStandard1
+            // 
+            this.authenticationStandard1.LogonParametersType = typeof(DevExpress.ExpressApp.Security.AuthenticationStandardLogonParameters);
+            // 
+            // validationModule1
+            // 
+            this.validationModule1.AllowValidationDetailsAccess = true;
+            this.validationModule1.IgnoreWarningAndInformationRules = false;
+            // 
+            // reportsModuleV21
+            // 
+            this.reportsModuleV21.EnableInplaceReports = true;
+            this.reportsModuleV21.ReportDataType = typeof(DevExpress.Persistent.BaseImpl.ReportDataV2);
+            // 
+            // XFactoryNETWindowsFormsApplication
+            // 
+            this.ApplicationName = "XFactoryNET";
+            this.Connection = this.sqlConnection1;
+            this.Modules.Add(this.module1);
+            this.Modules.Add(this.module2);
+            this.Modules.Add(this.conditionalAppearanceModule1);
+            this.Modules.Add(this.validationModule1);
+            this.Modules.Add(this.viewVariantsModule1);
+            this.Modules.Add(this.securityModule1);
+            this.Modules.Add(this.databaseUserSettingsModule1);
+            this.Modules.Add(this.reportsModuleV21);
+            this.Modules.Add(this.module3);
+            this.Modules.Add(this.validationWindowsFormsModule1);
+            this.Modules.Add(this.reportsWindowsFormsModuleV21);
+            this.Modules.Add(this.module4);
+            this.Security = this.securityStrategyComplex1;
+            this.DatabaseVersionMismatch += new System.EventHandler<DevExpress.ExpressApp.DatabaseVersionMismatchEventArgs>(this.XFactoryNETWindowsFormsApplication_DatabaseVersionMismatch);
+            this.CustomizeLanguagesList += new System.EventHandler<DevExpress.ExpressApp.CustomizeLanguagesListEventArgs>(this.XFactoryNETWindowsFormsApplication_CustomizeLanguagesList);
+            ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
+
+        }
+
+        #endregion
+
+        private DevExpress.ExpressApp.SystemModule.SystemModule module1;
+        private DevExpress.ExpressApp.Win.SystemModule.SystemWindowsFormsModule module2;
+        private XFactoryNET.Module.XFactoryNETModule module3;
+        private XFactoryNET.Module.Win.XFactoryNETWindowsFormsModule module4;
+        private System.Data.SqlClient.SqlConnection sqlConnection1;
+        private DevExpress.ExpressApp.ConditionalAppearance.ConditionalAppearanceModule conditionalAppearanceModule1;
+        private DevExpress.ExpressApp.Security.SecurityModule securityModule1;
+        private DevExpress.ExpressApp.Security.SecurityStrategyComplex securityStrategyComplex1;
+        private DevExpress.ExpressApp.Security.AuthenticationStandard authenticationStandard1;
+        private DevExpress.ExpressApp.Validation.ValidationModule validationModule1;
+        private DevExpress.ExpressApp.Validation.Win.ValidationWindowsFormsModule validationWindowsFormsModule1;
+        private DevExpress.ExpressApp.ViewVariantsModule.ViewVariantsModule viewVariantsModule1;
+        private DatabaseUserSettings.DatabaseUserSettingsModule databaseUserSettingsModule1;
+        private DevExpress.ExpressApp.ReportsV2.ReportsModuleV2 reportsModuleV21;
+        private DevExpress.ExpressApp.ReportsV2.Win.ReportsWindowsFormsModuleV2 reportsWindowsFormsModuleV21;
+    }
+}

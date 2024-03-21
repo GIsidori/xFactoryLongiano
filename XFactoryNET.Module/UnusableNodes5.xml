@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <DetailView Id="OdlCaricoRinfusa_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Auto17a91471-358e-481c-ac25-56dfe7801a63">
+              <LayoutGroup Id="Auto9b0eabe9-2588-470f-9dd5-e7cd181fc991">
+                <LayoutItem Id="Codice" ViewItem="Codice" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="OdlDosaggio_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Odl_col1">
+              <LayoutGroup Id="Item5">
+                <LayoutGroup Id="Auto9c1ba37e-8fbe-4645-acd1-f89621966a97">
+                  <LayoutItem Id="Codice" ViewItem="Codice" />
+                </LayoutGroup>
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="OdlInsacco_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Odl">
+              <LayoutGroup Id="Odl_col1">
+                <LayoutGroup Id="Auto42e15c4b-c124-4556-be8c-ce6b4492ee01">
+                  <LayoutGroup Id="Auto8500f2a4-5016-4bc4-aec4-e63ad287bf82">
+                    <LayoutItem Id="Codice" ViewItem="Codice" />
+                  </LayoutGroup>
+                </LayoutGroup>
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="OdlPellet_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Odl">
+              <LayoutGroup Id="Odl_col1">
+                <LayoutGroup Id="Autocb2b80a7-144f-4b4f-b3c2-24bedf2624f0">
+                  <LayoutGroup Id="Auto046ff331-5b22-4465-be27-785a21f83c93">
+                    <LayoutItem Id="Codice" ViewItem="Codice" />
+                  </LayoutGroup>
+                </LayoutGroup>
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="OdlScaricoRinfusa_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Auto824aee61-92af-47a8-8f7d-de2bc270f917">
+              <LayoutGroup Id="Auto9114427a-3aae-435e-a681-a495a63d90d8">
+                <LayoutGroup Id="Auto483d6dcb-c46a-4031-ab24-ca3b012e98b6">
+                  <LayoutGroup Id="Auto5b8e9922-c4aa-451e-8d90-a7549f597266">
+                    <LayoutItem Id="Codice" ViewItem="Codice" />
+                  </LayoutGroup>
+                </LayoutGroup>
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

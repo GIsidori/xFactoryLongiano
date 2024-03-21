@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="XFactoryNET.Module.BusinessObjects.Apparato" Collapsed="true">
+    <Position X="6" Y="2.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAABgACIAIAIAgAIEAAAAgAQAAAAAAEAQxEBA=</HashCode>
+      <FileName>BusinessObjects\Apparato.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Bilancia" Collapsed="true">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAACIIAAAAkAAYAAAAiggAkAJAAAACKAAAAAAAAAAgg=</HashCode>
+      <FileName>BusinessObjects\Bilancia.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Insaccatrice" Collapsed="true">
+    <Position X="2.5" Y="4.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Insaccatrice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Mixer" Collapsed="true">
+    <Position X="6.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Mixer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Pesa" Collapsed="true">
+    <Position X="8.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAoAAAQAAACAAAgAAAAAAgEAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Pesa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Pressa" Collapsed="true">
+    <Position X="4.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Pressa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Silos" Collapsed="true">
+    <Position X="10.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gI0AggAJYAAAAIBABAAQQACBAEBABAAAiEAAUATBAAg=</HashCode>
+      <FileName>BusinessObjects\Silos.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Percorso" Collapsed="true">
+    <Position X="7.5" Y="1.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="ApparatoFrom" Type="XFactoryNET.Module.BusinessObjects.Apparato" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.5" Y="1.5" />
+        <Point X="7" Y="1.5" />
+        <Point X="7" Y="2.75" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.349" Y="1.362" Height="0.182" Width="1.295" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="ApparatoTo" Type="XFactoryNET.Module.BusinessObjects.Apparato" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.062" Y="1.941" />
+        <Point X="8.062" Y="2.861" />
+        <Point X="7.5" Y="2.861" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.163" Y="-0.346" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Trasporto" Type="XFactoryNET.Module.BusinessObjects.Trasporto" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.75" Y="1.941" />
+        <Point X="8.75" Y="2.972" />
+        <Point X="13.812" Y="2.972" />
+        <Point X="13.812" Y="4.25" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="4.311" Y="1.371" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>IMAAAAAAAAAAAIAEEAEAAAIAAAAAAAAEBAAAAAAAIAA=</HashCode>
+      <FileName>BusinessObjects\Percorso.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Modalità" />
+      <Property Name="ApparatoFrom" />
+      <Property Name="ApparatoTo" />
+      <Property Name="Trasporto" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Trasporto" Collapsed="true">
+    <Position X="12.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAIAAAAAAAAAAAAAAgAAAgEAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Trasporto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Modalità" Collapsed="true">
+    <Position X="10.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAIAAAAAAAAAIAACAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Modalita.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Magazzino" Collapsed="true">
+    <Position X="0.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAABAAAIAAAAAQAAAAAAAAAAAAAAAAAAAgABA=</HashCode>
+      <FileName>BusinessObjects\Magazzino.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Lavorazione" Collapsed="true">
+    <Position X="0.75" Y="1.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAIAAAAAAAgJAAAACQAAAAAAAABAAAAA=</HashCode>
+      <FileName>BusinessObjects\Lavorazione.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Gruppo" Collapsed="true">
+    <Position X="3" Y="2.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>BusinessObjects\Gruppo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

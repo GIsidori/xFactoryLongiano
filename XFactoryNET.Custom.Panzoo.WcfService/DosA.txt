@@ -1,0 +1,946 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+  Persistable = 0  'NotPersistable
+  DataBindingBehavior = 0  'vbNone
+  DataSourceBehavior  = 0  'vbNone
+  MTSTransactionMode  = 0  'NotAnMTSObject
+END
+Attribute VB_Name = "DosA"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = True
+Option Explicit
+Option Base 1
+
+Public gIdArch As Integer
+
+Private mSimul As Boolean
+
+Implements Lavorazione
+
+Const cNRBIL = 5
+Const cNRINGR = 20
+Const cTIMEOUT = 3000
+
+Private mObjLav As Lavorazione
+Private mIDLav As String
+Private WithEvents mNode As FactoryNode
+Attribute mNode.VB_VarHelpID = -1
+
+Private WithEvents mTimer As Timer
+Attribute mTimer.VB_VarHelpID = -1
+Private WithEvents mScanTimer As Timer
+Attribute mScanTimer.VB_VarHelpID = -1
+
+Dim mRK512 As RK512
+
+Dim rc As Integer
+
+Dim aData(cNRINGR * 20) As Integer
+Dim aDummy(1) As Integer
+
+Dim sQtà(cNRBIL, cNRINGR) As Single
+Dim sIdMat(cNRBIL, cNRINGR) As String
+Dim sMod(cNRBIL, cNRINGR) As String
+Dim sToll(cNRBIL, cNRINGR) As Single
+Dim sIdCella(cNRBIL, cNRINGR) As String
+Dim sBilName(cNRBIL) As String
+Dim kCorr(cNRBIL) As Single
+Dim lStart(cNRBIL) As Integer
+Dim bAdditivi As Boolean
+Dim bGranMenù As Boolean
+Dim iMix As Integer         'linea di miscelazione (1=Mix1|2=Mix2)
+Dim iDS1 As Integer         'Uso DS1 (1=No|2=Si)
+Dim bHidden As Boolean
+
+Dim iStato(cNRBIL) As Integer
+Dim sPeso(cNRBIL) As Single
+Dim iProgr(cNRBIL) As Integer
+Dim sEstratto(cNRBIL) As Single
+
+Dim bFineBil(cNRBIL) As Boolean
+
+Dim gConn As Connection
+Dim mrsProd As New Recordset
+Dim mrsDett As New Recordset
+Dim mrsBil As New Recordset
+Dim mrsGiac As New Recordset
+
+Dim mrsDettProd As New Recordset
+
+Private bRunning As Boolean
+Private mIdProd As Long
+Private mCurrMisc As Long
+Private mNrMisc As Long
+Private mIdMat As String
+Private mIdArt As String
+Private mDest As String
+
+Private iStopMisc As Integer
+
+Private bAbort As Boolean           'Richiesta di abort
+
+Public Event Abort()
+Public Event StopMisc(NrMisc As Long)
+Public Event InizioProduzione(IdProd As Long)
+Public Event FineProduzione(IdProd As Long)
+Public Event InizioMiscelata(IdProd As Long, NrMisc As Long)
+Public Event FineMiscelata(IdProd As Long, NrMisc As Long)
+Public Event InizioDosaggio(IdProd As Long, NrMisc As Long, IdApparato As String)
+Public Event FineDosaggio(IdProd As Long, NrMisc As Long, IdApparato As String)
+Public Sub StopMisc(NrMisc As Integer)
+    If NrMisc <= mNrMisc Then
+        iStopMisc = NrMisc
+        RaiseEvent StopMisc(CLng(NrMisc))
+    End If
+End Sub
+Public Function Abort() As Boolean
+'Interrompe produzione in corso
+    bAbort = True
+    iStopMisc = mCurrMisc
+    RaiseEvent Abort
+    Abort = True
+End Function
+Public Property Get IdProd() As Long
+    IdProd = mIdProd
+End Property
+Public Property Get CurrMisc() As Long
+    CurrMisc = mCurrMisc
+End Property
+Public Property Get NrMisc() As Long
+    NrMisc = mNrMisc
+End Property
+Public Property Get Running() As Boolean
+    Running = bRunning
+End Property
+Private Sub mAvvia()
+'Avvia la produzione
+'Predispone i dati per il PLC
+'specificando nr. silos e qtà da estrarre per ogni bilancia
+'Elabora solo i materiali in silos.
+'I materiali in sacchi (aggiunte manuali) sono visualizzati da altro task.
+
+Dim iBil As Integer
+Dim iIndex As Integer
+Dim j As Integer
+Dim Qtà As Integer
+Dim Silos As Integer
+Dim fEnable As Integer
+Dim lWord As Long
+Dim sName As String
+Dim rsTmp As New Recordset
+Dim rsParam As New Recordset
+    
+    bRunning = True
+    bAbort = False
+    
+    
+    ShowDialog = (GetSetting("EasyMenù", "Settings", "ShowErrors", "1") = "1")
+    
+    SaveSetting "EasyMenù", "Settings", "ShowErrors", IIf(ShowDialog, "1", "0")
+    
+    On Error GoTo OnRkErr
+    
+    rsParam.Open "T_Parametri", gConn, adOpenDynamic, adLockOptimistic
+    rsParam.Find "IdParametro='$IdArch'"
+    If rsParam.EOF Then
+        rsParam.AddNew
+        rsParam.Fields!IdParametro = "$IdArch"
+        rsParam.Fields!Default = 1
+        rsParam.Fields!Descrizione = "Progressivo archiviazione"
+        gIdArch = 1
+        rsParam.Update
+    Else
+        gIdArch = rsParam.Fields!Default
+    End If
+    
+    rsParam.Close
+    
+    mrsBil.Open "SELECT * FROM V_Bilance WHERE IdLav='" & mIDLav & "' ORDER BY Name", gConn, adOpenStatic, adLockReadOnly
+    
+    mrsProd.Open "SELECT * FROM V_Produzioni WHERE IdArch=" & gIdArch & " AND IdLav = '" & mIDLav & "' AND Stato=0 ORDER BY IdProd", gConn, adOpenDynamic, adLockOptimistic
+    If Not mrsProd.EOF Then
+        mrsProd.MoveFirst
+        mIdProd = mrsProd.Fields!IdProd
+        mNrMisc = mrsProd.Fields!NrMisc
+        iStopMisc = mNrMisc + 1
+        mIdMat = mrsProd.Fields!IdMateriale
+        mIdArt = mrsProd.Fields!IdArticolo
+        bGranMenù = mrsProd.Fields!GranMenù
+        bHidden = mrsProd.Fields!Hidden              'Produzione "nascosta"
+        
+        iMix = 0
+        iDS1 = 0
+        
+        rsParam.Open "Select * FROM T_UsoParametri WHERE IDArch = " & gIdArch & " And IDProd = " & mIdProd, gConn, adOpenDynamic, adLockReadOnly
+        If Not rsParam.EOF Then
+            rsParam.Find "IDParametro = '$Mixer'"
+            If Not rsParam.EOF Then
+                iMix = rsParam.Fields!Valore
+            End If
+            rsParam.MoveFirst
+            rsParam.Find "IDParametro = '$DS1'"
+            If Not rsParam.EOF Then
+                iDS1 = rsParam.Fields!Valore
+            End If
+        End If
+        rsParam.Close
+        
+        ShowMsg "Avvio produzione nr. " & mIdProd
+        
+        aDummy(1) = 0
+        rc = mRK512.RK512Get(rkData, 39, 10, 1, aDummy)
+        If rc <> 0 Then            'SetPoint
+            App.LogEvent "Errore lettura DB39.DW20 (abilitazione PC) rc=" & rc, vbLogEventTypeError
+            GoTo rkErr
+        End If
+        If (aDummy(1) = 0) Then
+            'PC non abilitato
+            ShowMsg "PC non abilitato"
+            GoTo rkErr
+        End If
+        
+        mCurrMisc = 1
+        
+        'Scrivo silos e qtà
+        'con NrMisc=0 sono indicate le qtà teoriche
+        'Controllo la presenza di additivi manuali da aggiungere direttamente in mixer (sacchettino)
+        rsTmp.Open "SELECT * FROM V_DettProduzioniMaga WHERE IdArch=" & gIdArch & " AND IdMod='ADD' AND NrMisc=0 AND IdProd=" & mIdProd, gConn, adOpenStatic, adLockReadOnly
+        bAdditivi = Not rsTmp.EOF
+        rsTmp.Close
+        
+        mrsDett.Open "SELECT * FROM V_DettProduzioniSilos WHERE IdArch = " & gIdArch & " AND NrMisc=0 AND IdProd = " & mIdProd & " ORDER BY Qtà DESC", gConn, adOpenStatic, adLockReadOnly
+        fEnable = 0
+        For iBil = 1 To cNRBIL
+            lStart(iBil) = 0
+            sPeso(iBil) = 0
+            iProgr(iBil) = 1
+            sEstratto(iBil) = 0
+            mrsDett.Filter = "IdApparato='" & sBilName(iBil) & "'"
+            With mrsDett
+                For j = 1 To cNRINGR
+                    If Not .EOF Then
+                        fEnable = fEnable Or (2 ^ (iBil - 1))
+                        bFineBil(iBil) = False
+                        lStart(iBil) = 1
+                        Qtà = CLng(.Fields!Qtà / kCorr(iBil))
+                        Silos = CLng(.Fields!IdCella)
+                        sQtà(iBil, j) = .Fields!Qtà                 'salvo la qtà teorica
+                        sIdMat(iBil, j) = .Fields!IdMateriale
+                        sMod(iBil, j) = .Fields!IdMod
+                        sToll(iBil, j) = .Fields!Toll
+                        sIdCella(iBil, j) = .Fields!IdCella
+                        .MoveNext
+                    Else
+                        Qtà = 0
+                        Silos = 0
+                        sQtà(iBil, j) = 0
+                        sIdMat(iBil, j) = vbNullString
+                        sMod(iBil, j) = vbNullString
+                        sToll(iBil, j) = 0
+                        sIdCella(iBil, j) = vbNullString
+                    End If
+                    aData(j * 2 - 1) = Silos
+                    aData(j * 2) = Qtà
+                    If sIdCella(iBil, j) <> vbNullString And sQtà(iBil, j) <> 0 Then
+                        ShowMsg "Produzione Nr. " & mIdProd & _
+                                " Bilancia: " & sBilName(iBil) & _
+                                " Silos: " & sIdCella(iBil, j) & _
+                                " Q.tà: " & sQtà(iBil, j)
+                    End If
+                Next j
+            End With
+            If Not mSimul And lStart(iBil) = 1 Then
+                rc = mRK512.RK512Put(rkData, 50 + iBil, 51, cNRINGR * 2, aData)
+                If rc <> 0 Then            'SetPoint
+                    App.LogEvent "Errore scrittura DB" & 50 + iBil & ".DW102 (Qtà,Silos) rc=" & rc, vbLogEventTypeError
+                    GoTo rkErr
+                End If
+                aDummy(1) = CInt(NrMisc)
+                '03/08 rc = mRK512.RK512Put(rkData, 50 + iBil, 21, 1, aDummy)
+                rc = mRK512.RK512Put(rkData, 50 + iBil, 23, 1, aDummy)
+                If rc <> 0 Then             'NrMisc
+                    'App.LogEvent "Errore scrittura DB" & 50 + iBil & ".DW21 (NrMisc) rc=" & rc, vbLogEventTypeError
+                    App.LogEvent "Errore scrittura DB" & 50 + iBil & ".DW46 (NrMisc) rc=" & rc, vbLogEventTypeError
+                    GoTo rkErr
+                End If
+                aDummy(1) = Val(mrsProd.Fields!IdMateriale) 'Conversione in integer
+                '03/08 rc = mRK512.RK512Put(rkData, 50 + iBil, 22, 1, aDummy)
+                rc = mRK512.RK512Put(rkData, 50 + iBil, 24, 1, aDummy)
+                If rc <> 0 Then             'NrForm
+                    'App.LogEvent "Errore scrittura DB" & 50 + iBil & ".DW22 (NrFormula) rc=" & rc, vbLogEventTypeError
+                    App.LogEvent "Errore scrittura DB" & 50 + iBil & ".DW48 (NrFormula) rc=" & rc, vbLogEventTypeError
+                    GoTo rkErr
+                End If
+                '03/08
+                aDummy(1) = mIdProd        'Nr Lotto (progressivo del turno)
+                rc = mRK512.RK512Put(rkData, 50 + iBil, 22, 1, aDummy)
+                If rc <> 0 Then
+                    App.LogEvent "Errore scrittura DB" & 50 + iBil & ".DW44 (NrLotto) rc=" & rc, vbLogEventTypeError
+                    GoTo rkErr
+                End If
+                
+            End If
+            mrsBil.MoveNext
+        Next iBil
+        mrsDett.Close
+            
+        ShowMsg "Flag Enable = &H" & Hex$(fEnable)
+        
+        If Not mSimul Then
+            '03/08 aDummy(1) = IIf(bGranMenù, 61, 0)
+            'rc = mRK512.RK512Put(rkData, 39, 19, 1, aDummy)
+            'If rc <> 0 Then            'GranMenù
+                'App.LogEvent "Errore scrittura DB39.DW19 (FlagGranMenù) rc=" & rc, vbLogEventTypeError
+                'GoTo rkErr
+            'End If
+            'aDummy(1) = iMix
+            'rc = mRK512.RK512Put(rkData, 39, 40, 1, aDummy)
+            'If rc <> 0 Then            'MIX1/MIX2
+                'App.LogEvent "Errore scrittura DB39.DW40 (MIX1/MIX2) rc=" & rc, vbLogEventTypeError
+                'GoTo rkErr
+            'End If
+            
+            aDummy(1) = 0
+            If (bGranMenù) Then
+                aDummy(1) = &H100
+            End If
+            aDummy(1) = aDummy(1) Or (iMix)
+            rc = mRK512.RK512Put(rkData, 39, 15, 1, aDummy)
+            If rc <> 0 Then            'GranMenù | Mixer
+                App.LogEvent "Errore scrittura DB39.DW30 (FlagGranMenù+Mixer) rc=" & rc, vbLogEventTypeError
+                GoTo rkErr
+            End If
+            
+            '03/08
+            'aDummy(1) = iDS1
+            'rc = mRK512.RK512Put(rkData, 39, 41, 1, aDummy)
+            'If rc <> 0 Then            'DS1
+                'App.LogEvent "Errore scrittura DB39.DW41 (DS1) rc=" & rc, vbLogEventTypeError
+                'GoTo rkErr
+            'End If
+            
+            'aDummy(1) = IIf(bAdditivi, 1, 0)
+            'rc = mRK512.RK512Put(rkData, 39, 17, 1, aDummy)
+            'If rc <> 0 Then      'Additivi
+                'App.LogEvent "Errore scrittura DB39.DW17 (FlagAdditivi) rc=" & rc, vbLogEventTypeError
+                'GoTo rkErr
+            'End If
+            
+            aDummy(1) = IIf(bAdditivi, 2, 0)
+            aDummy(1) = aDummy(1) Or ((iDS1 - 1) * 4)
+            rc = mRK512.RK512Put(rkData, 39, 19, 1, aDummy)
+            If rc <> 0 Then            'Additivi | DS1
+                App.LogEvent "Errore scrittura DB39.DW38 (Additivi + DS1) rc=" & rc, vbLogEventTypeError
+                GoTo rkErr
+            End If
+            
+           
+            sName = Trim(mrsProd.Fields!Descrizione)
+            If Len(sName) < 24 Then sName = sName & Space(24 - Len(sName))
+            sName = Left(sName, 24)
+            For j = 1 To 12
+                lWord = CLng(AscB(Mid(sName, j * 2 - 1, 1))) * CLng(256) + CLng(AscB(Mid(sName, j * 2, 1)))
+                If (lWord And &H8000) <> 0 Then
+                    lWord = lWord - &H10000
+                End If
+                aData(j) = CInt(lWord)
+            Next j
+            'rc = mRK512.RK512Put(rkData, 39, 20, 12, aData)
+            rc = mRK512.RK512Put(rkData, 39, 51, 12, aData)
+            If rc <> 0 Then 'Codice formula
+                App.LogEvent "Errore scrittura DB39.DW102 (Codice formula) rc=" & rc, vbLogEventTypeError
+                GoTo rkErr
+            End If
+            
+            For iBil = 1 To NrBil
+                If Not mSimul Then
+                    aDummy(1) = 0
+                    rc = mRK512.RK512Put(rkData, 109, 10 * iBil + 4, 1, aDummy)
+                    If rc <> 0 Then 'Reset
+                        App.LogEvent "Errore scrittura DB109.DW" & 10 * iBil + 4 & " (FlagReset) rc=" & rc, vbLogEventTypeError
+                        GoTo rkErr
+                    End If
+                        
+                    aDummy(1) = lStart(iBil)
+                    '03/08 rc = mRK512.RK512Put(rkData, 109, 10 * iBil + 1, 1, aDummy)
+                    rc = mRK512.RK512Put(rkData, 109, 10 * iBil, 1, aDummy)
+                    If rc <> 0 Then            'Start
+                        App.LogEvent "Errore scrittura DB109.DW" & 2 * (10 * iBil) & " (FlagStart) rc=" & rc, vbLogEventTypeError
+                        GoTo rkErr
+                    End If
+                    aDummy(1) = 0
+                    rc = mRK512.RK512Put(rkData, 109, 10 * iBil + 2, 1, aDummy)
+                    If rc <> 0 Then                'Fine
+                        App.LogEvent "Errore scrittura DB109.DW" & 2 * (10 * iBil + 2) & " (FlagFine) rc=" & rc, vbLogEventTypeError
+                        GoTo rkErr
+                    End If
+                End If
+            Next
+            
+            aDummy(1) = fEnable
+            rc = mRK512.RK512Put(rkData, 109, 2, 1, aDummy)
+            If rc <> 0 Then            'Enable
+                App.LogEvent "Errore scrittura DB109.DW4 (FlagEnable) rc=" & rc, vbLogEventTypeError
+                GoTo rkErr
+            End If
+            aDummy(1) = 1
+            rc = mRK512.RK512Put(rkData, 109, 1, 1, aDummy)
+            If rc <> 0 Then            'EOT
+                App.LogEvent "Errore scrittura DB109.DW2 (EOT) rc=" & rc, vbLogEventTypeError
+                GoTo rkErr
+            End If
+        End If
+        
+        mrsProd.Fields!Stato = 1        'In produzione
+        mrsProd.Update
+        
+        RaiseEvent InizioProduzione(mIdProd)
+        
+        RaiseEvent InizioMiscelata(mIdProd, mCurrMisc)
+        
+        For iBil = 1 To cNRBIL
+            If lStart(iBil) = 1 Then RaiseEvent InizioDosaggio(mIdProd, mCurrMisc, sBilName(iBil))
+        Next
+        
+        mrsGiac.Open "T_Silos", gConn, adOpenDynamic, adLockOptimistic
+        mrsDettProd.Open "T_DettProduzioni", gConn, adOpenDynamic, adLockOptimistic
+        mScanTimer.Enabled = True
+    
+    Else
+        bRunning = False
+    End If
+
+exSub:
+    mrsBil.Close
+    mrsProd.Close
+    Exit Sub
+    
+rkErr:
+    ShowMsg "Errore Protocollo rk512"
+    mrsProd.Fields!Stato = -1
+    mrsProd.Update
+    If mrsDett.State = adStateOpen Then mrsDett.Close
+    bRunning = False
+    mIdProd = 0
+    mNrMisc = 0
+    mCurrMisc = 0
+    mTimer.Enabled = True
+    GoTo exSub
+    
+OnRkErr:
+    ShowMsg "Errore rk512: " & Err.Description
+    Resume Next
+End Sub
+
+Private Sub Class_Initialize()
+
+    Set gConn = New Connection
+    gConn.Open "DSN=EasyDb"
+    
+'    Set mTimer = New uTimer
+    
+    Set mTimer = frmRK512.mTimer
+    Set mScanTimer = frmRK512.mScanTimer
+    mTimer.Enabled = False
+    mTimer.Interval = 100
+    
+'    Set mScanTimer = New uTimer
+    mScanTimer.Enabled = False
+    mScanTimer.Interval = 5000
+    
+    Set mObjLav = New Lavorazione
+    
+    App.StartLogging "", &H20
+
+End Sub
+
+Private Sub Class_Terminate()
+    Call Terminate
+End Sub
+
+Private Function Lavorazione_Abort() As Boolean
+    Lavorazione_Abort = Me.Abort
+End Function
+Private Property Get Lavorazione_IdProd() As Long
+    Lavorazione_IdProd = Me.IdProd
+End Property
+Private Property Get Lavorazione_Running() As Boolean
+    Lavorazione_Running = Me.Running
+End Property
+
+Private Property Let Lavorazione_Tag(RHS As String)
+    Tag = RHS
+End Property
+
+Private Property Get Lavorazione_Tag() As String
+    Lavorazione_Tag = Tag
+End Property
+
+Private Sub mNode_Shutdown()
+    Call Terminate
+End Sub
+Private Property Get Lavorazione_ActiveX() As String
+    Lavorazione_ActiveX = ActiveX
+End Property
+
+Private Property Let Lavorazione_ActiveX(RHS As String)
+    ActiveX = RHS
+End Property
+Private Function Lavorazione_Avvia(IdProd As Integer) As Integer
+    Lavorazione_Avvia = Avvia(IdProd)
+End Function
+Private Property Let Lavorazione_Descrizione(RHS As String)
+    Descrizione = RHS
+End Property
+
+Private Property Get Lavorazione_Descrizione() As String
+    Lavorazione_Descrizione = Descrizione
+End Property
+
+Private Sub Lavorazione_Initialize(Name As String)
+    Initialize Name
+End Sub
+
+
+Private Property Let Lavorazione_IDLav(RHS As String)
+    IDLav = RHS
+End Property
+
+Private Property Get Lavorazione_IDLav() As String
+    Lavorazione_IDLav = IDLav
+End Property
+
+Private Property Let Lavorazione_NodeName(RHS As String)
+    NodeName = RHS
+End Property
+
+Private Property Get Lavorazione_NodeName() As String
+    Lavorazione_NodeName = NodeName
+End Property
+Private Sub Lavorazione_Terminate()
+    Call Terminate
+End Sub
+
+Public Property Get ActiveX() As String
+    ActiveX = mObjLav.ActiveX
+End Property
+
+Public Property Let ActiveX(RHS As String)
+    mObjLav.ActiveX = RHS
+End Property
+
+Public Function Avvia(IdProd As Integer) As Integer
+'idprod non viene utilizzato
+'in quanto viene letta la tabella Produzioni
+'per individuare la produzione da avviare.
+
+    If Not bRunning Then
+        bRunning = True
+        mTimer.Enabled = True
+    End If
+    Avvia = True
+End Function
+Public Property Let Descrizione(RHS As String)
+    mObjLav.Descrizione = RHS
+End Property
+
+Public Property Get Descrizione() As String
+    Descrizione = mObjLav.Descrizione
+End Property
+Public Sub Initialize(IDLav As String)
+Dim iBil As Integer
+Dim iIngr As Integer
+Dim i As Integer
+
+    Set mNode = EasyFactoryNode
+    
+    mIDLav = IDLav
+    
+    mObjLav.Initialize IDLav
+    
+    Set mRK512 = mNode.Devices.Item(1)
+    
+    mrsBil.Open "SELECT * FROM T_Bilance ORDER BY Name", gConn, adOpenStatic, adLockReadOnly
+    For iBil = 1 To cNRBIL
+        If Not mrsBil.EOF Then
+            sBilName(iBil) = mrsBil.Fields!Name
+            kCorr(iBil) = mrsBil.Fields!kCorr
+            mrsBil.MoveNext
+        End If
+    Next
+    mrsBil.Close
+
+End Sub
+
+
+Public Property Let IDLav(RHS As String)
+    mObjLav.IDLav = RHS
+End Property
+
+Public Property Get IDLav() As String
+    IDLav = mObjLav.IDLav
+End Property
+
+Public Property Let NodeName(RHS As String)
+    mObjLav.NodeName = RHS
+End Property
+
+Public Property Get NodeName() As String
+    NodeName = mObjLav.NodeName
+End Property
+Public Property Get Tag() As String
+    Tag = mObjLav.Tag
+End Property
+Public Property Let Tag(RHS As String)
+    mObjLav.Tag = RHS
+End Property
+Public Sub Terminate()
+    On Error Resume Next
+    mObjLav.Terminate
+    Set mObjLav = Nothing
+    Set mRK512 = Nothing
+    Set mTimer = Nothing
+    Set mScanTimer = Nothing
+    Unload frmRK512
+End Sub
+
+Private Sub UpdStato(IdProd As Long, Stato As Integer)
+'Aggiorna lo stato della produzione in corso
+'Ricalcola il numero di miscelate e la qtà totale che possono
+'essere cambiate a seguito di stop o abort.
+
+Dim rsTmp As New Recordset
+
+    rsTmp.Open "T_Produzioni", gConn, adOpenDynamic, adLockOptimistic
+    rsTmp.Filter = "IdArch=" & gIdArch & " AND IdProd = " & IdProd
+    If Not rsTmp.EOF Then
+        rsTmp.Fields!Stato = Stato
+        rsTmp.Fields!Qtà = rsTmp.Fields!Qtà / rsTmp.Fields!NrMisc * (mCurrMisc - 1)
+        rsTmp.Fields!NrMisc = mCurrMisc - 1
+        rsTmp.Update
+    End If
+    rsTmp.Close
+
+End Sub
+Public Property Get Peso(iBil As Integer) As Single
+    Peso = sPeso(iBil)
+End Property
+Public Property Get SilosAttuale(iBil As Integer) As String
+    If iProgr(iBil) > 0 Then SilosAttuale = sIdCella(iBil, iProgr(iBil))
+End Property
+Public Property Get QtàEstratta(iBil As Integer) As Single
+    QtàEstratta = sEstratto(iBil) * kCorr(iBil)
+End Property
+
+Public Property Get IngredienteAttuale(iBil As Integer) As String
+    If iProgr(iBil) > 0 Then IngredienteAttuale = sIdMat(iBil, iProgr(iBil))
+End Property
+Public Property Get QtàDaFare(iBil As Integer) As Single
+    If iProgr(iBil) > 0 Then QtàDaFare = sQtà(iBil, iProgr(iBil))
+End Property
+
+Public Property Get NrBil() As Integer
+    NrBil = cNRBIL
+End Property
+Public Property Get BilName(iBil As Integer) As String
+    BilName = sBilName(iBil)
+End Property
+Public Property Get Stato(iBil As Integer) As Integer
+    Stato = iStato(iBil)
+End Property
+
+Public Property Let Simul(bVal As Boolean)
+    If Not bRunning Then
+        mSimul = bVal
+    End If
+End Property
+Public Property Get Simul() As Boolean
+    Simul = mSimul
+End Property
+Public Property Let ShowDebug(bVal As Boolean)
+    If bVal Then
+        frmRK512.Show
+    Else
+        frmRK512.Hide
+    End If
+End Property
+
+Private Sub ShowMsg(Msg As String)
+    frmRK512.ShowMsg (Msg)
+    LogEvent Msg, vbLogEventTypeInformation
+End Sub
+Private Function LogEvent(Msg As String, EventType As LogEventTypeConstants, Optional Buttons As VbMsgBoxStyle) As VbMsgBoxResult
+    On Error Resume Next
+    LogEvent = vbOK
+    App.LogEvent Msg, EventType
+'    If Not IsMissing(Buttons) Then
+'        LogEvent = MsgBox(Msg, Buttons, App.Title)
+'    End If
+End Function
+
+Private Sub mScanTimer_Timer()
+Dim iBil As Integer
+Dim bFine As Boolean
+Dim j As Integer
+Dim lQtà As Single
+Static sCount As Integer
+
+'Verifica periodicamente lo stato delle bilance
+'Per le bilance avviate legge
+' il flag di fine dosaggio
+' il peso sulla bilancia
+' il nr. progressivo dell'ingrediente in corso di estrazione
+' la qtà estratta dell'ingrediente attuale
+'Se la bilancia ha terminato allora legge i pesi estratti
+'Se è richiesto l'abort allora setta a zero i pesi estratti (altrimenti leggerebbe i pesi della miscelata precedente)
+
+
+
+
+    mScanTimer.Enabled = False
+    
+    On Error GoTo OnRkErr
+    
+    bFine = True
+    
+    With mrsDettProd
+        For iBil = 1 To cNRBIL
+            If Not bFineBil(iBil) And lStart(iBil) = 1 Then
+                iStato(iBil) = 0
+                If Not mSimul Then
+                    rc = mRK512.RK512Get(rkData, 109, 10 * iBil + 2, 1, aDummy)
+                    If rc <> 0 Then
+                        LogEvent "IdProd= " & mIdProd & " CurMisc=" & CurrMisc & " Errore lettura DB109.DW" & 2 * (10 * iBil + 2) & " (Flag fine dosaggio) rc=" & rc, vbLogEventTypeError
+                        aDummy(1) = 0
+                    End If
+                    iStato(iBil) = aDummy(1)
+                    rc = mRK512.RK512Get(rkData, 50 + iBil, 1, 1, aDummy)
+                    If rc <> 0 Then
+                        LogEvent "IdProd= " & mIdProd & " CurMisc=" & CurrMisc & " Errore lettura DB" & 50 + iBil & ".DW2 (peso bilancia) rc=" & rc, vbLogEventTypeError
+                    End If
+                    sPeso(iBil) = aDummy(1)
+                    'rc = mRK512.RK512Get(rkData, 50 + iBil, 6, 1, aDummy)
+                    rc = mRK512.RK512Get(rkData, 50 + iBil, 4, 1, aDummy)
+                    If rc <> 0 Then
+                        LogEvent "IdProd= " & mIdProd & " CurMisc=" & CurrMisc & " Errore lettura DB" & 50 + iBil & ".DW8 (Nr. progr. ingrediente) rc=" & rc, vbLogEventTypeError
+                    End If
+                    iProgr(iBil) = aDummy(1) And &HFF   'byte basso
+                    rc = mRK512.RK512Get(rkData, 50 + iBil, 16, 1, aDummy)
+                    If rc <> 0 Then
+                        LogEvent "IdProd= " & mIdProd & " CurMisc=" & CurrMisc & " Errore lettura DB" & 50 + iBil & ".DW32 (Qtà estratta) rc=" & rc, vbLogEventTypeError
+                    End If
+                    sEstratto(iBil) = aDummy(1)
+                ElseIf lStart(iBil) = 1 Then
+                    sPeso(iBil) = sPeso(iBil) + sQtà(iBil, iProgr(iBil)) * (1 + Rnd / 10)
+                    iProgr(iBil) = iProgr(iBil) + 1
+                    sEstratto(iBil) = 0
+                    If sQtà(iBil, iProgr(iBil)) = 0 Then
+                        iStato(iBil) = 1
+                        sPeso(iBil) = 0
+                        iProgr(iBil) = 1
+                    End If
+                End If
+                If (lStart(iBil) = 1 And iStato(iBil) = 1) Or bAbort Then
+                    If Not mSimul Then
+                        rc = mRK512.RK512Get(rkData, 50 + iBil, 101, cNRINGR, aData)
+                        If rc <> 0 Then
+                            LogEvent "IdProd= " & mIdProd & " CurMisc=" & CurrMisc & " Errore lettura DB" & 50 + iBil & ".DW202 (pesi estratti) rc=" & rc, vbLogEventTypeError
+                            'In caso di errore di comunicazione prendo i valori teorici
+                            For j = 1 To cNRINGR
+                                aData(j) = sQtà(iBil, j) / kCorr(iBil)
+                            Next
+                        End If
+                    End If
+                    bFineBil(iBil) = True
+                    If bAbort Then
+                        ShowMsg "Produzione Nr. " & mIdProd & _
+                                " Bilancia: " & sBilName(iBil) & ": Abort dosaggio"
+                    Else
+                        ShowMsg "Produzione Nr. " & mIdProd & _
+                                " Bilancia: " & sBilName(iBil) & ": Fine dosaggio"
+                    End If
+                    'Fine dosaggio bilancia iBil
+                    For j = 1 To cNRINGR
+                        If sIdMat(iBil, j) <> vbNullString Then
+Retry:
+                            If Not mSimul Then
+                                If bAbort Then
+                                    lQtà = 0
+                                Else
+                                    lQtà = aData(j)
+                                End If
+                            Else
+                                lQtà = sQtà(iBil, j) * 0.95 / kCorr(iBil)
+                            End If
+                            lQtà = lQtà * kCorr(iBil)       'in kg
+                            If Abs(lQtà - sQtà(iBil, j)) / sQtà(iBil, j) * 100 > sToll(iBil, j) Then
+                                ShowMsg "Bilancia: " & sBilName(iBil) & _
+                                        " Silos: " & sIdCella(iBil, j) & _
+                                        " Q.tà Teorica: " & sQtà(iBil, j) & _
+                                        " Q.tà Estratta: " & lQtà
+                                If sToll(iBil, j) <> 0 Then
+                                    If ShowDialog Then
+                                        Load frmDialog
+                                        frmDialog.lblMsg = "Estrazione da bilancia " & _
+                                                         sBilName(iBil) & " fuori tolleranza" & vbCrLf & vbCrLf & _
+                                                         "Ingrediente: " & sIdMat(iBil, j) & vbCrLf & _
+                                                         "Silos: " & sIdCella(iBil, j) & vbCrLf & _
+                                                         "Q.tà teorica: " & sQtà(iBil, j) & vbCrLf & _
+                                                         "Q.tà estratta: " & lQtà
+                                        frmDialog.Show vbModal
+                                        
+    Dim bTry As Boolean
+                                        bTry = frmDialog.Retry
+                                        Unload frmDialog
+                                        If bTry Then
+                                            rc = mRK512.RK512Get(rkData, 50 + iBil, 100 + j, 1, aDummy)
+                                            aData(j) = aDummy(1)
+                                            GoTo Retry
+                                        End If
+                                    End If
+                                End If
+                            End If
+                            'Scrive record dettaglio produzione
+                            .AddNew
+                            .Fields!IdArch = gIdArch
+                            .Fields!IdProd = mIdProd
+                            .Fields!NrMisc = mCurrMisc
+                            .Fields!QtàEstr = lQtà
+                            .Fields!Qtà = sQtà(iBil, j)                 'qtà teoriche
+                            .Fields!IdMateriale = sIdMat(iBil, j)
+                            .Fields!Toll = sToll(iBil, j)
+                            .Fields!IdCella = sIdCella(iBil, j)
+                            .Fields!IdMod = sMod(iBil, j)
+                            .Update
+                            'Decremento giacenza siloss
+                            If Not mrsGiac.BOF Then mrsGiac.MoveFirst
+                            mrsGiac.Find "Name='" & sIdCella(iBil, j) & "'"
+                            If Not mrsGiac.EOF Then
+                                mrsGiac.Fields!Qtà = mrsGiac.Fields!Qtà - lQtà
+                                If mrsGiac.Fields!Qtà <= 0 Then
+                                    mrsGiac.Fields!Qtà = 0
+                                    mrsGiac.Fields!IdMateriale = Null
+                                    mrsGiac.Fields!IdProd = Null
+                                    mrsGiac.Fields!IdArch = Null
+                                End If
+                                mrsGiac.Update
+                            End If
+                        End If
+                    Next j
+                    RaiseEvent FineDosaggio(mIdProd, mCurrMisc, sBilName(iBil))
+                ElseIf lStart(iBil) = 1 Then
+                    bFine = False
+                End If
+            End If
+        Next
+    End With
+    
+    If bFine Then
+        ShowMsg "Produzione nr. " & mIdProd & ": Fine miscelata nr." & mCurrMisc
+        'Aggiorno cella di destinazione
+Dim rsTmp As New Recordset
+Dim sql As String
+
+        'Calcolo le quantità effettivamente estratte
+        sql = "SELECT Sum(QtàEstr) as QtàTot FROM V_DettProduzioni WHERE IdArch=" & gIdArch & " AND IdProd=" & mIdProd & _
+            " AND (NrMisc=" & mCurrMisc & ")"
+        rsTmp.Open sql, gConn, adOpenStatic, adLockReadOnly
+        lQtà = rsTmp.Fields!QtàTot
+        rsTmp.Close
+        If Not bHidden Then
+            'Qui bisognerebbe chiedere conferma della cella di destinazione ...
+            rsTmp.Open "SELECT * FROM T_DestinazioneProduzioni WHERE IdArch = " & gIdArch & " AND IdProd=" & mIdProd & " AND NrMisc=" & mCurrMisc, gConn, adOpenStatic, adLockReadOnly
+            If Not rsTmp.EOF Then
+                mDest = rsTmp.Fields!Dest
+            End If
+            If Not mrsGiac.BOF Then mrsGiac.MoveFirst
+            mrsGiac.Find "Name='" & mDest & "'"
+            If Not mrsGiac.EOF Then
+                mrsGiac.Fields!Qtà = mrsGiac.Fields!Qtà + lQtà
+                mrsGiac.Fields!IdMateriale = mIdMat
+                mrsGiac.Fields!IdArticolo = mIdArt
+                mrsGiac.Fields!IdProd = mIdProd
+                mrsGiac.Fields!IdArch = gIdArch
+                mrsGiac.Update
+            End If
+        End If
+        mCurrMisc = mCurrMisc + 1
+        RaiseEvent FineMiscelata(mIdProd, mCurrMisc - 1)
+        
+        If Not bAbort And mCurrMisc <= mNrMisc And mCurrMisc <= iStopMisc Then
+            ShowMsg "Produzione nr. " & mIdProd & ": Inizio miscelata nr." & mCurrMisc
+            RaiseEvent InizioMiscelata(mIdProd, mCurrMisc)
+            For iBil = 1 To cNRBIL
+                If lStart(iBil) = 1 Then
+                    bFineBil(iBil) = False
+                    aDummy(1) = 0
+                    rc = mRK512.RK512Put(rkData, 109, 10 * iBil + 4, 1, aDummy)
+                    If rc <> 0 Then
+                        LogEvent "Errore scrittura DB109.DW" & 2 * (10 * iBil + 4) & " (Flag reset) rc=" & rc, vbLogEventTypeError
+                    End If
+                    aDummy(1) = lStart(iBil)
+                    '03/08 rc = mRK512.RK512Put(rkData, 109, 10 * iBil + 1, 1, aDummy)
+                    rc = mRK512.RK512Put(rkData, 109, 10 * iBil, 1, aDummy)
+                    If rc <> 0 Then            'Start
+                        LogEvent "Errore scrittura DB109.DW" & 2 * (10 * iBil) & " (Flag start) rc=" & rc, vbLogEventTypeError
+                    End If
+                    aDummy(1) = 0
+                    rc = mRK512.RK512Put(rkData, 109, 10 * iBil + 2, 1, aDummy)
+                    If rc <> 0 Then            'Fine
+                        LogEvent "Errore scrittura DB109.DW" & 2 * (10 * iBil + 2) & " (Flag fine dosaggio) rc=" & rc, vbLogEventTypeError
+                    End If
+                    aDummy(1) = 1
+                    rc = mRK512.RK512Put(rkData, 109, 1, 1, aDummy)
+                    If rc <> 0 Then                'EOT
+                        LogEvent "Errore scrittura DB109.DW2 (EOT) rc=" & rc, vbLogEventTypeError
+                    End If
+                    RaiseEvent InizioDosaggio(mIdProd, mCurrMisc, sBilName(iBil))
+                End If
+            Next
+            mScanTimer.Enabled = True
+        Else
+            mrsDettProd.Close
+            mrsGiac.Close
+            ShowMsg "Fine Produzione nr. " & mIdProd
+            If bAbort Then
+                Call UpdStato(mIdProd, -2)    'produzione annullata
+            Else
+                Call UpdStato(mIdProd, 2)    'fine produzione
+            End If
+            
+            RaiseEvent FineProduzione(mIdProd)
+            
+            If bHidden Then
+                Call DeleteProd(mIdProd)
+            End If
+            
+            mIdProd = 0
+            mNrMisc = 0
+            mCurrMisc = 0
+            mTimer.Enabled = True
+        End If
+    Else
+        mScanTimer.Enabled = True
+    End If
+    Exit Sub
+
+OnRkErr:
+    ShowMsg "mScanTimer.Errore rk512: " & Err.Description
+    Resume Next
+End Sub
+
+Private Sub mTimer_Timer()
+    mTimer.Enabled = False
+    Call mAvvia
+End Sub
+Private Sub DeleteProd(IdProd As Long)
+Dim cmd As New Command
+
+    cmd.ActiveConnection = gConn
+    cmd.CommandText = "DELETE FROM T_Produzioni WHERE IDProd=" & IdProd
+    cmd.Execute
+    
+End Sub

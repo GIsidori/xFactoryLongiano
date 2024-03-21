@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <ListView Id="XFactoryNET.Custom.MM1.Module.BusinessObjects.QArticolo_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="Codice" Width="94" />
+        <ColumnInfo Id="Descrizione" Width="338" />
+        <ColumnInfo Id="Formula" Width="342" />
+      </Columns>
+    </ListView>
+  </Views>
+</Application>

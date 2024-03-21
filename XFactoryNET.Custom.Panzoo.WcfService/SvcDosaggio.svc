@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="XFactoryNET.Custom.Panzoo.WcfService.SvcDosaggio" CodeBehind="SvcDosaggio.svc.cs" %>

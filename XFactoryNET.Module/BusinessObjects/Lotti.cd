@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="Le proprietà Magazzino e Apparato della classe Lotto sono mutuamente esclusive.">
+    <Position X="5.343" Y="6.333" Height="0.75" Width="1.7" />
+  </Comment>
+  <Comment CommentText="Area in cui è stato stoccato il lotto">
+    <Position X="2.011" Y="4.389" Height="0.75" Width="1.7" />
+  </Comment>
+  <Comment CommentText="Apparato in cui è attualmente stoccato il lotto">
+    <Position X="5.344" Y="5.503" Height="0.75" Width="1.7" />
+  </Comment>
+  <Comment CommentText="Magazzino in cui è attualmente stoccato il lotto">
+    <Position X="1.146" Y="6.242" Height="0.75" Width="1.7" />
+  </Comment>
+  <Comment CommentText="Lotto &lt;-&gt; Componente">
+    <Position X="5.406" Y="3.877" Height="0.406" Width="1.638" />
+  </Comment>
+  <Comment CommentText="Lotto &lt;-&gt; Apparato">
+    <Position X="5.25" Y="4.69" Height="0.291" Width="1.367" />
+  </Comment>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Articolo" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQACAAAAAAgAIDAAAAQIAIBAABAIIABAgAAAAFAAAA=</HashCode>
+      <FileName>BusinessObjects\Articolo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Lotto">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Articolo" Type="XFactoryNET.Module.BusinessObjects.Articolo" FixedToPoint="true">
+      <Path>
+        <Point X="4.75" Y="0.938" />
+        <Point X="5.75" Y="0.938" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Magazzino" Type="XFactoryNET.Module.BusinessObjects.Magazzino" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.25" Y="3.898" />
+        <Point X="1.062" Y="3.898" />
+        <Point X="1.062" Y="7.5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-2.111" Y="3.591" Height="0.182" Width="0.951" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>IoUCAQQQIAAQEMZAAQAjcEMHIQABAAABhBAABIGwIAA=</HashCode>
+      <FileName>BusinessObjects\Lotto.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Articolo" />
+      <Property Name="Magazzino" />
+      <Property Name="Fornitore" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Allegati" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Allegato" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAQIAgAAAQAAAAAAAAQEAAAQAEAAAAQAA=</HashCode>
+      <FileName>BusinessObjects\Allegato.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Odl" Collapsed="true">
+    <Position X="10.5" Y="1.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>CgMAH4wACRIASsjAyFpgbVElJAEATBABQHZlVDs0MIA=</HashCode>
+      <FileName>BusinessObjects\Odl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Apparato">
+    <Position X="3.75" Y="7.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAABgACIAIAIAgAIEAAAAgAQAAAAAAEAQxEBA=</HashCode>
+      <FileName>BusinessObjects\Apparato.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Componente">
+    <Position X="7.5" Y="2.75" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>MAMEIQKCAQAAAIDAACABIAIBAACBEIAAABAIAAAAgBA=</HashCode>
+      <FileName>BusinessObjects\Componente.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Magazzino">
+    <Position X="0.5" Y="7.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Lotti" Type="XFactoryNET.Module.BusinessObjects.Lotto" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="0.75" Y="7.5" />
+        <Point X="0.75" Y="3.02" />
+        <Point X="3.25" Y="3.02" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.912" Y="-0.25" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAABAAAIAAAAAQAAAAAAAAAAAAAAAAAAAgABA=</HashCode>
+      <FileName>BusinessObjects\Magazzino.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Lotti" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Azienda" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Azienda.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Silos">
+    <Position X="6.5" Y="8.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>gI0AggAJYAAAAIBABAAQQACBAEBABAAAiEAAUATBAAg=</HashCode>
+      <FileName>BusinessObjects\Silos.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

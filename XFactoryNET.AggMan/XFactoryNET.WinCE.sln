@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XFactoryNET.WinCE", "XFactoryNET.AggMan\XFactoryNET.WinCE.csproj", "{B2E75298-BD73-4A34-944A-BDDA15C260A6}"
+EndProject
+Project("{B900F1C2-3D47-4FEC-85B3-04AAF18C3634}") = "XFactoryNET.CAB", "XFactoryNET.CAB\XFactoryNET.CAB.vddproj", "{AED5D430-CB0E-4616-9229-A88422EA2295}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B2E75298-BD73-4A34-944A-BDDA15C260A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2E75298-BD73-4A34-944A-BDDA15C260A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2E75298-BD73-4A34-944A-BDDA15C260A6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B2E75298-BD73-4A34-944A-BDDA15C260A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2E75298-BD73-4A34-944A-BDDA15C260A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2E75298-BD73-4A34-944A-BDDA15C260A6}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{AED5D430-CB0E-4616-9229-A88422EA2295}.Debug|Any CPU.ActiveCfg = Debug
+		{AED5D430-CB0E-4616-9229-A88422EA2295}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

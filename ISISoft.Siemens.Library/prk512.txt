@@ -1,0 +1,580 @@
+VERSION 5.00
+Object = "{648A5603-2C6E-101B-82B6-000000000014}#1.1#0"; "MSCOMM32.OCX"
+Begin VB.UserControl ucRK512 
+   ClientHeight    =   3600
+   ClientLeft      =   0
+   ClientTop       =   0
+   ClientWidth     =   4800
+   ScaleHeight     =   3600
+   ScaleWidth      =   4800
+   Begin VB.ListBox lstDebug 
+      Height          =   2985
+      Left            =   120
+      TabIndex        =   0
+      Top             =   120
+      Width           =   4575
+   End
+   Begin MSCommLib.MSComm mscomm 
+      Left            =   3720
+      Top             =   2880
+      _ExtentX        =   1005
+      _ExtentY        =   1005
+      _Version        =   393216
+      DTREnable       =   -1  'True
+   End
+End
+Attribute VB_Name = "ucRK512"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = True
+Option Explicit
+Dim fNum As Integer
+
+Public Enum rkEnum
+    rkData
+    rkInput
+    rkOutput
+    rkMerker
+    rkCounter
+    rkTimer
+End Enum
+
+Private Const NUL = &H0
+Private Const STX = &H2
+Private Const ETX = &H3
+Private Const EOT = &H4
+Private Const ACK = &H6
+Private Const DLE = &H10
+Private Const NAK = &H15
+
+Dim tQVZ As Integer
+Const tZVZ = 220
+Const tBLOCCO = 4000
+Const tREA = 5000
+
+Dim x As Integer
+Dim w As Integer
+
+Dim bNAK As Boolean
+Dim bWait As Boolean
+Dim bConflict As Boolean
+
+Dim commErr As MSCommLib.CommEventConstants
+
+Dim InputBuffer As String
+
+Dim mHighPriority As Boolean
+Dim mUseBCC As Boolean
+Public Property Get CommPort() As Integer
+    CommPort = mscomm.CommPort
+End Property
+Public Property Let CommPort(iComm As Integer)
+    mscomm.CommPort = iComm
+End Property
+
+Public Property Get UseBCC() As Boolean
+    UseBCC = mUseBCC
+End Property
+Public Property Let UseBCC(bVal As Boolean)
+    mUseBCC = bVal
+    If mUseBCC Then
+        tQVZ = 2000
+    Else
+        tQVZ = 500
+    End If
+End Property
+Public Property Get PortOpen() As Boolean
+    PortOpen = mscomm.PortOpen
+End Property
+Public Property Let PortOpen(bVal As Boolean)
+    If mscomm.PortOpen <> bVal Then
+        mscomm.PortOpen = bVal
+        If mscomm.PortOpen Then
+            Send Chr$(NAK)
+        End If
+    End If
+End Property
+Public Property Let Settings(sVal As String)
+    mscomm.Settings = sVal
+End Property
+Public Property Get Settings() As String
+    Settings = mscomm.Settings
+End Property
+Public Property Get HighPriority() As Boolean
+    HighPriority = mHighPriority
+End Property
+Public Property Let HighPriority(bVal As Boolean)
+    mHighPriority = bVal
+End Property
+
+Private Sub lstDebug_DblClick()
+    lstDebug.Clear
+End Sub
+
+Private Sub mscomm_OnComm()
+    commErr = 0	
+    If mscomm.CommEvent And &H1000 <> 0 Then
+        commErr = mscomm.CommEvent
+    End If
+End Sub
+
+Private Sub UserControl_Initialize()
+    fNum = FreeFile
+    Open "C:\rk512log.txt" For Append As #1
+End Sub
+
+Private Sub UserControl_InitProperties()
+    mUseBCC = True
+    tQVZ = 2000
+End Sub
+Private Sub UserControl_ReadProperties(PropBag As PropertyBag)
+    Settings = PropBag.ReadProperty("Settings", "9600,n,8,1")
+    UseBCC = PropBag.ReadProperty("UseBCC", True)
+    HighPriority = PropBag.ReadProperty("HighPriority", True)
+End Sub
+
+Private Sub UserControl_Resize()
+    lstDebug.Move 0, 0, UserControl.Width, UserControl.Height
+End Sub
+
+Private Sub UserControl_Terminate()
+    Close #fNum
+End Sub
+
+Private Sub UserControl_WriteProperties(PropBag As PropertyBag)
+    Call PropBag.WriteProperty("Settings", Settings)
+    Call PropBag.WriteProperty("UseBCC", UseBCC)
+    Call PropBag.WriteProperty("HighPriority", HighPriority)
+End Sub
+Private Function SendDatagram(pBuffer As String) As Integer
+Dim sDati As String
+Dim rxBuff As String
+
+    sDati = pBuffer & Chr$(DLE) & Chr$(ETX)
+    If UseBCC Then
+        sDati = sDati & Chr$(BCC(sDati))
+    End If
+    
+    w = 1
+
+try:
+    x = 1
+    
+sndSTX:
+    Send Chr$(STX)
+    
+wDLE:
+    If Not ReceiveNByte(rxBuff, 1, tQVZ) Then GoTo t1
+    
+    Select Case Asc(rxBuff)
+    Case DLE
+        If Send(sDati) <> 0 Then GoTo w1
+        If Not ReceiveNByte(rxBuff, 1, tQVZ) Then GoTo w1
+        Select Case Asc(rxBuff)
+        Case DLE
+            SendDatagram = 0
+            Exit Function
+        Case Else
+w1:
+            w = w + 1
+            If w <= 6 Then
+                GoTo try
+            Else
+                Send Chr$(NAK)
+                SendDatagram = 1
+                Exit Function
+            End If
+        End Select
+    Case STX
+        If mHighPriority Then
+            GoTo wDLE
+        Else
+            bConflict = True
+            'Avendo già ricevuto STX il parametro timeout è ininfluente
+            ReceiveDatagram rxBuff, 0
+            bConflict = False
+            GoTo try
+        End If
+    Case Else
+t1:
+        x = x + 1
+        If x <= 6 Then
+            GoTo sndSTX
+        Else
+            Send Chr$(NAK)
+            SendDatagram = 2
+            Exit Function
+        End If
+    End Select
+    
+    
+End Function
+Private Function ReceiveDatagram(pBuffer As String, iTimeout As Integer) As Integer
+Dim rxBuff As String
+Dim sDati As String
+Dim mBCC As Byte
+
+    If Not bConflict Then
+        If Not ReceiveNByte(rxBuff, 1, iTimeout) Then
+            ReceiveDatagram = False
+            Exit Function
+        End If
+        If Asc(rxBuff) <> STX And Asc(rxBuff) <> NAK Then
+            bNAK = True
+            GoTo quattro
+        End If
+        Debug.Print "Ricevuto STX Inizio datagram"
+    End If
+    
+uno:
+    Send Chr$(DLE)
+    
+quattro:
+    If Not ReceiveUntil(sDati, Chr$(DLE) & Chr$(ETX), tZVZ) Then
+        GoTo sndNAK
+    End If
+    
+    If UseBCC Then
+        mBCC = BCC(sDati)
+    End If
+    
+    sDati = RemoveDLE(sDati)
+    
+    If UseBCC Then
+        If Not ReceiveNByte(rxBuff, 1, tZVZ) Then
+            GoTo sndNAK
+        End If
+        If mBCC <> Asc(rxBuff) Then
+            GoTo sndNAK
+        End If
+        pBuffer = Left$(sDati, Len(sDati) - 2)
+    Else
+        pBuffer = Left$(sDati, Len(sDati) - 1)
+    End If
+    
+    If bNAK Then
+sndNAK:
+        bNAK = False
+        Send Chr$(NAK)
+        If w <= 5 Then
+            bWait = True
+            If ReceiveNByte(rxBuff, 1, tBLOCCO) Then
+                If Asc(rxBuff) = STX Then
+                    w = w + 1
+                    GoTo uno
+                End If
+            End If
+        End If
+    Else
+        Send Chr$(DLE)
+    End If
+    
+
+End Function
+Private Function BCC(sDati As String) As Byte
+Dim i As Integer
+Dim mBCC As Byte
+
+    For i = 1 To Len(sDati)
+        mBCC = mBCC Xor Asc(Mid$(sDati, i, 1))
+    Next
+    BCC = mBCC
+        
+End Function
+Private Function AddDLE(sDati As String) As String
+Dim j As Integer
+Dim s As String
+
+    s = sDati
+    j = -1
+    Do
+        If j = -1 Then
+            j = InStr(s, Chr$(DLE))
+        Else
+            j = InStr(j + 1, s, Chr$(DLE))
+        End If
+        If j <> 0 Then
+            s = Left$(s, j) & Chr$(DLE) & Right(s, Len(s) - j)
+            j = j + 1
+        End If
+    Loop Until j = 0
+            
+    AddDLE = s
+End Function
+Private Function RemoveDLE(sDati As String) As String
+Dim j As Integer
+Dim s As String
+
+    s = sDati
+    j = -1
+    Do
+        j = InStr(j + 2, s, Chr$(DLE) & Chr$(DLE))
+        If j <> 0 Then
+            s = Left$(s, j) & Right$(s, Len(s) - j - 1)
+        End If
+    Loop Until j = 0
+    
+    RemoveDLE = s
+End Function
+Private Function Send(sDati As String) As Integer
+
+    commErr = 0
+    mscomm.Output = sDati
+    Dump sDati, True
+    Send = commErr
+
+End Function
+Private Sub Dump(sDati As String, Tx As Boolean)
+Dim i As Integer
+Dim s As String
+
+    For i = 1 To Len(sDati)
+        s = s & Right$("0" & Hex$(Asc(Mid$(sDati, i, 1))), 2)
+    Next
+
+    lstDebug.AddItem IIf(Tx, ">", "<") & s
+    Print fNum, IIf(Tx, ">", "<") & s
+
+End Sub
+Private Function ReceiveNByte(sDati As String, iLen As Integer, iTimeout As Integer) As Boolean
+Dim tm As Single
+Dim iTm As Single
+
+    commErr = 0
+    iTm = iTimeout / 1000
+    tm = Timer
+    Do While (Len(InputBuffer) < iLen) And Timer - tm < iTm And commErr = 0
+        DoEvents
+        If mscomm.InBufferCount > 0 Then
+            InputBuffer = InputBuffer & mscomm.Input
+            tm = Timer
+        End If
+    Loop
+    
+    If commErr = 0 And Len(InputBuffer) >= iLen Then
+        sDati = Left$(InputBuffer, iLen)
+        InputBuffer = Right$(InputBuffer, Len(InputBuffer) - iLen)
+        ReceiveNByte = True
+    Else
+        sDati = InputBuffer
+        InputBuffer = vbNullString
+        ReceiveNByte = False
+    End If
+
+    Dump sDati, False
+
+End Function
+Private Function ReceiveUntil(sDati As String, WaitFor As String, iTimeout As Integer) As Boolean
+Dim j As Integer
+Dim tm As Single
+Dim iTm As Single
+
+    commErr = 0
+    iTm = iTimeout / 1000
+    j = InStr(InputBuffer, WaitFor)
+    tm = Timer
+    Do While j = 0 And Timer - tm < iTm And commErr = 0
+        DoEvents
+        If mscomm.InBufferCount > 0 Then
+            InputBuffer = InputBuffer & mscomm.Input
+            tm = Timer
+            j = InStr(InputBuffer, WaitFor)
+        End If
+    Loop
+    
+    If j <> 0 And commErr = 0 Then
+        sDati = Left$(InputBuffer, j + Len(WaitFor) - 1)
+        InputBuffer = Right$(InputBuffer, Len(InputBuffer) - j - 1)
+        ReceiveUntil = True
+    Else
+        sDati = InputBuffer
+        InputBuffer = vbNullString
+        ReceiveUntil = False
+    End If
+
+    Dump sDati, False
+
+End Function
+Public Function RK512Put(rkType As rkEnum, iDB As Byte, iDW As Byte, iLen As Integer, txData() As Integer) As Integer
+Dim sHead As String
+Dim sDati As String
+Dim bNext As Boolean
+Dim txBuffer As String
+Dim rxBuffer As String
+Dim low As Integer
+Dim high As Integer
+Dim cType As String * 1
+Dim i As Integer
+Dim lWord As Long
+
+    low = LBound(txData)
+    high = UBound(txData)
+    For i = low To low + iLen - 1
+        lWord = txData(i)
+        If (lWord And &H8000) <> 0 Then
+            lWord = lWord + &H10000
+        End If
+        txBuffer = txBuffer & Chr$(lWord \ 256) & Chr$(lWord Mod 256)
+    Next
+    
+    Select Case rkType
+        Case rkData
+            cType = "D"
+        Case rkInput
+            cType = "E"
+        Case rkOutput
+            cType = "A"
+        Case rkMerker
+            cType = "M"
+        Case rkCounter
+            cType = "Z"
+        Case rkTimer
+            cType = "T"
+    End Select
+    
+    Do
+        sDati = txBuffer
+        If Len(txBuffer) > 128 Then
+            sDati = Left$(txBuffer, 128)
+            txBuffer = Right$(txBuffer, Len(txBuffer) - 128)
+        Else
+            txBuffer = vbNullString
+        End If
+        
+        sDati = AddDLE(sDati)
+        
+        If Len(sDati) > 128 Then
+            txBuffer = Right$(sDati, Len(sDati) - 128) & txBuffer
+            If (Mid$(sDati, 128, 2)) = Chr$(DLE) & Chr$(DLE) Then
+                sDati = Left$(sDati, 128 - 1)
+            Else
+                sDati = Left$(sDati, 128)
+            End If
+        End If
+        
+        If bNext Then
+            sHead = Chr$(&HFF) & Chr$(NUL) & "A" & cType
+        Else
+            sHead = Chr$(NUL) & Chr$(NUL) & "A" & cType & Chr$(iDB) & Chr$(iDW) & Chr$(iLen \ 256) & Chr$(iLen Mod 256) & Chr$(&HFF) & Chr$(&HFF)
+        End If
+        sHead = AddDLE(sHead)
+        If SendDatagram(sHead & sDati) = 0 Then
+            If ReceiveDatagram(rxBuffer, tREA) <> 0 Then
+                RK512Put = 2
+                Exit Function
+            Else
+            'Analizza telegramma di reazione
+                If Asc(Mid$(rxBuffer, 4, 1)) <> NUL Then
+                'Ricevuto telegramma di reazione con segnalazione di errore
+                    Debug.Print "Ricevuto errore nr. " & Asc(Mid$(rxBuffer, 4, 1))
+                End If
+                If bNext Then
+                    If Asc(Left$(rxBuffer, 1)) = NUL Then
+                        RK512Put = 3
+                        Exit Function
+                    End If
+                Else
+                    If Asc(Left$(rxBuffer, 1)) <> NUL Then
+                        RK512Put = 4
+                        Exit Function
+                    End If
+                    bNext = True
+                End If
+            End If
+        Else
+            RK512Put = 1
+            Exit Function
+        End If
+    Loop Until txBuffer = vbNullString
+    
+    RK512Put = 0
+
+End Function
+Public Function RK512Get(rkType As rkEnum, iDB As Byte, iDW As Byte, iLen As Integer, rxData() As Integer) As Integer
+Dim sHead As String
+Dim sDati As String
+Dim bNext As Boolean
+Dim txBuffer As String
+Dim rxBuffer As String
+Dim low As Integer
+Dim high As Integer
+Dim cType As String * 1
+Dim i As Integer
+Dim k As Integer
+Dim lWord As Long
+
+    low = LBound(rxData)
+    high = UBound(rxData)
+    
+'    For i = low To high
+'        txBuffer = txBuffer & (txData(i) \ 256) & txData(i) Mod 256
+'    Next
+'
+'
+    Select Case rkType
+        Case rkData
+            cType = "D"
+        Case rkInput
+            cType = "E"
+        Case rkOutput
+            cType = "A"
+        Case rkMerker
+            cType = "M"
+        Case rkCounter
+            cType = "Z"
+        Case rkTimer
+            cType = "T"
+    End Select
+    
+    Do
+        If bNext Then
+            sHead = Chr$(&HFF) & Chr$(NUL) & "E" & cType
+        Else
+            sHead = Chr$(NUL) & Chr$(NUL) & "E" & cType & Chr$(iDB) & Chr$(iDW) & Chr$(iLen \ 256) & Chr$(iLen Mod 256) & Chr$(&HFF) & Chr$(&HFF)
+        End If
+        sHead = AddDLE(sHead)
+        If SendDatagram(sHead) = 0 Then
+            If ReceiveDatagram(rxBuffer, tREA) <> 0 Then
+                RK512Get = 2
+                Exit Function
+            Else
+            'Analizza telegramma di reazione
+                If Asc(Mid$(rxBuffer, 4, 1)) <> NUL Then
+                'Ricevuto telegramma di reazione con segnalazione di errore
+                    Debug.Print "Ricevuto errore nr. " & Asc(Mid$(rxBuffer, 4, 1))
+                End If
+                If bNext Then
+                    If Asc(Left$(rxBuffer, 1)) = NUL Then
+                        RK512Get = 3
+                        Exit Function
+                    End If
+                Else
+                    If Asc(Left$(rxBuffer, 1)) <> NUL Then
+                        RK512Get = 4
+                        Exit Function
+                    End If
+                    bNext = True
+                End If
+                'Telegramma ricevuto ok
+                'Analizzo dati utili
+                On Error Resume Next
+                For i = 5 To Len(rxBuffer) - 1 Step 2
+                    lWord = CLng(Asc(Mid$(rxBuffer, i, 1))) * CLng(256) + CLng(Asc(Mid$(rxBuffer, i + 1, 1)))
+                    If (lWord And &H8000) <> 0 Then
+                        lWord = lWord - &H10000
+                    End If
+                    rxData(k + low) = CInt(lWord)
+                    k = k + 1
+                Next i
+                On Error GoTo 0
+            End If
+        Else
+            RK512Get = 1
+            Exit Function
+        End If
+    Loop Until k >= iLen
+    
+    RK512Get = 0
+
+End Function

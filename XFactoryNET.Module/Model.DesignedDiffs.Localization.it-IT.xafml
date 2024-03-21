@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views>
+    <DetailView Id="Articolo_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Articolo" Caption="Articolo" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="OdlDosaggio_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Odl_col1">
+              <LayoutGroup Id="Item5" Caption="Ordine di Lavoro">
+                <LayoutGroup Id="Auto9c1ba37e-8fbe-4645-acd1-f89621966a97" Caption="Auto9c1ba37e-8fbe-4645-acd1-f89621966a97(5)" />
+                <LayoutGroup Id="Autof1b2e27a-6ec3-4225-a486-b654aeac5046" Caption="Autof1b2e27a-6ec3-4225-a486-b654aeac5046(9)" />
+              </LayoutGroup>
+              <LayoutGroup Id="Autob6984f21-7a6a-4e69-a7a2-ac9f829e6fd3" Caption="Autob6984f21-7a6a-4e69-a7a2-ac9f829e6fd3(13)">
+                <LayoutGroup Id="Autoa4228fd1-fbb6-4da5-b549-483019a741ac" Caption="Autoa4228fd1-fbb6-4da5-b549-483019a741ac(14)" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="IngredientiTeorici" Caption="Ingredienti Teorici" />
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="RuleSetValidationResult_ByTarget_Error_DetailView">
+      <Items>
+        <StaticText Id="ValidationResultsText" Text="Sono stati rilevati problemi durante la convalida dei dati. Si prega di leggere le informazioni seguenti per capire quali sono i problemi e come è possibile correggerli." />
+      </Items>
+    </DetailView>
+    <DetailView Id="ValidationResults_Error_DetailView">
+      <Items>
+        <StaticText Id="ValidationResultsText" Text="Sono stati rilevati problemi durante la convalida dei dati. Si prega di leggere le informazioni seguenti per capire quali sono i problemi e come è possibile correggerli." />
+      </Items>
+    </DetailView>
+  </Views>
+</Application>

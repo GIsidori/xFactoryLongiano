@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="XFactoryNET.Custom.GIMA.Module.BusinessObjects.QArticolo">
+    <Position X="1.5" Y="3" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ABAAAAAQABAAAIAQAAACAAAAAABAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>BusinessObjects\QArticolo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Custom.GIMA.Module.BusinessObjects.QFormula" Collapsed="true">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ARAAAAAQABAAAAAQAAACAAAAAAAAAAAAAAAEAAEAAAA=</HashCode>
+      <FileName>BusinessObjects\QFormula.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Componenti" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="XFactoryNET.Custom.GIMA.Module.BusinessObjects.QComponente">
+    <Position X="6.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAcAACAEAEAAAABAAAAAAAAAAAAABgAAAAAAAAACAAA=</HashCode>
+      <FileName>BusinessObjects\QComponente.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Row" />
+      <Property Name="Articolo" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="XFactoryNET.Custom.GIMA.Module.BusinessObjects.QAllegato" Collapsed="true">
+    <Position X="2" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>BusinessObjects\QAllegato.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Custom.GIMA.Module.BusinessObjects.QDettaglioAllegato">
+    <Position X="6.75" Y="5.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Articolo" Type="XFactoryNET.Custom.GIMA.Module.BusinessObjects.QArticolo" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.75" Y="5.729" />
+        <Point X="6.375" Y="5.729" />
+        <Point X="6.375" Y="4.25" />
+        <Point X="3" Y="4.25" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAMAIAAAAAAAAAAEACAAAAAgAAAAAgAAAAAAAAACACA=</HashCode>
+      <FileName>BusinessObjects\QDettaglioAllegato.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Row" />
+      <Property Name="Allegato" />
+      <Property Name="Articolo" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="XFactoryNET.Custom.GIMA.Module.BusinessObjects.QFormuleArticoli" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <AssociationLine Name="Articolo" Type="XFactoryNET.Custom.GIMA.Module.BusinessObjects.QArticolo" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3" Y="2.062" />
+        <Point X="2.312" Y="2.062" />
+        <Point X="2.312" Y="3" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAA=</HashCode>
+      <FileName>QFormuleArticoli.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Row" />
+      <Property Name="Formula" />
+      <Property Name="Articolo" />
+    </ShowAsAssociation>
+  </Class>
+  <Struct Name="XFactoryNET.Custom.GIMA.Module.BusinessObjects.QComponenteRow" Collapsed="true">
+    <Position X="10.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\QComponenteRow.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="XFactoryNET.Custom.GIMA.Module.BusinessObjects.QAllegatoRow">
+    <Position X="9.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\QAllegatoRow.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="XFactoryNET.Custom.GIMA.Module.BusinessObjects.QFormuleArticoliRow" Collapsed="true">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>QFormuleArticoli.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

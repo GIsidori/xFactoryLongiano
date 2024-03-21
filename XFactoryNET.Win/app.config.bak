@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<configuration>
+
+  <system.serviceModel>
+    <bindings>
+      <netTcpBinding>
+        <binding name="NetTcpBinding_ISvcDosaggio" />
+      </netTcpBinding>
+    </bindings>
+    <client>
+      <endpoint address="net.tcp://server-prod-long:8523/XFactoryNET/SvcDosaggio"
+          binding="netTcpBinding" bindingConfiguration="NetTcpBinding_ISvcDosaggio"
+          contract="Services.Dosaggio.ISvcDosaggio" name="NetTcpBinding_ISvcDosaggio">
+        <identity>
+          <dns value="server-prod-long" />
+        </identity>
+      </endpoint>
+    </client>
+  </system.serviceModel>
+  <appSettings>
+    <add key="Modules" value="XFactoryNET.Custom.Panzoo.Module;XFactoryNet.Custom.GIMA.Module"/>
+    <add key="NewVersionServer" value="" />
+    <add key="EnableDiagnosticActions" value="False" />
+    <add key="Languages" value="it-IT;it" />
+    <add key="ClientSettingsProvider.ServiceUri" value="" />
+  </appSettings>
+  <connectionStrings>
+    <add name="EasyTestConnectionString" connectionString="Integrated Security=SSPI;Pooling=false;Data Source=\SQLEXPRESS;Initial Catalog=XFactoryNETEasyTest" />
+    <!--
+		Use the following connection string to connect to a database on the Microsoft SQL Server Express:
+		<add name="ConnectionString" connectionString="Integrated Security=SSPI;Pooling=false;Data Source=.\SQLEXPRESS;Initial Catalog=XFactoryNET"/>
+		-->
+    <!--
+		Use the following connection string to connect to a database on the Microsoft SQL Server:
+    <add name="ConnectionString" connectionString="Integrated Security=SSPI;Pooling=false;Data Source=(local);Initial Catalog=XFactoryNET" />
+
+
+<add name="ConnectionString" connectionString="User ID=XFactoryUser;Password=XFactory;Pooling=false;Data Source=SERVER-PROD-LON\SQLEXPRESS;Initial Catalog=XFactoryNET" />
+-->
+
+
+<!--
+		Use the following connection string to connect to a Jet (Microsoft Access) database:
+		<add name="ConnectionString" connectionString="Provider=Microsoft.Jet.OLEDB.4.0;Password=;User ID=Admin;Data Source=XFactoryNET.mdb;Mode=Share Deny None;"/>
+		-->
+  </connectionStrings>
+  <system.diagnostics>
+    <switches>
+      <!-- Use the one of predefined values: 0-Off, 1-Errors, 2-Warnings, 3-Info, 4-Verbose. The default value is 3. -->
+      <add name="eXpressAppFramework" value="3" />
+      <add name="XPO" value="3" />
+    </switches>
+  </system.diagnostics>
+  <startup>
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0" />
+  </startup>
+  <system.web>
+    <membership defaultProvider="ClientAuthenticationMembershipProvider">
+      <providers>
+        <add name="ClientAuthenticationMembershipProvider" type="System.Web.ClientServices.Providers.ClientFormsAuthenticationMembershipProvider, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" serviceUri="" />
+      </providers>
+    </membership>
+    <roleManager defaultProvider="ClientRoleProvider" enabled="true">
+      <providers>
+        <add name="ClientRoleProvider" type="System.Web.ClientServices.Providers.ClientRoleProvider, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" serviceUri="" cacheTimeout="86400" />
+      </providers>
+    </roleManager>
+  </system.web>
+</configuration>

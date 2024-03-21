@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DB2DataSet" targetNamespace="http://tempuri.org/DB2DataSet.xsd" xmlns:mstns="http://tempuri.org/DB2DataSet.xsd" xmlns="http://tempuri.org/DB2DataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="XFactoryNETConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="XFactoryNETConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.XFactoryNET.Custom.GIMA.Module.Properties.Settings.GlobalReference.Default.XFactoryNETConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="QArticoloTableAdapter" GeneratorDataComponentClassName="QArticoloTableAdapter" Name="QArticolo" UserDataComponentName="QArticoloTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="XFactoryNETConnectionString (Settings)" DbObjectName="XFactoryNET.dbo.QArticolo" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT CDPRO, DSPAR, CDFOR, NOTEA FROM dbo.QArticolo</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CDPRO" DataSetColumn="CDPRO" />
+              <Mapping SourceColumn="DSPAR" DataSetColumn="DSPAR" />
+              <Mapping SourceColumn="CDFOR" DataSetColumn="CDFOR" />
+              <Mapping SourceColumn="NOTEA" DataSetColumn="NOTEA" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="QFormulaTableAdapter" GeneratorDataComponentClassName="QFormulaTableAdapter" Name="QFormula" UserDataComponentName="QFormulaTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="XFactoryNETConnectionString (Settings)" DbObjectName="XFactoryNET.dbo.QFormula" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT CDFOR, NRVER, CDMAT, PERC, TOLL, MDDOS FROM dbo.QFormula</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CDFOR" DataSetColumn="CDFOR" />
+              <Mapping SourceColumn="NRVER" DataSetColumn="NRVER" />
+              <Mapping SourceColumn="CDMAT" DataSetColumn="CDMAT" />
+              <Mapping SourceColumn="PERC" DataSetColumn="PERC" />
+              <Mapping SourceColumn="TOLL" DataSetColumn="TOLL" />
+              <Mapping SourceColumn="MDDOS" DataSetColumn="MDDOS" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DB2DataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DB2DataSet" msprop:Generator_UserDSName="DB2DataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="QArticolo" msprop:Generator_TableClassName="QArticoloDataTable" msprop:Generator_TableVarName="tableQArticolo" msprop:Generator_TablePropName="QArticolo" msprop:Generator_RowDeletingName="QArticoloRowDeleting" msprop:Generator_RowChangingName="QArticoloRowChanging" msprop:Generator_RowEvHandlerName="QArticoloRowChangeEventHandler" msprop:Generator_RowDeletedName="QArticoloRowDeleted" msprop:Generator_UserTableName="QArticolo" msprop:Generator_RowChangedName="QArticoloRowChanged" msprop:Generator_RowEvArgName="QArticoloRowChangeEvent" msprop:Generator_RowClassName="QArticoloRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CDPRO" msprop:Generator_ColumnVarNameInTable="columnCDPRO" msprop:Generator_ColumnPropNameInRow="CDPRO" msprop:Generator_ColumnPropNameInTable="CDPROColumn" msprop:Generator_UserColumnName="CDPRO">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DSPAR" msprop:Generator_ColumnVarNameInTable="columnDSPAR" msprop:Generator_ColumnPropNameInRow="DSPAR" msprop:Generator_ColumnPropNameInTable="DSPARColumn" msprop:Generator_UserColumnName="DSPAR">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CDFOR" msprop:Generator_ColumnVarNameInTable="columnCDFOR" msprop:Generator_ColumnPropNameInRow="CDFOR" msprop:Generator_ColumnPropNameInTable="CDFORColumn" msprop:Generator_UserColumnName="CDFOR">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NOTEA" msprop:Generator_ColumnVarNameInTable="columnNOTEA" msprop:Generator_ColumnPropNameInRow="NOTEA" msprop:Generator_ColumnPropNameInTable="NOTEAColumn" msprop:Generator_UserColumnName="NOTEA">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="QFormula" msprop:Generator_TableClassName="QFormulaDataTable" msprop:Generator_TableVarName="tableQFormula" msprop:Generator_TablePropName="QFormula" msprop:Generator_RowDeletingName="QFormulaRowDeleting" msprop:Generator_RowChangingName="QFormulaRowChanging" msprop:Generator_RowEvHandlerName="QFormulaRowChangeEventHandler" msprop:Generator_RowDeletedName="QFormulaRowDeleted" msprop:Generator_UserTableName="QFormula" msprop:Generator_RowChangedName="QFormulaRowChanged" msprop:Generator_RowEvArgName="QFormulaRowChangeEvent" msprop:Generator_RowClassName="QFormulaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CDFOR" msprop:Generator_ColumnVarNameInTable="columnCDFOR" msprop:Generator_ColumnPropNameInRow="CDFOR" msprop:Generator_ColumnPropNameInTable="CDFORColumn" msprop:Generator_UserColumnName="CDFOR">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NRVER" msprop:Generator_ColumnVarNameInTable="columnNRVER" msprop:Generator_ColumnPropNameInRow="NRVER" msprop:Generator_ColumnPropNameInTable="NRVERColumn" msprop:Generator_UserColumnName="NRVER" type="xs:decimal" />
+              <xs:element name="CDMAT" msprop:Generator_ColumnVarNameInTable="columnCDMAT" msprop:Generator_ColumnPropNameInRow="CDMAT" msprop:Generator_ColumnPropNameInTable="CDMATColumn" msprop:Generator_UserColumnName="CDMAT">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PERC" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnPERC" msprop:Generator_ColumnPropNameInRow="PERC" msprop:Generator_ColumnPropNameInTable="PERCColumn" msprop:Generator_UserColumnName="PERC" type="xs:decimal" minOccurs="0" />
+              <xs:element name="TOLL" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTOLL" msprop:Generator_ColumnPropNameInRow="TOLL" msprop:Generator_ColumnPropNameInTable="TOLLColumn" msprop:Generator_UserColumnName="TOLL" type="xs:decimal" minOccurs="0" />
+              <xs:element name="MDDOS" msprop:Generator_ColumnVarNameInTable="columnMDDOS" msprop:Generator_ColumnPropNameInRow="MDDOS" msprop:Generator_ColumnPropNameInTable="MDDOSColumn" msprop:Generator_UserColumnName="MDDOS">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

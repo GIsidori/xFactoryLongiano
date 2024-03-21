@@ -1,0 +1,214 @@
+﻿namespace XFactoryNET.WinCE
+{
+    partial class frmSacchi
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.giacenzeSacchiBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.xFactoryNETDataSet = new XFactoryNET.WinCE.XFactoryNETDataSet();
+            this.dataGrid1 = new System.Windows.Forms.DataGrid();
+            this.dataGridTableStyle1 = new System.Windows.Forms.DataGridTableStyle();
+            this.dataGridTextBoxColumn1 = new System.Windows.Forms.DataGridTextBoxColumn();
+            this.dataGridTextBoxColumn2 = new System.Windows.Forms.DataGridTextBoxColumn();
+            this.dataGridTextBoxColumn3 = new System.Windows.Forms.DataGridTextBoxColumn();
+            this.dataGridTextBoxColumn4 = new System.Windows.Forms.DataGridTextBoxColumn();
+            this.dataGridTextBoxColumn5 = new System.Windows.Forms.DataGridTextBoxColumn();
+            this.giacenzeSacchiTableAdapter = new XFactoryNET.WinCE.XFactoryNETDataSetTableAdapters.GiacenzaSacchiTableAdapter();
+            this.timer1 = new System.Windows.Forms.Timer();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.giacenzeSacchiBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xFactoryNETDataSet)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.button1);
+            this.panel3.Controls.Add(this.button2);
+            this.panel3.Controls.Add(this.button3);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(798, 70);
+            // 
+            // button1
+            // 
+            this.button1.Enabled = false;
+            this.button1.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+            this.button1.Location = new System.Drawing.Point(147, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(136, 57);
+            this.button1.TabIndex = 34;
+            this.button1.Text = "Sacchi";
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+            this.button2.Location = new System.Drawing.Point(289, 3);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(136, 57);
+            this.button2.TabIndex = 33;
+            this.button2.Text = "Silos";
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+            this.button3.Location = new System.Drawing.Point(5, 3);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(136, 57);
+            this.button3.TabIndex = 32;
+            this.button3.Text = "Pesa";
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // giacenzeSacchiBindingSource
+            // 
+            this.giacenzeSacchiBindingSource.DataMember = "GiacenzaSacchi";
+            this.giacenzeSacchiBindingSource.DataSource = this.xFactoryNETDataSet;
+            // 
+            // xFactoryNETDataSet
+            // 
+            this.xFactoryNETDataSet.DataSetName = "XFactoryNETDataSet";
+            this.xFactoryNETDataSet.Prefix = "";
+            this.xFactoryNETDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // dataGrid1
+            // 
+            this.dataGrid1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.dataGrid1.DataSource = this.giacenzeSacchiBindingSource;
+            this.dataGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGrid1.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
+            this.dataGrid1.Location = new System.Drawing.Point(0, 70);
+            this.dataGrid1.Name = "dataGrid1";
+            this.dataGrid1.RowHeadersVisible = false;
+            this.dataGrid1.Size = new System.Drawing.Size(798, 505);
+            this.dataGrid1.TabIndex = 1;
+            this.dataGrid1.TableStyles.Add(this.dataGridTableStyle1);
+            // 
+            // dataGridTableStyle1
+            // 
+            this.dataGridTableStyle1.GridColumnStyles.Add(this.dataGridTextBoxColumn1);
+            this.dataGridTableStyle1.GridColumnStyles.Add(this.dataGridTextBoxColumn2);
+            this.dataGridTableStyle1.GridColumnStyles.Add(this.dataGridTextBoxColumn3);
+            this.dataGridTableStyle1.GridColumnStyles.Add(this.dataGridTextBoxColumn4);
+            this.dataGridTableStyle1.GridColumnStyles.Add(this.dataGridTextBoxColumn5);
+            this.dataGridTableStyle1.MappingName = "GiacenzaSacchi";
+            // 
+            // dataGridTextBoxColumn1
+            // 
+            this.dataGridTextBoxColumn1.Format = "";
+            this.dataGridTextBoxColumn1.FormatInfo = null;
+            this.dataGridTextBoxColumn1.HeaderText = "Articolo";
+            this.dataGridTextBoxColumn1.MappingName = "Articolo";
+            this.dataGridTextBoxColumn1.Width = 100;
+            // 
+            // dataGridTextBoxColumn2
+            // 
+            this.dataGridTextBoxColumn2.Format = "";
+            this.dataGridTextBoxColumn2.FormatInfo = null;
+            this.dataGridTextBoxColumn2.HeaderText = "Descrizione";
+            this.dataGridTextBoxColumn2.MappingName = "Descrizione";
+            this.dataGridTextBoxColumn2.Width = 400;
+            // 
+            // dataGridTextBoxColumn3
+            // 
+            this.dataGridTextBoxColumn3.Format = "n0";
+            this.dataGridTextBoxColumn3.FormatInfo = null;
+            this.dataGridTextBoxColumn3.HeaderText = "Quantità";
+            this.dataGridTextBoxColumn3.MappingName = "Quantità";
+            this.dataGridTextBoxColumn3.Width = 80;
+            // 
+            // dataGridTextBoxColumn4
+            // 
+            this.dataGridTextBoxColumn4.Format = "";
+            this.dataGridTextBoxColumn4.FormatInfo = null;
+            this.dataGridTextBoxColumn4.HeaderText = "Conf.";
+            this.dataGridTextBoxColumn4.MappingName = "Confezione";
+            this.dataGridTextBoxColumn4.Width = 100;
+            // 
+            // dataGridTextBoxColumn5
+            // 
+            this.dataGridTextBoxColumn5.Format = "";
+            this.dataGridTextBoxColumn5.FormatInfo = null;
+            this.dataGridTextBoxColumn5.HeaderText = "Magazzino";
+            this.dataGridTextBoxColumn5.MappingName = "Magazzino";
+            this.dataGridTextBoxColumn5.Width = 100;
+            // 
+            // giacenzeSacchiTableAdapter
+            // 
+            this.giacenzeSacchiTableAdapter.ClearBeforeFill = true;
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 10000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // frmSacchi
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(798, 575);
+            this.ControlBox = false;
+            this.Controls.Add(this.dataGrid1);
+            this.Controls.Add(this.panel3);
+            this.Name = "frmSacchi";
+            this.Text = "Giacenze in sacchi";
+            this.Deactivate += new System.EventHandler(this.frmSacchi_Deactivate);
+            this.Load += new System.EventHandler(this.frmSacchi_Load);
+            this.Activated += new System.EventHandler(this.frmSacchi_Activated);
+            this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.giacenzeSacchiBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xFactoryNETDataSet)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGrid dataGrid1;
+        private XFactoryNETDataSet xFactoryNETDataSet;
+        private System.Windows.Forms.BindingSource giacenzeSacchiBindingSource;
+        private XFactoryNET.WinCE.XFactoryNETDataSetTableAdapters.GiacenzaSacchiTableAdapter giacenzeSacchiTableAdapter;
+        private System.Windows.Forms.DataGridTableStyle dataGridTableStyle1;
+        private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn1;
+        private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn2;
+        private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn3;
+        private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn4;
+        private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn5;
+        private System.Windows.Forms.Timer timer1;
+    }
+}

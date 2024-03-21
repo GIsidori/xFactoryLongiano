@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <DetailView Id="XFactoryNET.Module.BusinessObjects.OdlCaricoRinfusa_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Lotti" TextAlignMode="AlignLocal">
+              <LayoutItem Id="Lotti" TextAlignMode="AutoSize" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="XFactoryNET.Module.BusinessObjects.OdlDosaggio_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Componenti" TextAlignMode="AlignLocal">
+              <LayoutItem Id="Componenti" TextAlignMode="AutoSize" />
+            </LayoutGroup>
+            <LayoutGroup Id="Lotti" TextAlignMode="AlignLocal">
+              <LayoutItem Id="Lotti" TextAlignMode="AutoSize" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

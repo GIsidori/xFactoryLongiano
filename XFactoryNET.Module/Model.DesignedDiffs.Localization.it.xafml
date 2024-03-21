@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views>
+    <DetailView Id="Lavorazione_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" Caption="Main">
+          <LayoutGroup Id="SimpleEditors" Caption="SimpleEditors">
+            <LayoutGroup Id="LookupTable" Caption="LookupTable" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="Mixer_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" Caption="Main">
+          <LayoutGroup Id="SimpleEditors" Caption="SimpleEditors">
+            <LayoutGroup Id="Apparato" Caption="Apparato" />
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Prelievi" Caption="Prelievi" />
+            <LayoutGroup Id="Destinazioni" Caption="Destinazioni" />
+            <LayoutGroup Id="Item1" Caption="Impostazioni">
+              <LayoutGroup Id="Autoe405bf51-818a-4ac9-8bb9-916d054183b8" Caption="" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="OdlInsacco_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Odl" Caption="Odl" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="Pesa_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" Caption="Main">
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Prelievi" Caption="Prelievi" />
+            <LayoutGroup Id="Destinazioni" Caption="Destinazioni" />
+            <LayoutGroup Id="Item1" Caption="Settings">
+              <LayoutGroup Id="Auto21cf68f2-26f0-4ad3-94d4-db03032820b9" Caption="" />
+            </LayoutGroup>
+          </TabbedGroup>
+          <LayoutGroup Id="SimpleEditors" Caption="SimpleEditors" />
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="Trasporto_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" Caption="Main">
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Prelievi" Caption="Prelievi" />
+            <LayoutGroup Id="Destinazioni" Caption="Destinazioni" />
+            <LayoutGroup Id="Item1" Caption="Impostazioni">
+              <LayoutGroup Id="Auto740d7b88-bb8b-40d0-b3da-a1415ed9357a" Caption="" />
+            </LayoutGroup>
+          </TabbedGroup>
+          <LayoutGroup Id="SimpleEditors" Caption="SimpleEditors" />
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

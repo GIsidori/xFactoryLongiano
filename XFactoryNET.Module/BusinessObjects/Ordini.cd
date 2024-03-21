@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="XFactoryNET.Module.BusinessObjects.Odl" Collapsed="true">
+    <Position X="7.5" Y="3" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Ingredienti" Type="XFactoryNET.Module.BusinessObjects.Lotto" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.188" Y="3.691" />
+        <Point X="8.188" Y="4.066" />
+        <Point X="11.25" Y="4.066" />
+        <Point X="11.25" Y="3.691" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.977" Y="0.12" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Prodotti" Type="XFactoryNET.Module.BusinessObjects.Lotto" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.188" Y="3" />
+        <Point X="8.188" Y="2.625" />
+        <Point X="11.25" Y="2.625" />
+        <Point X="11.25" Y="3" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="1.081" Y="0.443" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>CgEBH4wACRMACsBEAFogdVAFIQEADBEAQHYlFBs0MIA=</HashCode>
+      <FileName>BusinessObjects\Odl.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Ingredienti" />
+      <Property Name="Prodotti" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.OrdineProduzione" Collapsed="true">
+    <Position X="5.25" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="OrdineCarico" Type="XFactoryNET.Module.BusinessObjects.OrdineCarico" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.938" Y="2.691" />
+        <Point X="5.938" Y="3.562" />
+        <Point X="4.5" Y="3.562" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AQEAAYAAAMEAEICAABAAQQAEAUAABBAAgAAQQAEBAQA=</HashCode>
+      <FileName>BusinessObjects\OrdineProduzione.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="OrdineCarico" />
+      <Property Name="OrdineCliente" />
+      <Property Name="Articolo" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Odls" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.OrdineCliente" Collapsed="true">
+    <Position X="3" Y="0.75" Width="1.5" />
+    <AssociationLine Name="Cliente" Type="XFactoryNET.Module.BusinessObjects.Azienda" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3" Y="1.062" />
+        <Point X="1.25" Y="1.062" />
+        <Point X="1.25" Y="2" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.617" Y="1.016" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAACAAAAAgAAACAEAAAgAQAAAAAA=</HashCode>
+      <FileName>BusinessObjects\OrdineCliente.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Cliente" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.OrdineCarico" Collapsed="true">
+    <Position X="3" Y="3.25" Width="1.5" />
+    <AssociationLine Name="Vettore" Type="XFactoryNET.Module.BusinessObjects.Azienda" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3" Y="3.547" />
+        <Point X="1.188" Y="3.547" />
+        <Point X="1.188" Y="2.691" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.669" Y="0.954" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIIAAQCCAAAAAAAAAAAAEAAAAAAAAAABA=</HashCode>
+      <FileName>BusinessObjects\OrdineCarico.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Vettore" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Articolo" Collapsed="true">
+    <Position X="7.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IASACAAAAAAgAIDAAAAQIAIBAABAIIABAgBAAAFAQAA=</HashCode>
+      <FileName>BusinessObjects\Articolo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Azienda" Collapsed="true">
+    <Position X="0.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Azienda.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Lotto" Collapsed="true">
+    <Position X="10.5" Y="3" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Silos" Type="XFactoryNET.Module.BusinessObjects.Silos">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.506" Y="0.06" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>IoUSAQQQIAAQEMZAAQAjcEMHIQAFAAAAhBAABIEwIAA=</HashCode>
+      <FileName>BusinessObjects\Lotto.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Silos" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Silos" Collapsed="true">
+    <Position X="13.5" Y="3" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Lotto" Type="XFactoryNET.Module.BusinessObjects.Lotto" FixedFromPoint="true">
+      <Path>
+        <Point X="13.5" Y="3.5" />
+        <Point X="12" Y="3.5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.435" Y="0.058" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AA0AggAJIAABAIBABAAQQACFAEBABAAAiEAAVARBAAg=</HashCode>
+      <FileName>BusinessObjects\Silos.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Lotto" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

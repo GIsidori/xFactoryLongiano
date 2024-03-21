@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="XFactoryNET.Module.BusinessObjects.OdlCaricoRinfusa" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAEAAAABAAAgAAA=</HashCode>
+      <FileName>BusinessObjects\OdlCaricoRinfusa.cs</FileName>
+      <NewMemberFileName>BusinessObjects\OdlDosaggio.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Lotto" Collapsed="true">
+    <Position X="7.5" Y="2.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Articolo" Type="XFactoryNET.Module.BusinessObjects.Articolo">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.836" Y="0.245" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>IoESIQQQAAAQEIZAAQAjcAMFIQEEAAAAgBAABIGQIAA=</HashCode>
+      <FileName>BusinessObjects\Lotto.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Articolo" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Allegato" Collapsed="true">
+    <Position X="0.75" Y="3.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AACUAAAAAAEAQIAgAAAAAAAAAAAAAEAAQQAAAAAAQAA=</HashCode>
+      <FileName>BusinessObjects\Allegato.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.OdlInsacco" Collapsed="true">
+    <Position X="2.25" Y="5.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAIAAAAAAAAAAAAAAAAEAAAABAAAgAAA=</HashCode>
+      <FileName>BusinessObjects\OdlInsacco.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Formula" Collapsed="true">
+    <Position X="0.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BJAAAAQECBAACIAAAAAAIAAAIAAAAAAAQAAEABEgMBA=</HashCode>
+      <FileName>BusinessObjects\Formula.cs</FileName>
+      <NewMemberFileName>BusinessObjectsentClasses.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Articolo" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>IASACAAAAAAgAIDAAAAQIAIDAABAIIABAgBAAAFAQAA=</HashCode>
+      <FileName>BusinessObjects\Articolo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Componente" Collapsed="true">
+    <Position X="6" Y="1.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Articolo" Type="XFactoryNET.Module.BusinessObjects.Articolo" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.75" Y="1.5" />
+        <Point X="6.75" Y="0.938" />
+        <Point X="7.5" Y="0.938" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.862" Y="-0.15" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>MAMEIQKCAAAAAIDAACABIAIBAACBEIAAABAIAAAAgBA=</HashCode>
+      <FileName>BusinessObjects\Componente.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Articolo" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Odl" Collapsed="true">
+    <Position X="4" Y="2.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Articolo" Type="XFactoryNET.Module.BusinessObjects.Articolo" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.812" Y="2.75" />
+        <Point X="4.812" Y="0.625" />
+        <Point X="7.5" Y="0.625" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Lavorazione" Type="XFactoryNET.Module.BusinessObjects.Lavorazione" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4" Y="2.813" />
+        <Point X="3.625" Y="2.813" />
+        <Point X="3.625" Y="1.846" />
+        <Point X="2.25" Y="1.846" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="ApparatoLavorazione" Type="XFactoryNET.Module.BusinessObjects.Apparato" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.062" Y="3.441" />
+        <Point X="5.062" Y="4.625" />
+        <Point X="5.75" Y="4.625" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.859" Y="0.769" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="IngredientiTeorici" Type="XFactoryNET.Module.BusinessObjects.Componente">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.432" Y="0.123" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="ProdottiTeorici" Type="XFactoryNET.Module.BusinessObjects.Componente" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.5" Y="3" />
+        <Point X="6.312" Y="3" />
+        <Point X="6.312" Y="2.191" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.409" Y="0.516" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AgMBH4QASSMAGsDkAFowdFAFoAAADBFEQHYlFBs0MIA=</HashCode>
+      <FileName>BusinessObjects\Odl.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Articolo" />
+      <Property Name="Lavorazione" />
+      <Property Name="ApparatoLavorazione" />
+      <Property Name="Formula" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Lotti" />
+      <Property Name="IngredientiTeorici" />
+      <Property Name="ProdottiTeorici" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Confezione" Collapsed="true">
+    <Position X="9.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAgACAAAAAIAIAAAAAAACAAAAAAAAAAQAAAgAAAA=</HashCode>
+      <FileName>BusinessObjects\Confezione.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Mixer" Collapsed="true">
+    <Position X="11.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Mixer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Apparato" Collapsed="true">
+    <Position X="5.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAABgACIAIAIAgAIEAAAAgAQAAAAAAEAQxEBA=</HashCode>
+      <FileName>BusinessObjects\Apparato.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.OdlDosaggio" Collapsed="true">
+    <Position X="7.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAEAAAABAAAgAAA=</HashCode>
+      <FileName>BusinessObjects\OdlDosaggio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.Lavorazione" Collapsed="true">
+    <Position X="0.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAIAAAAAAAgAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>BusinessObjects\Lavorazione.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.OdlScaricoRinfusa" Collapsed="true">
+    <Position X="4" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAEAAAABAAAgAAA=</HashCode>
+      <FileName>BusinessObjects\OdlScaricoRinfusa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XFactoryNET.Module.BusinessObjects.OdlPellet" Collapsed="true">
+    <Position X="5.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAEAAAABAAAgAAA=</HashCode>
+      <FileName>BusinessObjects\OdlPellet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

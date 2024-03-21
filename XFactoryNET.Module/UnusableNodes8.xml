@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <ListView Id="Odl_Ingredienti_ListView" IsFooterVisible="True" AllowEdit="True" LayoutSettings="&lt;XtraSerializer version=&quot;1.0&quot; application=&quot;View&quot;&gt;&#xD;&#xA;  &lt;property name=&quot;FormatConditions&quot; iskey=&quot;true&quot; value=&quot;0&quot; /&gt;&#xD;&#xA;  &lt;property name=&quot;OptionsView&quot; isnull=&quot;true&quot; iskey=&quot;true&quot;&gt;&#xD;&#xA;    &lt;property name=&quot;ShowGroupPanel&quot;&gt;false&lt;/property&gt;&#xD;&#xA;    &lt;property name=&quot;ShowDetailButtons&quot;&gt;false&lt;/property&gt;&#xD;&#xA;    &lt;property name=&quot;ShowFooter&quot;&gt;true&lt;/property&gt;&#xD;&#xA;    &lt;property name=&quot;ShowButtonMode&quot;&gt;ShowOnlyInEditor&lt;/property&gt;&#xD;&#xA;  &lt;/property&gt;&#xD;&#xA;&lt;/XtraSerializer&gt;" DetailViewID="">
+      <Columns Id="Columns">
+        <ColumnInfo Id="CodiceAlternativo" Width="69" Index="-1" />
+        <ColumnInfo Id="Confezione" Width="69" Index="-1" />
+        <ColumnInfo Id="DataFine" Width="69" Index="-1" />
+        <ColumnInfo Id="DataInizio" Width="69" Index="-1" />
+        <ColumnInfo Id="Note" Width="69" Index="-1" />
+        <ColumnInfo Id="NrMisc" SortOrder="Ascending" Index="-1" GroupIndex="0" />
+        <ColumnInfo Id="Odl" Width="44" Index="-1" />
+        <ColumnInfo Id="Tolleranza" Width="41" Index="-1" />
+        <ColumnInfo Id="NrComp" Width="89" Index="0" />
+        <ColumnInfo Id="Articolo" Width="92" Index="1" />
+        <ColumnInfo Id="TipoMovimento" Width="109" Index="2" />
+        <ColumnInfo Id="Articolo.Descrizione" PropertyName="Articolo.Descrizione" Index="3" Width="432" />
+        <ColumnInfo Id="QtàTeo" Index="4" Width="137">
+          <Summary Id="Summary">
+            <ColumnSummaryItem Id="Summary0" Index="0" SummaryType="Sum" Removed="True" />
+          </Summary>
+        </ColumnInfo>
+        <ColumnInfo Id="Quantità" Width="77" Index="5" />
+        <ColumnInfo Id="Silos" Width="41" Index="6" />
+        <ColumnInfo Id="ApparatoLavorazione" Width="158" Index="7" SortIndex="1" SortOrder="Ascending" />
+        <ColumnInfo Id="Magazzino" Index="8" Width="70" />
+        <ColumnInfo Id="Modalità" Width="129" Index="9" />
+        <ColumnInfo Id="CodiceLotto" Width="197" Index="10" />
+      </Columns>
+    </ListView>
+    <ListView Id="Odl_Prodotti_ListView" IsFooterVisible="True" AllowEdit="True" LayoutSettings="&lt;XtraSerializer version=&quot;1.0&quot; application=&quot;View&quot;&gt;&#xD;&#xA;  &lt;property name=&quot;FormatConditions&quot; iskey=&quot;true&quot; value=&quot;0&quot; /&gt;&#xD;&#xA;  &lt;property name=&quot;OptionsView&quot; isnull=&quot;true&quot; iskey=&quot;true&quot;&gt;&#xD;&#xA;    &lt;property name=&quot;ShowGroupPanel&quot;&gt;false&lt;/property&gt;&#xD;&#xA;    &lt;property name=&quot;ShowDetailButtons&quot;&gt;false&lt;/property&gt;&#xD;&#xA;    &lt;property name=&quot;ShowFooter&quot;&gt;true&lt;/property&gt;&#xD;&#xA;    &lt;property name=&quot;ShowButtonMode&quot;&gt;ShowOnlyInEditor&lt;/property&gt;&#xD;&#xA;  &lt;/property&gt;&#xD;&#xA;&lt;/XtraSerializer&gt;" DetailViewID="">
+      <Columns Id="Columns">
+        <ColumnInfo Id="ApparatoLavorazione" Width="67" Index="-1" />
+        <ColumnInfo Id="CodiceAlternativo" Index="-1" />
+        <ColumnInfo Id="Confezione" Index="-1" />
+        <ColumnInfo Id="DataFine" Index="-1" />
+        <ColumnInfo Id="DataInizio" Index="-1" />
+        <ColumnInfo Id="Modalità" Width="67" Index="-1" />
+        <ColumnInfo Id="Note" Index="-1" />
+        <ColumnInfo Id="NrMisc" SortOrder="Ascending" Index="-1" GroupIndex="0" />
+        <ColumnInfo Id="Odl" Index="-1" />
+        <ColumnInfo Id="Tolleranza" Width="61" Index="-1" />
+        <ColumnInfo Id="NrComp" Width="105" Index="0" />
+        <ColumnInfo Id="Articolo" Width="97" Index="1" />
+        <ColumnInfo Id="TipoMovimento" Index="2" />
+        <ColumnInfo Id="Articolo.Descrizione" PropertyName="Articolo.Descrizione" Index="3" Width="626" />
+        <ColumnInfo Id="QtàTeo" Index="4" Width="98">
+          <Summary Id="Summary">
+            <ColumnSummaryItem Id="Summary0" Index="0" SummaryType="Sum" Removed="True" />
+          </Summary>
+        </ColumnInfo>
+        <ColumnInfo Id="Quantità" Index="5" Width="101" />
+        <ColumnInfo Id="Silos" Index="6" Width="66" />
+        <ColumnInfo Id="Magazzino" Index="7" Width="66" />
+        <ColumnInfo Id="CodiceLotto" Index="8" Width="389" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Lotto_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Autob957afd2-5182-429a-8349-0dccecf10716">
+              <LayoutGroup Id="Auto2ffcb2d2-0bbc-4299-aa39-b4564265c515">
+                <LayoutGroup Id="Auto475058cb-6c36-4a91-ac87-d6bd31c2b155">
+                  <LayoutItem Id="Odl" ViewItem="Odl" />
+                </LayoutGroup>
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

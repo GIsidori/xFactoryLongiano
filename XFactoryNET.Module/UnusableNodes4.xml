@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <ListView Id="Magazzino_Lotti_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="ApparatoLavorazione" Index="-1" />
+        <ColumnInfo Id="Modalità" Index="-1" />
+        <ColumnInfo Id="Note" Width="199" Index="-1" />
+        <ColumnInfo Id="NrComp" Index="-1" />
+        <ColumnInfo Id="NrMisc" Index="-1" />
+        <ColumnInfo Id="Odl" Index="-1" />
+        <ColumnInfo Id="QtàTeo" Index="-1" />
+        <ColumnInfo Id="Silos" Index="-1" />
+        <ColumnInfo Id="Tolleranza" Index="-1" />
+        <ColumnInfo Id="CodiceLotto" Width="88" />
+        <ColumnInfo Id="Articolo" Width="74" Index="1" />
+        <ColumnInfo Id="TipoMovimento" Width="66" />
+        <ColumnInfo Id="Articolo.Descrizione" PropertyName="Articolo.Descrizione" Index="2" Width="208" />
+        <ColumnInfo Id="Quantità" Width="101" Index="3" />
+        <ColumnInfo Id="DataInizio" Width="97" Index="5" />
+        <ColumnInfo Id="DataFine" Width="97" Index="6" />
+        <ColumnInfo Id="Confezione" Width="99" Index="7" />
+        <ColumnInfo Id="CodiceAlternativo" Width="219" Index="8" />
+      </Columns>
+    </ListView>
+    <ListView Id="OdlDosaggioArch_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="NrOrd" PropertyName="NrOrd" Index="1" Width="71" />
+        <ColumnInfo Id="NrArch" PropertyName="NrArch" Index="0" Width="72" SortIndex="0" SortOrder="Ascending" />
+        <ColumnInfo Id="Codice" PropertyName="Codice" Width="59" SortIndex="-1" SortOrder="None" Index="-1" View="" />
+      </Columns>
+    </ListView>
+    <ListView Id="Lavorazione_LookupListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="NOrd" Index="-1" />
+      </Columns>
+    </ListView>
+    <DetailView Id="OdlCaricoRinfusa_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Auto17a91471-358e-481c-ac25-56dfe7801a63">
+              <LayoutGroup Id="Auto9b0eabe9-2588-470f-9dd5-e7cd181fc991">
+                <LayoutItem Id="Codice" ViewItem="Codice" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="OdlCaricoRinfusa_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="Codice" Index="-1" Width="0" />
+        <ColumnInfo Id="NrArch" Width="60" Index="1" />
+        <ColumnInfo Id="NrOrd" Index="2" Width="68" />
+      </Columns>
+    </ListView>
+    <DetailView Id="OdlDosaggio_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Odl_col1">
+              <LayoutGroup Id="Item5">
+                <LayoutGroup Id="Auto9c1ba37e-8fbe-4645-acd1-f89621966a97">
+                  <LayoutItem Id="Codice" ViewItem="Codice" />
+                </LayoutGroup>
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="OdlDosaggio_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="Codice" Width="59" Index="-1" />
+        <ColumnInfo Id="NrArch" Index="1" Width="62" />
+        <ColumnInfo Id="NrOrd" Index="2" Width="66" />
+      </Columns>
+    </ListView>
+    <DetailView Id="OdlInsacco_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Odl">
+              <LayoutGroup Id="Odl_col1">
+                <LayoutItem Id="Codice" ViewItem="Codice" SizeConstraintsType="Default" Index="0" RelativeSize="15.920398009950249" Removed="True" />
+                <LayoutItem Id="NrArch" SizeConstraintsType="Default" Index="2" RelativeSize="4.2031523642732047" Removed="True" />
+                <LayoutItem Id="NrOrd" SizeConstraintsType="Default" Index="2" RelativeSize="4.2031523642732047" Removed="True" />
+                <LayoutGroup Id="Auto42e15c4b-c124-4556-be8c-ce6b4492ee01">
+                  <LayoutGroup Id="Auto8500f2a4-5016-4bc4-aec4-e63ad287bf82">
+                    <LayoutItem Id="Codice" ViewItem="Codice" />
+                  </LayoutGroup>
+                </LayoutGroup>
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="OdlInsacco_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="Codice" Width="73" Index="-1" />
+        <ColumnInfo Id="NrArch" Index="-1" />
+        <ColumnInfo Id="NrOrd" Index="0" Width="71" />
+      </Columns>
+    </ListView>
+    <DetailView Id="OdlPellet_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Odl">
+              <LayoutGroup Id="Odl_col1">
+                <LayoutItem Id="NrOrd" SizeConstraintsType="Default" RelativeSize="3.3850493653032441" Index="1" Removed="True" />
+                <LayoutItem Id="Codice" SizeConstraintsType="Default" RelativeSize="8.0604534005037785" Removed="True" />
+                <LayoutItem Id="NrArch" SizeConstraintsType="Default" RelativeSize="3.3850493653032441" Removed="True" />
+                <LayoutGroup Id="Autocb2b80a7-144f-4b4f-b3c2-24bedf2624f0">
+                  <LayoutGroup Id="Auto046ff331-5b22-4465-be27-785a21f83c93">
+                    <LayoutItem Id="Codice" ViewItem="Codice" />
+                  </LayoutGroup>
+                </LayoutGroup>
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="OdlPellet_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="Codice" Width="70" Index="-1" />
+        <ColumnInfo Id="NrArch" Index="-1" />
+        <ColumnInfo Id="NrOrd" Index="0" />
+      </Columns>
+    </ListView>
+    <DetailView Id="OdlScaricoRinfusa_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Auto824aee61-92af-47a8-8f7d-de2bc270f917">
+              <LayoutGroup Id="Auto9114427a-3aae-435e-a681-a495a63d90d8">
+                <LayoutGroup Id="Auto483d6dcb-c46a-4031-ab24-ca3b012e98b6">
+                  <LayoutGroup Id="Auto5b8e9922-c4aa-451e-8d90-a7549f597266">
+                    <LayoutItem Id="Codice" ViewItem="Codice" />
+                  </LayoutGroup>
+                </LayoutGroup>
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="OdlScaricoRinfusa_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="Codice" Width="84" Index="-1" />
+        <ColumnInfo Id="NrArch" Width="61" Index="0" />
+        <ColumnInfo Id="NrOrd" Width="110" Index="1" />
+      </Columns>
+    </ListView>
+    <ListView Id="OrdineProduzione_Odls_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="NrArch" Width="44" Index="-1" />
+        <ColumnInfo Id="NrOrd" Width="44" Index="-1" />
+        <ColumnInfo Id="Codice" Width="49" />
+      </Columns>
+    </ListView>
+  </Views>
+</Application>

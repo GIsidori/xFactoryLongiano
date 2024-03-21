@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <ActionDesign>
+    <Actions>
+      <Action Id="AbortDosaggio" ImageName="BO_Rules" />
+    </Actions>
+  </ActionDesign>
+  <BOModel>
+    <Class Name="XFactoryNET.Custom.Panzoo.Module.BusinessObjects.StatoDosaggio" ImageName="ModelEditor_Settings" />
+  </BOModel>
+  <SchemaModules>
+    <SchemaModule Name="SystemModule" Version="14.1.7.0" IsNewNode="True" />
+  </SchemaModules>
+  <Views>
+    <DashboardView Id="DosaggioDashboardView" Caption="Stato Dosaggio" IsNewNode="True">
+      <Items IsNewNode="True">
+        <DashboardViewItem Id="OdlDosaggioDashboardItem" ViewId="OdlDosaggio_ListView" Caption="Elenco Ordini di Lavoro" IsNewNode="True" />
+        <DashboardViewItem Id="StatoDosaggioDashboardItem" Caption="Stato lavorazione" ViewId="StatoDosaggio_DetailView" ActionsToolbarVisibility="Hide" IsNewNode="True" />
+      </Items>
+      <Layout IsNewNode="True">
+        <LayoutGroup Id="Main" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True">
+          <LayoutItem Id="OdlDosaggioDashboardItem" ViewItem="OdlDosaggioDashboardItem" Index="0" SizeConstraintsType="Default" RelativeSize="43.300653594771241" IsNewNode="True" />
+          <LayoutItem Id="StatoDosaggioDashboardItem" ViewItem="StatoDosaggioDashboardItem" Index="1" SizeConstraintsType="Default" RelativeSize="56.699346405228759" IsNewNode="True" />
+        </LayoutGroup>
+      </Layout>
+    </DashboardView>
+    <DetailView Id="ParametriDosaggio_DetailView">
+      <Items>
+        <PropertyEditor Id="Fittizia" PropertyName="Odl.Dummy" Caption="Fittizia" IsNewNode="True" />
+        <PropertyEditor Id="Mixer" PropertyName="Odl.ApparatoLavorazione" Caption="Miscelatore" DataSourceCriteria="Lavorazione.Codice = 'Dosaggio'" IsNewNode="True" />
+      </Items>
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="15.24822695035461">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="ParametriDosaggio" RelativeSize="100">
+              <LayoutItem Id="Mixer" ViewItem="Mixer" SizeConstraintsType="Default" Index="0" RelativeSize="37.2093023255814" IsNewNode="True" />
+              <LayoutItem Id="DS1" SizeConstraintsType="Default" Index="1" RelativeSize="27.906976744186046" />
+              <LayoutItem Id="GranMenù" SizeConstraintsType="Default" Index="2" RelativeSize="34.883720930232556" />
+              <LayoutItem Id="Odl" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+        <LayoutItem Id="Fittizia" ViewItem="Fittizia" SizeConstraintsType="Default" Index="1" RelativeSize="84.7517730496454" IsNewNode="True" />
+      </Layout>
+    </DetailView>
+    <DetailView Id="StatoDosaggio_DetailView" AllowEdit="False" AllowDelete="False" AllowNew="False">
+      <Items>
+        <PropertyEditor Id="StatoBilance" AllowEdit="False" />
+      </Items>
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="35.93429158110883">
+            <LayoutGroup Id="StatoDosaggio" RelativeSize="100" Direction="Vertical">
+              <LayoutGroup Id="StatoDosaggio_col1" RelativeSize="77.714285714285708">
+                <LayoutGroup Id="Autoaf69ff3c-d7db-4ffc-bcf0-096647f33b97" ShowCaption="False" Caption="Autoaf69ff3c-d7db-4ffc-bcf0-096647f33b97(5)" Direction="Horizontal" Index="0" RelativeSize="100" IsNewNode="True">
+                  <LayoutGroup Id="Auto04f84154-7ddf-45f1-84dc-47a188795141" ShowCaption="False" Caption="Auto04f84154-7ddf-45f1-84dc-47a188795141(6)" Index="0" RelativeSize="53.945249597423512" IsNewNode="True">
+                    <LayoutItem Id="NrOrd" ViewItem="NrOrd" SizeConstraintsType="Default" Index="0" RelativeSize="23.529411764705884" IsNewNode="True" />
+                    <LayoutItem Id="Articolo" ViewItem="Articolo" SizeConstraintsType="Default" Index="1" RelativeSize="17.647058823529413" IsNewNode="True" />
+                    <LayoutItem Id="Descrizione" ViewItem="Descrizione" SizeConstraintsType="Default" Index="2" RelativeSize="17.647058823529413" IsNewNode="True" />
+                    <LayoutItem Id="QuantitàTotale" ViewItem="QuantitàTotale" SizeConstraintsType="Default" Index="3" RelativeSize="17.647058823529413" IsNewNode="True" />
+                    <LayoutItem Id="QuantitàperLotto" ViewItem="QuantitàperLotto" SizeConstraintsType="Default" Index="4" RelativeSize="23.529411764705884" IsNewNode="True" />
+                  </LayoutGroup>
+                  <LayoutGroup Id="Auto755aac0f-9172-43e7-9f10-6f9651ab23ce" ShowCaption="False" Caption="Auto755aac0f-9172-43e7-9f10-6f9651ab23ce(11)" Index="1" RelativeSize="46.054750402576488" IsNewNode="True">
+                    <LayoutItem Id="NrMisc" ViewItem="NrMisc" SizeConstraintsType="Default" Index="0" RelativeSize="23.529411764705884" IsNewNode="True" />
+                    <LayoutItem Id="CurrMisc" ViewItem="CurrMisc" SizeConstraintsType="Default" Index="1" RelativeSize="17.647058823529413" IsNewNode="True" />
+                    <LayoutItem Id="Formula" ViewItem="Formula" SizeConstraintsType="Default" Index="2" RelativeSize="17.647058823529413" IsNewNode="True" />
+                    <LayoutItem Id="SilosDestinazione" ViewItem="SilosDestinazione" SizeConstraintsType="Default" Index="3" RelativeSize="17.647058823529413" IsNewNode="True" />
+                    <LayoutItem Id="Note" ViewItem="Note" SizeConstraintsType="Default" Index="4" RelativeSize="23.529411764705884" IsNewNode="True" />
+                  </LayoutGroup>
+                </LayoutGroup>
+                <LayoutItem Id="CurrMisc" ViewItem="CurrMisc" SizeConstraintsType="Default" Index="1" RelativeSize="10.344827586206897" Removed="True" />
+                <LayoutItem Id="Note" SizeConstraintsType="Default" RelativeSize="19.277108433734941" Index="1" Removed="True" />
+                <LayoutItem Id="NrMisc" ViewItem="NrMisc" SizeConstraintsType="Default" Index="1" RelativeSize="9.375" Removed="True" />
+                <LayoutItem Id="ErrorString" SizeConstraintsType="Default" Index="2" RelativeSize="44" Removed="True" />
+                <LayoutItem Id="QuantitàTotale" SizeConstraintsType="Default" RelativeSize="15.384615384615385" Index="7" Removed="True" />
+                <LayoutItem Id="Running" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="StatoDosaggio_col2" RelativeSize="31.352459016393443" Direction="Horizontal" Caption="StatoDosaggio_col2" Removed="True">
+                <LayoutItem Id="Articolo" Removed="True" />
+                <LayoutItem Id="Descrizione" Removed="True" />
+                <LayoutItem Id="Formula" Removed="True" />
+                <LayoutItem Id="NrOrd" Removed="True" />
+                <LayoutItem Id="QuantitàperLotto" Removed="True" />
+                <LayoutItem Id="SilosDestinazione" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="StatoBilance_Group" Direction="Vertical" RelativeSize="57.494866529774129" Caption="Stato Bilance">
+            <LayoutItem Id="StatoBilance" SizeConstraintsType="Default" RelativeSize="91.071428571428569" ShowCaption="False" />
+          </LayoutGroup>
+          <LayoutItem Id="ErrorString" ViewItem="ErrorString" SizeConstraintsType="Default" Index="2" RelativeSize="6.5708418891170428" IsNewNode="True" />
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="StatoDosaggio_StatoBilance_ListView">
+      <Columns>
+        <ColumnInfo Id="CurrMisc" Index="-1" />
+        <ColumnInfo Id="Stato" Index="-1" />
+        <ColumnInfo Id="CodiceBilancia" Width="78" Index="0" />
+        <ColumnInfo Id="NrIngrediente" Width="84" Index="1" />
+        <ColumnInfo Id="Codice" Width="53" Index="2" />
+        <ColumnInfo Id="Descrizione" Width="389" Index="3" />
+        <ColumnInfo Id="Silos" Width="167" Index="4" />
+        <ColumnInfo Id="QtàTeorica" Width="118" Index="5" />
+        <ColumnInfo Id="QtàEstratta" Width="118" Index="6" />
+        <ColumnInfo Id="Peso" Width="118" Index="7" />
+        <ColumnInfo Id="ErrorString" Width="187" Index="8" />
+      </Columns>
+    </ListView>
+  </Views>
+</Application>

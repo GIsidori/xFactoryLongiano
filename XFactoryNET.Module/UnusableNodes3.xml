@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <ListView Id="GiacenzaSacchi_Lotti_ListView" LayoutSettings="&lt;XtraSerializer version=&quot;1.0&quot; application=&quot;View&quot;&gt;&#xD;&#xA;  &lt;property name=&quot;FormatConditions&quot; iskey=&quot;true&quot; value=&quot;0&quot; /&gt;&#xD;&#xA;  &lt;property name=&quot;OptionsView&quot; isnull=&quot;true&quot; iskey=&quot;true&quot;&gt;&#xD;&#xA;    &lt;property name=&quot;ShowGroupPanel&quot;&gt;false&lt;/property&gt;&#xD;&#xA;    &lt;property name=&quot;ShowDetailButtons&quot;&gt;false&lt;/property&gt;&#xD;&#xA;    &lt;property name=&quot;ShowButtonMode&quot;&gt;ShowOnlyInEditor&lt;/property&gt;&#xD;&#xA;  &lt;/property&gt;&#xD;&#xA;&lt;/XtraSerializer&gt;">
+      <Columns Id="Columns">
+        <ColumnInfo Id="ApparatoLavorazione" Width="36" Index="-1" />
+        <ColumnInfo Id="CodiceAlternativo" Width="36" Index="-1" />
+        <ColumnInfo Id="Modalità" Width="36" Index="-1" />
+        <ColumnInfo Id="Note" Width="52" Index="-1" />
+        <ColumnInfo Id="NrComp" Width="25" Index="-1" />
+        <ColumnInfo Id="NrMisc" Width="57" Index="-1" />
+        <ColumnInfo Id="Odl" Width="68" Index="-1" />
+        <ColumnInfo Id="QtàTeo" Width="25" Index="-1" />
+        <ColumnInfo Id="Silos" Width="36" Index="-1" />
+        <ColumnInfo Id="Tolleranza" Width="25" Index="-1" />
+        <ColumnInfo Id="DataInizio" Width="71" Index="0" />
+        <ColumnInfo Id="DataFine" Width="62" Index="1" />
+        <ColumnInfo Id="TipoMovimento" Width="106" Index="2" />
+        <ColumnInfo Id="CodiceLotto" Width="93" Index="3" />
+        <ColumnInfo Id="Quantità" Width="62" Index="4" />
+        <ColumnInfo Id="Articolo" Width="78" Index="5" />
+        <ColumnInfo Id="Articolo.Descrizione" PropertyName="Articolo.Descrizione" Index="6" Width="173" />
+        <ColumnInfo Id="Confezione" Width="52" Index="7" />
+        <ColumnInfo Id="Magazzino" Width="74" Index="8" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Lotto_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Autob957afd2-5182-429a-8349-0dccecf10716">
+              <LayoutGroup Id="Auto2ffcb2d2-0bbc-4299-aa39-b4564265c515">
+                <LayoutGroup Id="Auto475058cb-6c36-4a91-ac87-d6bd31c2b155">
+                  <LayoutItem Id="Odl" ViewItem="Odl" />
+                </LayoutGroup>
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Magazzino_Giacenze_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="NumeroSacchi" Width="138" />
+      </Columns>
+    </ListView>
+  </Views>
+</Application>

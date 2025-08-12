@@ -218,7 +218,6 @@
       <SubType>Designer</SubType>
       <DependentUpon>XFactoryNETModule.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BusinessObjects\Apparato.cd" />

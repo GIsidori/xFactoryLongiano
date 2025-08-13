@@ -8,6 +8,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Validation;
 using DevExpress.ExpressApp.ConditionalAppearance;
+using DevExpress.ExpressApp.Editors;
 
 namespace XFactoryNET.Module.BusinessObjects
 {
@@ -20,7 +21,7 @@ namespace XFactoryNET.Module.BusinessObjects
         public Componente(Session session) : base(session) { }
         public Componente() : base(Session.DefaultSession) { }
         public override void AfterConstruction() { base.AfterConstruction(); }
-       
+
         public Componente Clona()
         {
             
@@ -39,36 +40,67 @@ namespace XFactoryNET.Module.BusinessObjects
             return c;
         }
 
+        protected override void OnChanged(string propertyName, object oldValue, object newValue)
+        {
+            base.OnChanged(propertyName, oldValue, newValue);
+            if (propertyName == "Percentuale")
+                OnChanged("Quantità");
+        }
 
-        float fPercentuale;
+        decimal fPercentuale;
         [ModelDefault("DisplayFormat","n4")]
         [ModelDefault("EditMask","n4")]
-        public float Percentuale
+        [ImmediatePostData]
+        [RuleValueComparison(ValueComparisonType.GreaterThan,0,CustomMessageTemplate="Percentuale non valida",TargetContextIDs="Verifica Ingredienti")]
+        public decimal Percentuale
         {
             get { return fPercentuale; }
-            set { SetPropertyValue<float>("Percentuale", ref fPercentuale, value); }
+            set { SetPropertyValue<decimal>("Percentuale", ref fPercentuale, value); }
+        }
+
+        private decimal quantità;
+        [ModelDefault("DisplayFormat", "n3")][ModelDefault("EditMask","n3")]
+        //[Appearance(null, AppearanceItemType = "ViewItem", Criteria = "OdlIngredientiTeorici IS NULL AND OdlProdottiTeorici IS NULL", Visibility = ViewItemVisibility.Hide)]
+        public decimal Quantità
+        {
+            get 
+            { 
+                return quantità;
+            }
+            set
+            {
+                SetPropertyValue<decimal>("Quantità", ref quantità, value);
+            }
         }
 
 
-        float fTolleranza;
-        public float Tolleranza
+        decimal fTolleranza;
+        [ModelDefault("DisplayFormat", "n3")][ModelDefault("EditMask","n3")]
+        public decimal Tolleranza
         {
             get { return fTolleranza; }
-            set { SetPropertyValue<float>("Tolleranza", ref fTolleranza, value); }
+            set { SetPropertyValue<decimal>("Tolleranza", ref fTolleranza, value); }
         }
 
-        float fTolleranzaPerc;
-        public float TolleranzaPerc
+        decimal fTolleranzaPerc;
+        [ModelDefault("DisplayFormat", "p")]
+        public decimal TolleranzaPerc
         {
             get { return fTolleranzaPerc; }
-            set { SetPropertyValue<float>("TolleranzaPerc", ref fTolleranzaPerc, value); }
+            set { SetPropertyValue<decimal>("TolleranzaPerc", ref fTolleranzaPerc, value); }
         }
 
         Articolo fArticolo;
         public Articolo Articolo
         {
             get { return fArticolo; }
-            set { SetPropertyValue<Articolo>("Articolo", ref fArticolo, value); }
+            set
+            {
+                if (fArticolo != value)
+                {
+                    SetPropertyValue<Articolo>("Articolo", ref fArticolo, value);
+                }
+            }
         }
 
 
@@ -79,8 +111,16 @@ namespace XFactoryNET.Module.BusinessObjects
             set { SetPropertyValue<Modalità>("Modalità", ref fModalità, value); }
         }
 
+        Silos silos;
+        [Appearance(null,AppearanceItemType="ViewItem",Criteria="OdlIngredientiTeorici IS NULL AND OdlProdottiTeorici IS NULL",Visibility=ViewItemVisibility.Hide)]
+        public Silos Silos
+        {
+            get { return silos; }
+            set { SetPropertyValue<Silos>("Silos", ref silos, value); }
+        }
+
         StatoComponente fStato;
-        [RuleValueComparison("RuleComponentePronto","Verifica Ingredienti",ValueComparisonType.Equals,StatoComponente.Pronto,CustomMessageTemplate="Materiale inesistente o quantità insufficiente")]
+        [RuleValueComparison("RuleComponentePronto","Verifica Ingredienti",ValueComparisonType.Equals,StatoComponente.Pronto,CustomMessageTemplate="Materiale {Articolo}: {DescrizioneArticolo} inesistente o quantità insufficiente")]
         public StatoComponente Stato
         {
             get { return fStato; }

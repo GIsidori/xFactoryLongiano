@@ -1,7 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
+  <BOModel>
+    <Class Name="XFactoryNET.Module.BusinessObjects.Odl" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" />
+    <Class Name="XFactoryNET.Module.BusinessObjects.OdlCaricoRinfusa" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" />
+    <Class Name="XFactoryNET.Module.BusinessObjects.OdlDosaggio" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" />
+    <Class Name="XFactoryNET.Module.BusinessObjects.OdlEntrataSacchi" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" />
+    <Class Name="XFactoryNET.Module.BusinessObjects.OdlInsacco" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" />
+    <Class Name="XFactoryNET.Module.BusinessObjects.OdlInsilaggio" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" />
+    <Class Name="XFactoryNET.Module.BusinessObjects.OdlPellet" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" />
+    <Class Name="XFactoryNET.Module.BusinessObjects.OdlScaricoRinfusa" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" />
+    <Class Name="XFactoryNET.Module.BusinessObjects.OdlUscitaSacchi" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" />
+  </BOModel>
   <SchemaModules>
     <SchemaModule Name="SystemAspNetModule" Version="14.1.7.0" IsNewNode="True" />
     <SchemaModule Name="SystemModule" Version="14.1.7.0" IsNewNode="True" />
   </SchemaModules>
+  <Views>
+    <ListView Id="Articolo_Consumi_PivotGridView" EditorTypeName="DevExpress.ExpressApp.PivotGrid.Web.ASPxPivotGridListEditor" />
+    <ListView Id="Odl_OdlProdotti_ListView" EditorTypeName="DevExpress.ExpressApp.TreeListEditors.Web.ASPxTreeListEditor" />
+    <ListView Id="Odl_OdlUtilizzati_ListView" EditorTypeName="DevExpress.ExpressApp.TreeListEditors.Web.ASPxTreeListEditor" />
+  </Views>
 </Application>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <DetailView Id="Silos_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="Autoc57a8516-605b-42f6-9c1c-c97457eee7d8">
+            <LayoutGroup Id="Auto68cf30b6-e3a4-4188-8f4f-56918c09cb56">
+              <LayoutItem Id="QtàDisponibile" ViewItem="QtàDisponibile" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

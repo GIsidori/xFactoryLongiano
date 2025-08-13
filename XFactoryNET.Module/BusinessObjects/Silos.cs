@@ -33,6 +33,8 @@ namespace XFactoryNET.Module.BusinessObjects
         //}
 
         private Lotto lotto;
+        [Browsable(true)]
+        [ModelDefault("AllowEdit","False")]
         public Lotto Lotto
         {
             get { return lotto; }
@@ -45,11 +47,12 @@ namespace XFactoryNET.Module.BusinessObjects
             get { return fTipoSilos; }
             set { SetPropertyValue<int>("TipoSilos", ref fTipoSilos, value); }
         }
-        float fCapacit‡;
-        public float Capacit‡
+        decimal fCapacit‡;
+        [ModelDefault("DisplayFormat", "n0")][ModelDefault("EditMask","n0")]
+        public decimal Capacit‡
         {
             get { return fCapacit‡; }
-            set { SetPropertyValue<float>("Capacit‡", ref fCapacit‡, value); }
+            set { SetPropertyValue<decimal>("Capacit‡", ref fCapacit‡, value); }
         }
         int fVelocit‡Grosso;
         public int Velocit‡Grosso
@@ -69,29 +72,34 @@ namespace XFactoryNET.Module.BusinessObjects
             get { return fVelocit‡Fine; }
             set { SetPropertyValue<int>("Velocit‡Fine", ref fVelocit‡Fine, value); }
         }
-        float fSogliaGrosso;
-        public float SogliaGrosso
+        decimal fSogliaGrosso;
+        [ModelDefault("DisplayFormat", "n0")][ModelDefault("EditMask","n0")]
+        public decimal SogliaGrosso
         {
             get { return fSogliaGrosso; }
-            set { SetPropertyValue<float>("SogliaGrosso", ref fSogliaGrosso, value); }
+            set { SetPropertyValue<decimal>("SogliaGrosso", ref fSogliaGrosso, value); }
         }
-        float fSogliaFine;
-        public float SogliaFine
+        decimal fSogliaFine;
+        [ModelDefault("DisplayFormat", "n0")][ModelDefault("EditMask","n0")]
+        public decimal SogliaFine
         {
             get { return fSogliaFine; }
-            set { SetPropertyValue<float>("SogliaFine", ref fSogliaFine, value); }
+            set { SetPropertyValue<decimal>("SogliaFine", ref fSogliaFine, value); }
         }
-        float fVolo;
-        public float Volo
+        decimal fVolo;
+        [ModelDefault("DisplayFormat", "n0")][ModelDefault("EditMask","n0")]
+        public decimal Volo
         {
             get { return fVolo; }
-            set { SetPropertyValue<float>("Volo", ref fVolo, value); }
+            set { SetPropertyValue<decimal>("Volo", ref fVolo, value); }
         }
-        float fTolleranza;
-        public float Tolleranza
+        
+        decimal fTolleranza;
+        [ModelDefault("DisplayFormat", "n0")][ModelDefault("EditMask","n0")]
+        public decimal Tolleranza
         {
             get { return fTolleranza; }
-            set { SetPropertyValue<float>("Tolleranza", ref fTolleranza, value); }
+            set { SetPropertyValue<decimal>("Tolleranza", ref fTolleranza, value); }
         }
         DateTime fDataManut;
         public DateTime DataManut
@@ -107,7 +115,7 @@ namespace XFactoryNET.Module.BusinessObjects
             set { SetPropertyValue<string>("Settings", ref fSettings, value); }
         }
 
-        [Association("LottiInSilos")]
+        [Association("LottiInSilos"),Browsable(false)]
         public XPCollection<Lotto> Lotti
         {
             get
@@ -116,17 +124,42 @@ namespace XFactoryNET.Module.BusinessObjects
             }
         }
 
-        public XPCollection<Lotto> Giacenza
+        private IList<Lotto> giacenza;
+        [Delayed]
+        public IList<Lotto> Giacenza
         {
             get
-            { return new XPCollection<Lotto>(Lotti, CriteriaOperator.Parse("DataFine IS NULL AND TipoMovimento>=0")); }
+            {
+                CriteriaOperator crit = CriteriaOperator.Parse("Silos = ? AND DataFine IS NULL AND TipoMovimento >= 0",this.Codice);
+                giacenza = new XPCollection<Lotto>(Session, crit);
+
+                //var query = from l in Lotti where (l.DataFine == null && l.TipoMovimento >= 0) select l;
+                //giacenza = query.ToList<Lotto>();
+                return giacenza;
+            }
         }
 
+        private XPCollection<Odl> odl;
+        [Delayed]
+        public IList<Odl> Odl
+        {
+            get 
+            {
+                CriteriaOperator crit = CriteriaOperator.Parse("[<Lotto>][^.Oid = Odl AND Silos = ? AND TipoMovimento >= 0].Count()>0", this.Codice);
+                odl =new XPCollection<Odl>(Session, crit);
+                return odl;
+            }
+        }
+
+        private string elencoAllegati;
+        [Delayed]
         public string ElencoAllegati
         {
             get
             {
-                return this.Lotto == null ? string.Empty : Allegato.GetElencoAllegati(this.Lotto.AllegatiLotto.Select<AllegatoLotto,Allegato>(a => a.Allegato));
+                if (IsLoading || elencoAllegati == null)
+                    elencoAllegati = this.Lotto == null ? string.Empty : Allegato.GetElencoAllegati(this.Lotto.AllegatiLotto.Select<AllegatoLotto,Allegato>(a => a.Allegato));
+                return elencoAllegati;
             }
         }
 
@@ -136,7 +169,7 @@ namespace XFactoryNET.Module.BusinessObjects
             RegistraMovimento(lotto, lotto.TipoMovimento,lotto.Quantit‡);
         }
 
-        public void RegistraMovimento(Lotto lotto, float qt‡)
+        public void RegistraMovimento(Lotto lotto, decimal qt‡)
         {
             RegistraMovimento(lotto, lotto.TipoMovimento,qt‡);
         }
@@ -147,38 +180,34 @@ namespace XFactoryNET.Module.BusinessObjects
         }
 
 
-        public void RegistraMovimento(Lotto lotto,TipoMovimento tipoMovimento,float qt‡)
+        public void RegistraMovimento(Lotto lotto,TipoMovimento tipoMovimento,decimal qt‡)
         {
             if (lotto != null)
             {
-                this.Reload();
                 lotto.Silos = this;
                 if (lotto.DataInizio == System.DateTime.MinValue)
                     lotto.DataInizio = System.DateTime.Now;
                 lotto.TipoMovimento = tipoMovimento;
                 if (tipoMovimento >=0)
                 {
-                    this.Quantit‡ += qt‡;
                     this.Lotto = lotto;
                 }
                 else
                 {
-                    Lotto.UtilizzaLotti(this.Lotti,lotto);
-                    this.Quantit‡ -= qt‡;
-                    if (this.Quantit‡ <= 0)
+                    this.Lotti.Reload();
+                    Lotto.UtilizzaLotti(this.Giacenza, lotto);
+                    if (this.Quantit‡ < 1)     // svuota se inferiore a 1 kg.
                         this.Svuota();
                 }
             }
-
         }
 
         public void Svuota()
         {
-            foreach (var lot in Lotti)
+            foreach (var lot in Giacenza)
             {
                 lot.DataFine = System.DateTime.Now;
             }
-            this.Quantit‡ = 0;
             this.Lotto = null;
         }
 
@@ -191,17 +220,60 @@ namespace XFactoryNET.Module.BusinessObjects
         }
 
 
-        private float quantit‡;
-        [ModelDefault("AllowEdit", "False")]
-        public float Quantit‡
+        //private decimal quantit‡;
+        //[ModelDefault("AllowEdit", "False")]
+        //[ModelDefault("DisplayFormat", "n0")]
+        //[ModelDefault("EditMask", "n0")]
+        //public decimal Quantit‡
+        //{
+        //    get
+        //    {
+        //        return quantit‡;
+        //    }
+        //    set
+        //    {
+        //        SetPropertyValue<decimal>("Quantit‡", ref quantit‡, value);
+        //    }
+        //}
+
+
+        /*
+         * UPDATE Silos SET Quantit‡ = 
+(SELECT SUM(Lotto.Quantit‡-Lotto.Quantit‡Prelevata) 
+FROM            Lotto
+WHERE        (Lotto.TipoMovimento >= 0) AND (Lotto.DataFine IS NULL) AND (Lotto.GCRecord IS NULL) AND Lotto.Silos = Silos.Codice)
+         * */
+
+        decimal? quantit‡ = null;
+        [PersistentAlias("Lotti[TipoMovimento>=0 AND DataFine IS NULL].SUM(Quantit‡-Quantit‡Prelevata)")]
+        [ModelDefault("DisplayFormat", "n0")]
+        [ModelDefault("AllowEdit","False")]
+        public decimal Quantit‡
         {
             get
             {
-                return quantit‡;
+                quantit‡ = this.Giacenza.Sum(l => l.Quantit‡Residua);
+                return quantit‡.Value;
+                //var obj = EvaluateAlias("Quantit‡");
+                //if (obj != null)
+                //    return (decimal)obj;
+                //return decimal.Zero;
             }
-            set { SetPropertyValue<float>("Quantit‡", ref quantit‡, value); }
         }
 
+
+        //private decimal? quantit‡Disponibile = null;
+        //[Browsable(true)]
+        //[ModelDefault("DisplayFormat", "n0")]
+        //public decimal Quantit‡Disponibile
+        //{
+        //    get
+        //    {
+        //        if (quantit‡Disponibile.HasValue == false)
+        //            quantit‡Disponibile = this.Giacenza.Sum(l => l.Quantit‡Disponibile);
+        //        return quantit‡Disponibile.Value;
+        //    }
+        //}
 
         [Association]
         public XPCollection<Gruppo> Gruppi

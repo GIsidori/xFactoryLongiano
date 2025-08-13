@@ -7,6 +7,7 @@ using System.ComponentModel;
 using DevExpress.Persistent.Base;
 using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Model;
+using DevExpress.Data.Filtering;
 
 namespace XFactoryNET.Module.BusinessObjects
 {
@@ -33,38 +34,57 @@ namespace XFactoryNET.Module.BusinessObjects
 
         private short numeroOrdine;
         [Indexed]
-        [ModelDefault("Format","D")]
+        [ModelDefault("DisplayFormat","{0:D}")]
+        [ModelDefault("AllowEdit", "False")]
         public short NumeroOrdine
         {
             get { return numeroOrdine; }
             set { SetPropertyValue<short>("NumeroOrdine", ref numeroOrdine, value); }
         }
 
+
         internal void SetNextNumeroOrdine(bool isHidden)
         {
+            this.NumeroOrdine = GetNextNumeroOrdine(this.Session,isHidden);
+        }
+
+        internal static short GetNextNumeroOrdine(Session session, bool isHidden)
+        {
             short nr = 0;
-            var odp = new XPCollection<OrdineProduzione>(this.Session);
+            var odp = new XPCollection<OrdineProduzione>(session);
             if (isHidden)
             {
+                odp.Criteria = new BinaryOperator("NumeroOrdine",0,BinaryOperatorType.Less);
                 if (odp.Count > 0)
                 {
-                    nr = odp.Min(o => o.NumeroOrdine);
+                    //nr = odp.Min(o => o.NumeroOrdine);
+                    OrdineProduzione o = odp.OrderBy<OrdineProduzione, System.DateTime>(a => a.Data).LastOrDefault();
+
+                    nr = o.NumeroOrdine;
                     if (nr > short.MinValue)
                         nr--;
+                    else
+                        nr = -1;
                 }
                 else nr = -1;
             }
             else
             {
+                odp.Criteria = new BinaryOperator("NumeroOrdine", 0, BinaryOperatorType.Greater);
                 if (odp.Count > 0)
                 {
-                    nr = odp.Max(o => o.NumeroOrdine);
+                   // nr = odp.Max(o => o.NumeroOrdine);
+                    OrdineProduzione o = odp.OrderBy<OrdineProduzione, System.DateTime>(a => a.Data).LastOrDefault();
+
+                    nr = o.NumeroOrdine;
                     if (nr < short.MaxValue)
                         nr++;
+                    else
+                        nr = 1;
                 }
                 else nr = 1;
             }
-            this.NumeroOrdine = nr;
+            return nr;
         }
 
         private StatoOdP stato;
@@ -74,7 +94,16 @@ namespace XFactoryNET.Module.BusinessObjects
             set { SetPropertyValue<StatoOdP>("Stato", ref stato, value); }
         }
 
+        private bool archiviato;
+        public bool Archiviato
+        {
+            get { return archiviato; }
+            set { SetPropertyValue<bool>("Archiviato", ref archiviato, value); }
+        }
+
+
         private DateTime data;
+        [ModelDefault("DisplayFormat", "g")]
         public DateTime Data
         {
             get { return data; }
@@ -115,12 +144,24 @@ namespace XFactoryNET.Module.BusinessObjects
         }
 
 
-        private float quantità;
-        public float Quantità
+        private decimal quantità;
+        [ModelDefault("DisplayFormat","n0")]
+        [ModelDefault("EditMask","n0")]
+        public decimal Quantità
         {
             get { return quantità; }
-            set { SetPropertyValue<float>("Quantità", ref quantità, value); }
+            set { SetPropertyValue<decimal>("Quantità", ref quantità, value); }
         }
+
+        private decimal quantitàEffettiva;
+        [ModelDefault("DisplayFormat", "n0")]
+        [ModelDefault("EditMask", "n0")]
+        public decimal QuantitàEffettiva
+        {
+            get { return quantitàEffettiva; }
+            set { SetPropertyValue<decimal>("QuantitàEffettiva", ref quantitàEffettiva, value); }
+        }
+
 
         private string note;
         public string Note
@@ -143,6 +184,14 @@ namespace XFactoryNET.Module.BusinessObjects
             set { SetPropertyValue<FormaFisica>("FormaFisica", ref formaFisica, value); }
         }
 
+        private string codiceEsterno;
+        public string CodiceEsterno
+        {
+            get { return codiceEsterno; }
+            set { SetPropertyValue<string>("CodiceEsterno", ref codiceEsterno, value); }
+        }
+
+
         [Association,Aggregated]
         public XPCollection<AllegatoOrdineProduzione> AllegatiOrdineProduzione
         {
@@ -156,7 +205,7 @@ namespace XFactoryNET.Module.BusinessObjects
         }
 
 
-    }
+}
 
 
     public class AllegatoOrdineProduzione : BaseXPObject

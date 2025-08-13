@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <DetailView Id="Trasporto_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Prelievi" Caption="Prelievi" />
+            <LayoutGroup Id="Destinazioni" Caption="Destinazioni" />
+            <LayoutGroup Id="Item1" Caption="Impostazioni">
+              <LayoutGroup Id="Auto740d7b88-bb8b-40d0-b3da-a1415ed9357a" Caption="" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

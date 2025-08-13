@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <ListView Id="Bilancia_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="PesoMax" Index="-1" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Bilancia_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Item1">
+              <LayoutGroup Id="Bilancia">
+                <LayoutGroup Id="Bilancia_col1">
+                  <LayoutItem Id="PesoMax" ViewItem="PesoMax" />
+                </LayoutGroup>
+              </LayoutGroup>
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Lotto_Prodotti_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="QuantitàDisponibile" Width="85" Index="-1" />
+        <ColumnInfo Id="QuantitàImpegnata" Width="94" Index="-1" />
+      </Columns>
+    </ListView>
+    <ListView Id="Lotto_Utilizzi_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="QuantitàDisponibile" Width="50" />
+        <ColumnInfo Id="QuantitàImpegnata" Width="50" />
+      </Columns>
+    </ListView>
+    <ListView Id="Odl_Lotti_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="QuantitàDisponibile" Width="118" Index="-1" />
+        <ColumnInfo Id="QuantitàImpegnata" Width="51" Index="-1" />
+      </Columns>
+    </ListView>
+    <DetailView Id="OrdineProduzione_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="OrdineProduzione">
+              <LayoutGroup Id="OrdineProduzione_col2">
+                <LayoutItem Id="Formula" SizeConstraintsType="Default" RelativeSize="15" Index="1" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Silos_Giacenza_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="QuantitàDisponibile" Width="106" Index="-1">
+          <Summary Id="Summary">
+            <ColumnSummaryItem Id="Summary0" Index="0" SummaryType="Sum" />
+          </Summary>
+        </ColumnInfo>
+        <ColumnInfo Id="QuantitàImpegnata" Width="58" Index="-1" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Trasporto_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <TabbedGroup Id="Tabs" Index="1" RelativeSize="95.733333333333334">
+            <LayoutGroup Id="Prelievi" RelativeSize="100" Caption="Prelievi" Index="0">
+              <LayoutItem Id="Prelievi" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Destinazioni" RelativeSize="100" Caption="Destinazioni" Index="1">
+              <LayoutItem Id="Destinazioni" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Item1" ShowCaption="True" CaptionLocation="Top" Index="2" RelativeSize="100" Caption="Impostazionni">
+              <LayoutItem Id="Settings" ViewItem="Settings" SizeConstraintsType="Default" Index="0" RelativeSize="4.71976401179941" />
+              <LayoutGroup Id="Auto740d7b88-bb8b-40d0-b3da-a1415ed9357a" ShowCaption="False" Direction="Horizontal" Index="1" RelativeSize="95.280235988200587" Caption="Auto740d7b88-bb8b-40d0-b3da-a1415ed9357a">
+                <LayoutItem Id="CaricoAbilitato" ViewItem="CaricoAbilitato" SizeConstraintsType="Default" Index="0" RelativeSize="50" />
+                <LayoutItem Id="ScaricoAbilitato" ViewItem="ScaricoAbilitato" SizeConstraintsType="Default" Index="1" RelativeSize="50" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

@@ -12,9 +12,9 @@ namespace XFactoryNET.Custom.MM1.Module.BusinessObjects
 {
     public enum TipoSetaccio
     {
-        Setaccio250,
-        Setaccio250D,
-        NoSetaccio
+        Setaccio250 = 1,
+        Setaccio250D = 2,
+        NoSetaccio = 4
     }
 
     public enum TipoRete
@@ -30,14 +30,14 @@ namespace XFactoryNET.Custom.MM1.Module.BusinessObjects
         MolinoRulli
     }
 
-    public class ParametriDosaggio:BaseXPObject
+    public class ParametriDosaggioMM1:BaseXPObject
     {
-        public ParametriDosaggio():base()
+        public ParametriDosaggioMM1():base()
         {
 
         }
 
-        public ParametriDosaggio(Session session)
+        public ParametriDosaggioMM1(Session session)
             : base(session)
         { }
 

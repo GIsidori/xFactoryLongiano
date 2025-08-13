@@ -40,9 +40,12 @@ namespace XFactoryNET.Win
             this.validationModule1 = new DevExpress.ExpressApp.Validation.ValidationModule();
             this.validationWindowsFormsModule1 = new DevExpress.ExpressApp.Validation.Win.ValidationWindowsFormsModule();
             this.viewVariantsModule1 = new DevExpress.ExpressApp.ViewVariantsModule.ViewVariantsModule();
-            this.databaseUserSettingsModule1 = new DatabaseUserSettings.DatabaseUserSettingsModule();
             this.reportsModuleV21 = new DevExpress.ExpressApp.ReportsV2.ReportsModuleV2();
             this.reportsWindowsFormsModuleV21 = new DevExpress.ExpressApp.ReportsV2.Win.ReportsWindowsFormsModuleV2();
+            this.treeListEditorsModuleBase1 = new DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase();
+            this.treeListEditorsWindowsFormsModule1 = new DevExpress.ExpressApp.TreeListEditors.Win.TreeListEditorsWindowsFormsModule();
+            this.pivotGridModule1 = new DevExpress.ExpressApp.PivotGrid.PivotGridModule();
+            this.pivotGridWindowsFormsModule1 = new DevExpress.ExpressApp.PivotGrid.Win.PivotGridWindowsFormsModule();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // sqlConnection1
@@ -81,11 +84,14 @@ namespace XFactoryNET.Win
             this.Modules.Add(this.validationModule1);
             this.Modules.Add(this.viewVariantsModule1);
             this.Modules.Add(this.securityModule1);
-            this.Modules.Add(this.databaseUserSettingsModule1);
             this.Modules.Add(this.reportsModuleV21);
+            this.Modules.Add(this.pivotGridModule1);
             this.Modules.Add(this.module3);
             this.Modules.Add(this.validationWindowsFormsModule1);
             this.Modules.Add(this.reportsWindowsFormsModuleV21);
+            this.Modules.Add(this.treeListEditorsModuleBase1);
+            this.Modules.Add(this.treeListEditorsWindowsFormsModule1);
+            this.Modules.Add(this.pivotGridWindowsFormsModule1);
             this.Modules.Add(this.module4);
             this.Security = this.securityStrategyComplex1;
             this.DatabaseVersionMismatch += new System.EventHandler<DevExpress.ExpressApp.DatabaseVersionMismatchEventArgs>(this.XFactoryNETWindowsFormsApplication_DatabaseVersionMismatch);
@@ -108,8 +114,11 @@ namespace XFactoryNET.Win
         private DevExpress.ExpressApp.Validation.ValidationModule validationModule1;
         private DevExpress.ExpressApp.Validation.Win.ValidationWindowsFormsModule validationWindowsFormsModule1;
         private DevExpress.ExpressApp.ViewVariantsModule.ViewVariantsModule viewVariantsModule1;
-        private DatabaseUserSettings.DatabaseUserSettingsModule databaseUserSettingsModule1;
         private DevExpress.ExpressApp.ReportsV2.ReportsModuleV2 reportsModuleV21;
         private DevExpress.ExpressApp.ReportsV2.Win.ReportsWindowsFormsModuleV2 reportsWindowsFormsModuleV21;
+        private DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase treeListEditorsModuleBase1;
+        private DevExpress.ExpressApp.TreeListEditors.Win.TreeListEditorsWindowsFormsModule treeListEditorsWindowsFormsModule1;
+        private DevExpress.ExpressApp.PivotGrid.PivotGridModule pivotGridModule1;
+        private DevExpress.ExpressApp.PivotGrid.Win.PivotGridWindowsFormsModule pivotGridWindowsFormsModule1;
     }
 }

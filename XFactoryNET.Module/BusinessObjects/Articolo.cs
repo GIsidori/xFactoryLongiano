@@ -7,11 +7,15 @@ using System.ComponentModel;
 using DevExpress.Persistent.Base;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp.ConditionalAppearance;
+using DevExpress.ExpressApp.Editors;
 
 namespace XFactoryNET.Module.BusinessObjects
 {
     [MapInheritance(MapInheritanceType.OwnTable)]
     [NavigationItem("Formule e Materiali")]
+    [Appearance(null, AppearanceItemType = "LayoutItem", TargetItems = "Formule,AllegatiArticolo", Criteria = "TipoMateriale='MateriaPrima'", Visibility = ViewItemVisibility.Hide)]
+    [Appearance(null, AppearanceItemType = "LayoutItem", TargetItems = "Sostituzioni", Criteria = "TipoMateriale<>'MateriaPrima'", Visibility = ViewItemVisibility.Hide)]
     public class Articolo : BaseArticolo
     {
         public Articolo(Session session) : base(session) { }
@@ -25,19 +29,19 @@ namespace XFactoryNET.Module.BusinessObjects
             get { return fTipoMateriale; }
             set { SetPropertyValue<TipoMateriale>("TipoMateriale", ref fTipoMateriale, value); }
         }
-        float fTolleranza;
+        decimal fTolleranza;
         [ModelDefault("EditMask","n4")]
         [ModelDefault("DisplayFormat","n4")]
-        public float Tolleranza
+        public decimal Tolleranza
         {
             get { return fTolleranza; }
-            set { SetPropertyValue<float>("Tolleranza", ref fTolleranza, value); }
+            set { SetPropertyValue<decimal>("Tolleranza", ref fTolleranza, value); }
         }
 
-        private float fPesoSpecifico = 1;
+        private decimal fPesoSpecifico = 1;
         [ModelDefault("EditMask", "n4")]
         [ModelDefault("DisplayFormat", "n4")]
-        public float PesoSpecifico
+        public decimal PesoSpecifico
         {
             get
             {
@@ -45,7 +49,7 @@ namespace XFactoryNET.Module.BusinessObjects
             }
             set
             {
-                SetPropertyValue<float>("PesoSpecifico", ref fPesoSpecifico, value);
+                SetPropertyValue<decimal>("PesoSpecifico", ref fPesoSpecifico, value);
             }
         }
 
@@ -75,11 +79,52 @@ namespace XFactoryNET.Module.BusinessObjects
             get { return GetCollection<Lotto>("Lotti"); }
         }
 
-        public XPCollection<Lotto> Giacenza
+        [Browsable(true)]
+        public IList<Lotto> Consumi
         {
             get
-            { return new XPCollection<Lotto>(Lotti, CriteriaOperator.Parse("DataFine IS NULL AND TipoMovimento>=0")); }
+            {
+                return Lotti.Where(l => l.TipoMovimento < 0).ToList();
+                //return new XPCollection<Lotto>(Lotti, CriteriaOperator.Parse("TipoMovimento<0"));
+            }
         }
+
+        [Browsable(true)]
+        public IList<Lotto> Produzioni
+        {
+            get
+            {
+                return Lotti.Where(l => l.TipoMovimento > 0).ToList();
+
+                //return new XPCollection<Lotto>(Lotti, CriteriaOperator.Parse("TipoMovimento>0"));   //Escluse le giacenze iniziali
+            }
+        }
+        
+
+        [Browsable(true)]
+        public IList<Lotto> Giacenza
+        {
+            get
+            {
+                return Lotti.Where(l => l.DataFine == null && l.TipoMovimento >= 0).ToList();
+                //return new XPCollection<Lotto>(l, CriteriaOperator.Parse("DataFine IS NULL AND TipoMovimento>=0")); 
+            }
+        }
+
+        public IList<Odl> Odl
+        {
+            get 
+            {
+                return Produzioni.Select(l => l.Odl).Distinct().ToList();
+                //return new XPCollection<BusinessObjects.Odl>(Session, Lotti.Where(l=>l.TipoMovimento>=0).Select(l => l.Odl).Distinct()); 
+            }
+        }
+
+        //[Delayed,Browsable(false)]
+        //public XPCollection<Lotto> LottiPrecedenti
+        //{
+        //    get { return new XPCollection<Lotto>(Lotti, CriteriaOperator.Parse("DataFine IS NOT NULL AND TipoMovimento>=0")); }
+        //}
 
         string fNote;
         public string Note
@@ -88,11 +133,12 @@ namespace XFactoryNET.Module.BusinessObjects
             set { SetPropertyValue<string>("Note", ref fNote, value); }
         }
 
-        float qtà;
-        public float QuantitàPerMiscelata
+        decimal qtà;
+        [ModelDefault("DisplayFormat", "n0")][ModelDefault("EditMask","n0")]
+        public decimal QuantitàPerMiscelata
         {
             get { return qtà; }
-            set { SetPropertyValue<float>("QuantitàPerMiscelata", ref qtà, value); }
+            set { SetPropertyValue<decimal>("QuantitàPerMiscelata", ref qtà, value); }
         }
 
 
@@ -111,13 +157,18 @@ namespace XFactoryNET.Module.BusinessObjects
             get { return GetCollection<Formula>("Formule"); }
         }
 
-        private TipoSostituzione tipoSostituzione;
-        public TipoSostituzione TipoSostituzione
-        {
-            get { return tipoSostituzione; }
-            set { SetPropertyValue<TipoSostituzione>("TipoSostituzione", ref tipoSostituzione, value); }
-        }
+        //private TipoSostituzione tipoSostituzione;
+        //public TipoSostituzione TipoSostituzione
+        //{
+        //    get { return tipoSostituzione; }
+        //    set { SetPropertyValue<TipoSostituzione>("TipoSostituzione", ref tipoSostituzione, value); }
+        //}
 
+        [Association,Aggregated]
+        public XPCollection<Sostituzione> Sostituzioni
+        {
+            get { return GetCollection<Sostituzione>("Sostituzioni"); }
+        }
 
     }
 

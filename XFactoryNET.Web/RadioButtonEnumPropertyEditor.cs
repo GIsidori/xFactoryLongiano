@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DevExpress.ExpressApp.Web.Editors;
-using DevExpress.Web.ASPxEditors;
+using DevExpress.Web;
 using System.Web.UI.WebControls;
 using DevExpress.ExpressApp.Utils;
 using DevExpress.ExpressApp;

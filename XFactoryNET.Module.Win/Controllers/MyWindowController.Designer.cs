@@ -28,9 +28,23 @@ namespace XFactoryNET.Module.Win.Controllers
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.components = new System.ComponentModel.Container();
+            this.ShowSettingsAction = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
+            // 
+            // ShowSettingsAction
+            // 
+            this.ShowSettingsAction.Caption = "Impostazioni..";
+            this.ShowSettingsAction.Category = "Tools";
+            this.ShowSettingsAction.ConfirmationMessage = null;
+            this.ShowSettingsAction.Id = "ShowSettingsAction";
+            this.ShowSettingsAction.TargetViewNesting = DevExpress.ExpressApp.Nesting.Root;
+            this.ShowSettingsAction.ToolTip = null;
+            this.ShowSettingsAction.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.ShowSettingsAction_Execute);
+
         }
 
         #endregion
+
+        private DevExpress.ExpressApp.Actions.SimpleAction ShowSettingsAction;
     }
 }

@@ -22,7 +22,7 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>IoESIQQQAAAQEIZAAQAjcAMFIQEEAAAAgBAABIGQIAA=</HashCode>
+      <HashCode>IoGSwQQQAAAQEYZAAQADeCMFIQAEAQAAwBAABIGwIgA=</HashCode>
       <FileName>BusinessObjects\Lotto.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -47,7 +47,7 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAEAAAAIAAAAAAAAAAAAAAAAEAAAABAAAgAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAEAAAABAAAgAAA=</HashCode>
       <FileName>BusinessObjects\OdlInsacco.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -67,7 +67,7 @@
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>IASACAAAAAAgAIDAAAAQIAIDAABAIIABAgBAAAFAQAA=</HashCode>
+      <HashCode>IASAKAAAAAAgAIDAAAAQIAIBAABAYIABAgBAAAFAQAA=</HashCode>
       <FileName>BusinessObjects\Articolo.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -88,7 +88,7 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>MAMEIQKCAAAAAIDAACABIAIBAACBEIAAABAIAAAAgBA=</HashCode>
+      <HashCode>MAMEIQKCAAAAAIDAACABYAIBAECBEIAAABAIAAAAgBA=</HashCode>
       <FileName>BusinessObjects\Componente.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -142,7 +142,7 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AgMBH4QASSMAGsDkAFowdFAFoAAADBFEQHYlFBs0MIA=</HashCode>
+      <HashCode>AAMBH4QASTMAG8DuQFowfFAFoAAADRFEQHYlFBs8MoA=</HashCode>
       <FileName>BusinessObjects\Odl.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -160,7 +160,7 @@
   <Class Name="XFactoryNET.Module.BusinessObjects.Confezione" Collapsed="true">
     <Position X="9.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAgACAAAAAIAIAAAAAAACAAAAAAAAAAQAAAgAAAA=</HashCode>
+      <HashCode>AAQAAgACAAAAAIAIAAAAAAAAAAAAAAAAAAQAAAgAAAA=</HashCode>
       <FileName>BusinessObjects\Confezione.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -181,7 +181,7 @@
   <Class Name="XFactoryNET.Module.BusinessObjects.OdlDosaggio" Collapsed="true">
     <Position X="7.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAEAAAABAAAgAAA=</HashCode>
+      <HashCode>AAAAAAAAQAAAAIAAAAAAAAAAAAAAAAEAAAABAAAgAAA=</HashCode>
       <FileName>BusinessObjects\OdlDosaggio.cs</FileName>
     </TypeIdentifier>
   </Class>

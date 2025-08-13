@@ -51,6 +51,11 @@ namespace XFactoryNET.Custom.Panzoo.Module.Controllers
                 odl.Predisposto += new EventHandler<CancelEventArgs>(odl_Predisposto);
             }
 
+            if (this.View.Id == "StatoDosaggio_DetailView")
+            {
+                Frame.GetController<RefreshController>().Actions["Refresh"].Active["NonStatoDosaggio"] = false;
+            }
+
             //if (this.View.Id == "DosaggioDashboardView")
             //{
             //    DashboardViewItem viewItem = ((DashboardView)View).FindItem("StatoDosaggioDashboardItem") as DashboardViewItem;
@@ -90,6 +95,7 @@ namespace XFactoryNET.Custom.Panzoo.Module.Controllers
                 svp.Controllers.Add(dlg);
 
                 Application.ShowViewStrategy.ShowView(svp, new ShowViewSource(null, null));
+
             }
         }
 
@@ -178,7 +184,10 @@ namespace XFactoryNET.Custom.Panzoo.Module.Controllers
                 timer.Elapsed -= new System.Timers.ElapsedEventHandler(timer_Elapsed);
                 timer.Stop();
                 timer.Dispose();
+                Frame.GetController<RefreshController>().Actions["Refresh"].Active["NonStatoDosaggio"] = true;
             }
+
+
             base.OnDeactivated();
         }
 

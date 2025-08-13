@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DevExpress.Xpo;
 using System.ComponentModel;
+using DevExpress.ExpressApp.Model;
 
 namespace XFactoryNET.Module.BusinessObjects
 {
@@ -33,10 +34,47 @@ namespace XFactoryNET.Module.BusinessObjects
         }
 
 
-        [Association]
-        public XPCollection<Classe> Classi
+        [Association, Browsable(false)]
+        public XPCollection<Categoria> CategorieProprie
         {
-            get { return GetCollection<Classe>("Classi"); }
+            get { return GetCollection<Categoria>("CategorieProprie"); }
+        }
+
+        XPCollection<Categoria> categorie = null;
+        [NonPersistent]
+        [ModelDefault("AllowEdit","False")]
+        [ModelDefault("AllowNew", "False")]
+        [ModelDefault("AllowDelete", "False")]
+        [ModelDefault("Caption","Categorie di appartenenza")]
+        public XPCollection<Categoria> Categorie
+        {
+            get
+            {
+                if (categorie == null)
+                {
+                    XPCollection<Categoria> collectionCategorie = new XPCollection<Categoria>(Session);
+                    categorie = new XPCollection<Categoria>(CategorieProprie);
+                    foreach (var cat in collectionCategorie)
+                    {
+                        if (cat.CriteriaObjectType == this.GetType())
+                        {
+                            if ((string.IsNullOrEmpty(cat.Criteria) == false) && this.Fit(Session.ParseCriteria(cat.Criteria)))
+                            {
+                                categorie.Add(cat);
+                            }
+                        }
+                    }
+                }
+
+                XPCollection<Categoria> copiaColl = new XPCollection<Categoria>(categorie);
+                //Recurse
+                foreach (var item in copiaColl)
+                {
+                    categorie.AddRange(item.Categorie);
+                }
+
+                return categorie;
+            }
         }
 
         [Association, Aggregated]

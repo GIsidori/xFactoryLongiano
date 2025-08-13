@@ -35,13 +35,5 @@ namespace XFactoryNET.Module.BusinessObjects
         }
 
 
-        public void Insacca(Silos app)
-        {
-            this.Prelievo = app;
-            this.Quantità = app.Quantità;
-            this.Articolo = app.Articolo;
-            this.NumeroMiscelate = 1;
-        }
-
     }
 }

@@ -17,6 +17,7 @@ namespace XFactoryNET.Win
         [STAThread]
         static void Main()
         {
+            DevExpress.ExpressApp.FrameworkSettings.DefaultSettingsCompatibilityMode = DevExpress.ExpressApp.FrameworkSettingsCompatibilityMode.v20_1;
 
 #if EASYTEST
 			DevExpress.ExpressApp.Win.EasyTest.EasyTestRemotingRegistration.Register();
@@ -33,14 +34,29 @@ namespace XFactoryNET.Win
 				winApplication.ConnectionString = ConfigurationManager.ConnectionStrings["EasyTestConnectionString"].ConnectionString;
 			}
 #endif
+
             if (ConfigurationManager.ConnectionStrings["ConnectionString"] != null)
             {
                 winApplication.ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             }
+            else
+            {
+                winApplication.ConnectionString = XFactoryNET.Module.Win.frmSettings.GetConnectionString();
+                if (winApplication.ConnectionString == null)
+                {
+                    winApplication.Exit();
+                    return;
+                }
+            }
+            
+
+
             try
             {
                 //Carica i moduli specificati nel file app.config
-                winApplication.Setup(winApplication.ApplicationName,winApplication.ConnectionString,ConfigurationManager.AppSettings["Modules"].Split(';'));
+                string[] modules = ConfigurationManager.AppSettings["Modules"].Split(';');
+
+                winApplication.Setup(winApplication.ApplicationName,winApplication.ConnectionString,modules);
                 winApplication.Start();
             }
             catch (Exception e)

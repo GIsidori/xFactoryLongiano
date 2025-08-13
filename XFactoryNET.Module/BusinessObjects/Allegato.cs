@@ -17,9 +17,12 @@ namespace XFactoryNET.Module.BusinessObjects
             {
                 foreach (var all in allegati)
                 {
-                    if (string.IsNullOrEmpty(codice) == false)
-                        codice += " ";
-                    codice += all.CodiceAllegato;
+                    if (all != null)
+                    {
+                        if (string.IsNullOrEmpty(codice) == false)
+                            codice += " ";
+                        codice += all.CodiceAllegato;
+                    }
                 }
             }
             return codice;

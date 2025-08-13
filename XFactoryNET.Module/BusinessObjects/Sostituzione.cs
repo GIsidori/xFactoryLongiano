@@ -9,21 +9,41 @@ namespace XFactoryNET.Module.BusinessObjects
 {
     public class Sostituzione : BaseXPObject
     {
-        BaseArticolo fClasse;
-        [Association]
+
+        public Sostituzione(Session session) : base(session) { }
+        public Sostituzione() : base(Session.DefaultSession) { }
+        public override void AfterConstruction()
+        {
+            Applica = false;
+            Abilitata = false;
+            base.AfterConstruction();
+        }
+
+        BaseArticolo fBaseArticolo;
+
         public BaseArticolo BaseArticolo
         {
-            get { return fClasse; }
-            set { SetPropertyValue<BaseArticolo>("BaseArticolo", ref fClasse, value); }
+            get { return fBaseArticolo; }
+            set { SetPropertyValue<BaseArticolo>("BaseArticolo", ref fBaseArticolo, value); }
+        }
+
+        Categoria fCategoria;
+        public Categoria Categoria
+        {
+            get { return fCategoria; }
+            set { SetPropertyValue<Categoria>("Categoria", ref fCategoria, value); }
         }
 
         Articolo fIngrediente;
+        [Association]
         public Articolo Ingrediente
         {
             get { return fIngrediente; }
             set { SetPropertyValue<Articolo>("Ingrediente", ref fIngrediente, value); }
         }
+
         Formula fFormula;
+        [Association]
         public Formula Formula
         {
             get { return fFormula; }
@@ -37,12 +57,12 @@ namespace XFactoryNET.Module.BusinessObjects
             set { SetPropertyValue<bool>("Applica", ref bApplica, value); }
         }
 
-        public Sostituzione(Session session) : base(session) { }
-        public Sostituzione() : base(Session.DefaultSession) { }
-        public override void AfterConstruction() 
+        bool bAbilitata;
+        public bool Abilitata
         {
-            Applica = true;
-            base.AfterConstruction();
+            get { return bAbilitata; }
+            set { SetPropertyValue<bool>("Abilitata", ref bAbilitata, value); }
         }
+
     }
 }

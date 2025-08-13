@@ -23,7 +23,6 @@ namespace XFactoryNET.Module
         public XFactoryNETModule()
         {
             InitializeComponent();
-            this.RequiredModuleTypes.Add(typeof(DatabaseUserSettings.DatabaseUserSettingsModule));
         }
         public override IEnumerable<ModuleUpdater> GetModuleUpdaters(IObjectSpace objectSpace, Version versionFromDB)
         {
@@ -32,10 +31,21 @@ namespace XFactoryNET.Module
             PredefinedReportsUpdater predefinedReportsUpdater =
                 new PredefinedReportsUpdater(Application, objectSpace, versionFromDB);
 
+
             predefinedReportsUpdater.AddPredefinedReport<Reports.ReportOdl>(
                 "Stampa Ordine di Lavorazione", typeof(BusinessObjects.OdlDosaggio), true);
-            
+
+
+            predefinedReportsUpdater.AddPredefinedReport<Reports.ReportMiscelateOdl>(
+                "Stampa dettaglio Ordine di Lavorazione", typeof(BusinessObjects.OdlDosaggio), true);
+
             predefinedReportsUpdater.AddPredefinedReport<Reports.ReportMedicati>("Stampa medicati", typeof(BusinessObjects.OdlDosaggio), true);
+
+            predefinedReportsUpdater.AddPredefinedReport<Reports.ReportAggiunteManuali>("Stampa aggiunte manuali", typeof(BusinessObjects.OdlDosaggio), true);
+
+            predefinedReportsUpdater.AddPredefinedReport<Reports.ReportFormula>("Stampa Formula", typeof(BusinessObjects.Formula), true);
+
+            //predefinedReportsUpdater.AddPredefinedReport<Reports.ReportConsumi>("Stampa consumi",typeof(BusinessObjects.OdlDosaggio));
 
             return new ModuleUpdater[] { updater, predefinedReportsUpdater };
 

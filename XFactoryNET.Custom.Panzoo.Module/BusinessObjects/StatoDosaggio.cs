@@ -47,13 +47,14 @@ namespace XFactoryNET.Custom.Panzoo.Module.BusinessObjects
             set { SetPropertyValue<int>("NrBil", ref nrBil, value); }
         }
 
-        float peso;
+        decimal peso;
         [ImmediatePostData]
         [ModelDefault("AllowEdit", "False")]
-        public float Peso
+        [ModelDefault("DisplayFormat", "n3")]
+        public decimal Peso
         {
             get { return peso; }
-            set { SetPropertyValue<float>("Peso", ref peso, value); }
+            set { SetPropertyValue<decimal>("Peso", ref peso, value); }
         }
         private bool stato;
         [ImmediatePostData]
@@ -93,13 +94,14 @@ namespace XFactoryNET.Custom.Panzoo.Module.BusinessObjects
         }
 
 
-        private float qtàEstratta;
+        private decimal qtàEstratta;
         [ImmediatePostData]
         [ModelDefault("AllowEdit", "False")]
-        public float QtàEstratta
+        [ModelDefault("DisplayFormat", "n3")]
+        public decimal QtàEstratta
         {
             get { return qtàEstratta; }
-            set { SetPropertyValue<float>("QtàEstratta", ref qtàEstratta, value); }
+            set { SetPropertyValue<decimal>("QtàEstratta", ref qtàEstratta, value); }
         }
 
         private Bilancia bilancia;
@@ -160,13 +162,14 @@ namespace XFactoryNET.Custom.Panzoo.Module.BusinessObjects
 
 
         [ModelDefault("AllowEdit", "False")]
-        public float QtàTeorica
+        [ModelDefault("DisplayFormat","n0")]
+        public decimal QtàTeorica
         {
             get
             {
                 if (Ingrediente != null)
                     return Ingrediente.QtàTeo;
-                return 0F;
+                return 0m;
             }
         }
 
@@ -175,8 +178,8 @@ namespace XFactoryNET.Custom.Panzoo.Module.BusinessObjects
             try
             {
                 this.NrIngrediente = svc.NrIngrediente(nrBil);
-                this.Peso = svc.GetPeso(nrBil);
-                this.QtàEstratta = svc.QtàEstratta(nrBil);
+                this.Peso = (decimal)svc.GetPeso(nrBil);
+                this.QtàEstratta = (decimal)svc.QtàEstratta(nrBil);
                 this.Stato = svc.StatoBilancia(nrBil);
                 ErrorString = string.Empty;
                 OnLoaded();
@@ -294,23 +297,25 @@ namespace XFactoryNET.Custom.Panzoo.Module.BusinessObjects
             }
         }
 
-        public float QuantitàTotale
+        [ModelDefault("DisplayFormat", "n0")]
+        public decimal QuantitàTotale
         {
             get
             {
                 if (Odl != null)
                     return Odl.Quantità;
-                return 0F;
+                return 0m;
             }
         }
 
-        public float QuantitàperLotto
+        [ModelDefault("DisplayFormat", "n0")]
+        public decimal QuantitàperLotto
         {
             get
             {
                 if (Odl != null)
                     return Odl.QuantitàPerMiscelata;
-                return 0F;
+                return 0m;
             }
         }
 

@@ -22,9 +22,9 @@ namespace XFactoryNET.Module.BusinessObjects
             set { SetPropertyValue<string>("Settings", ref fSettings, value); }
         }
 
-        float fPesoAttuale;
+        decimal fPesoAttuale;
         [NonPersistent]
-        public float PesoAttuale
+        public decimal PesoAttuale
         {
             get { return fPesoAttuale; }
             set { fPesoAttuale = value; }

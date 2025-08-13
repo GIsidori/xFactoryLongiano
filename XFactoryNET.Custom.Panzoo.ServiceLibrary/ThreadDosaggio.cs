@@ -29,6 +29,7 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
         private static bool bAbort = false;
         private static int iStopMisc = 0;  //Lotto a cui stoppare
         private static int currMisc = 0;   //Lotto corrente
+        private static int nrMisc = 0;
         private static bool bRunning = false;
         private static int numeroOdp;
         private static int idOdl;
@@ -36,17 +37,16 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
 
         static bool[] lStart = new bool[cNRBIL];                   //Bilancia in dosaggio
         static bool[] iStato = new bool[cNRBIL];
-        static float[] sPeso = new float[cNRBIL];                  //Peso sulla bilancia
-        static float[] sEstratto = new float[cNRBIL];              //Peso estratto su bilancia
+        static decimal[] sPeso = new decimal[cNRBIL];                  //Peso sulla bilancia
+        static decimal[] sEstratto = new decimal[cNRBIL];              //Peso estratto su bilancia
         static int[] iProgr = new int[cNRBIL];                     //Indice ingrediente in estrazione;
 
-        private float qtàTot = 0F;                              //Peso Totale Estratto per la miscelata corrente
+        private decimal qtàTot = 0m;                              //Peso Totale Estratto per la miscelata corrente
 
         private PLCConnection myConn;
         Dictionary<string, PLCTag> wordList = new Dictionary<string, PLCTag>();
         Dictionary<string, List<PLCTag>> buffList = new Dictionary<string, List<PLCTag>>();
 
-        private UnitOfWork unitOfWork;
 
         OrdineProduzione odp;
         Odl odl;
@@ -54,7 +54,7 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
 
         ParametriDosaggio pDos;
 
-        XPCollection<Bilancia> bilance;
+        XPCollection<Bilancia> bilance = null;
 
         public void Dispose()
         {
@@ -94,12 +94,14 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
         public static void Arresta()
         {
             bAbort = true;
+            iStopMisc = currMisc;
         }
 
         public static void StopMisc(int nrMisc)
         {
             iStopMisc = nrMisc;
         }
+
 
 #if SIMUL
         private static Session staticSession;
@@ -139,7 +141,7 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
         }
         public static int NrMisc()
         {
-            return iStopMisc;
+            return nrMisc;
         }
 
         public static bool Running()
@@ -147,7 +149,7 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
             return bRunning;
         }
 
-        public static float GetPeso(int iBil)
+        public static decimal GetPeso(int iBil)
         {
 #if SIMUL
             return new Random().Next(1000);
@@ -156,7 +158,7 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
 #endif
         }
 
-        public static float QtàEstratta(int iBil)
+        public static decimal QtàEstratta(int iBil)
         {
             return sEstratto[iBil];
         }
@@ -215,27 +217,37 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
                 //var xpObjectSpaceDataProvider = new XPObjectSpaceProvider(new ConnectionDataStoreProvider(dl.Connection));
                 //IObjectSpace os = (IObjectSpace)xpObjectSpaceDataProvider.CreateUpdatingObjectSpace(false);
 
-                unitOfWork = new UnitOfWork() { ConnectionString = connectionString };
-
-
-                bilance = new XPCollection<Bilancia>(unitOfWork, true);
 #if !SIMUL
                 myConn = new PLCConnection("PLCConfig");
                 myConn.Connect();
+#else
+                Console.WriteLine("Programma in modo SIMULAZIONE!");
 #endif
+
+                //Azzera nrProdzione in corso.
+                WriteDBW(51, 44, 0);
+
                 do
                 {
-                    try
+                    using (UnitOfWork unitOfWork = new UnitOfWork() { ConnectionString = connectionString })
                     {
-                        Thread.Sleep(3000);
-                        LeggeStatoProduzione();
-                        AvviaProduzione();
+                        if (bilance == null)
+                            bilance = new XPCollection<Bilancia>(unitOfWork, true);
+
+                        try
+                        {
+                            LeggeStatoProduzione(unitOfWork);
+                            AvviaProduzione(unitOfWork);
+                        }
+                        catch (Exception ex)
+                        {
+                            unitOfWork.DropChanges();
+                            System.Console.WriteLine(ex.Message);
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        unitOfWork.DropChanges();
-                        System.Console.WriteLine(ex.Message);
-                    }
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    Thread.Sleep(3000);
                 }
                 while (true);
 
@@ -251,13 +263,13 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
             System.Console.WriteLine("{0:g} - {1}", System.DateTime.Now, message);
         }
 
-        private bool AvviaProduzione()
+        private bool AvviaProduzione(UnitOfWork unitOfWork)
         {
 
             try
             {
 
-                numeroOdp = ReadDBW(51 , 44);         //OdP in corso
+                //numeroOdp = ReadDBW(51 , 44);         //OdP in corso
 
                 if (numeroOdp != 0)
                     return false;
@@ -265,7 +277,9 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
                 if (ReadDBW(39, 20) == 0)
                     return false;     //PC non abilitato a scrivere su PLC
 
-                odl = unitOfWork.FindObject<OdlDosaggio>(CriteriaOperator.Parse("Stato = ? OR Stato = ?", StatoOdL.Avviato, StatoOdL.InEsecuzione));
+                odl = unitOfWork.FindObject<OdlDosaggio>(PersistentCriteriaEvaluationBehavior.BeforeTransaction, CriteriaOperator.Parse("Stato = ? OR Stato = ?", StatoOdL.Avviato, StatoOdL.InEsecuzione));
+
+                idOdl = 0;
                 if (odl == null)
                     return false;
 
@@ -276,62 +290,29 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
                 numeroOdp = odp.NumeroOrdine;
 
                 currMisc = odl.NumeroMiscelateEseguite + 1;
+                nrMisc = odl.NumeroMiscelate;
 
                 LogMessage(@"Avvio Produzione nr. {0} - {1} ""{2}""", numeroOdp, odl.Articolo.Codice, odl.Articolo.Descrizione);
                 
                 bool bAdditivi = odl.IngredientiTeorici.Any<Componente>(c =>c.Modalità != null && c.Modalità.Codice == "ADD");
                 pDos = unitOfWork.FindObject<ParametriDosaggio>(new BinaryOperator("Odl", odl));
 
-                for (int iBil = 0; iBil < cNRBIL;iBil++ )
+                InviaIngredienti();
+
+                if (lStart[0])
                 {
-                    Bilancia bil = Bilancia(iBil);
-                    if (bil == null)
-                        continue;
-                    short Qtà = 0;
-                    short iSilos = 0;
-                    lStart[iBil] = false;
-                    sPeso[iBil] = 0;
-                    iProgr[iBil] = 1;
-                    sEstratto[iBil] = 0;
-
-                    IList<Lotto> ingr = odl.Ingredienti.Where(c => c.Silos != null && c.ApparatoLavorazione == bil && c.NrMisc == currMisc).ToList();
-                    //odl.Ingredienti.Filter = CriteriaOperator.Parse("ApparatoLavorazione=? AND NrMisc=? AND Silos IS NOT NULL", bil,currMisc);  
-                    //odl.Ingredienti.Sorting.Add(new SortProperty("QtàTeo",DevExpress.Xpo.DB.SortingDirection.Descending));
-                    for (int j = 0; j < cNRINGR; j++)
-                    {
-                        if (ingr.Count <= j)
-                        {
-                            Qtà = 0;
-                            iSilos = 0;
-                        }
-                        else
-                        {
-                            Lotto c = ingr[j];
-                            Qtà = (short)c.QtàTeo;
-                            if (bil.kMult != 0)
-                                Qtà = (short) (c.QtàTeo * bil.kMult);
-                            iSilos = (short)((Apparato)c.Silos).Numero;
-                            lStart[iBil] = true;
-                        }
-                        WriteDBW(51 + iBil, 102 + j * 4, iSilos);
-                        WriteDBW(51 + iBil, 104 + j * 4, Qtà);
-
-                    }
-                    odl.Ingredienti.Filter = null;
-                    if (lStart[iBil])          
-                    {
-                        lotto = odl.Prodotti.FirstOrDefault<Lotto>(p => p.NrMisc == currMisc && p.NrComp == 1);
-                        idCompProd = lotto.Oid;
-                        WriteDBW(51 + iBil, 44, odp.NumeroOrdine);         //OdP
-                        //
-                        WriteDBW(51 + iBil, 46, (short)odl.NumeroMiscelate);
-                        int codiceFormula;
-                        if (odl.Formula == null || false == int.TryParse(odl.Formula.Codice,out codiceFormula))
-                            codiceFormula = 9999;
-                        WriteDBD(51 + iBil, 48, codiceFormula);     //Double Word (32bit)
-                    }
-
+                    lotto = odl.Prodotti.FirstOrDefault<Lotto>(p => p.NrMisc == currMisc && p.NrComp == 1);
+                    idCompProd = lotto.Oid;
+                    WriteDBW(51 , 44, odp.NumeroOrdine);         //OdP
+                    //
+                    WriteDBW(51 , 46, (short)odl.NumeroMiscelate);
+                    int codiceFormula;
+                    if (odl.Formula == null || false == int.TryParse(odl.Formula.Codice, out codiceFormula))
+                        codiceFormula = 9999;
+                    WriteDBD(51 , 48, codiceFormula);     //Double Word (32bit)
                 }
+
+
 
                 if (pDos != null)
                 {
@@ -347,13 +328,12 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
 
                 WriteString(39, 102, 24, sName);
 
+
                 double fEnable = 0;
-                qtàTot = 0F;
+                qtàTot = 0m;
                 for (int iBil = 0; iBil <cNRBIL; iBil++)
                 {
-                    WriteDBW(109, (iBil + 1) * 10 + 4, 0);                 //Flag reset
-                    WriteDBW(109, (iBil + 1) * 10,(short) (lStart[iBil] ? 1 : 0));   //Flag avvio dosaggio bilancia
-                    WriteDBW(109, (iBil + 1) * 10 + 2, 0);                 //Flag fine dosaggio
+                    AvviaBilancia(iBil);
                     if (lStart[iBil])
                         fEnable = fEnable + Math.Pow(2,iBil);
                 }
@@ -377,21 +357,77 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
 
         }
 
-        private void LeggeStatoProduzione()
+        private void AvviaBilancia(int iBil)
+        {
+            WriteDBW(109, (iBil + 1) * 10 + 4, 0);                 //Flag reset
+            WriteDBW(109, (iBil + 1) * 10, (short)(lStart[iBil] ? 1 : 0));   //Flag avvio dosaggio bilancia
+            WriteDBW(109, (iBil + 1) * 10 + 2, 0);                 //Flag fine dosaggio
+        }
+
+        private void InviaIngredienti()
+        {
+            for (int iBil = 0; iBil < cNRBIL; iBil++)
+            {
+                InviaIngredienti(iBil);
+            }
+        }
+
+        private void InviaIngredienti(int iBil)
+        {
+            Bilancia bil = Bilancia(iBil);
+            if (bil == null)
+                return;
+            short Qtà = 0;
+            short iSilos = 0;
+            lStart[iBil] = false;
+            sPeso[iBil] = 0;
+            iProgr[iBil] = 1;
+            sEstratto[iBil] = 0;
+
+            IList<Lotto> ingr = odl.Ingredienti.Where(c => c.Silos != null && c.ApparatoLavorazione != null && c.ApparatoLavorazione.Codice == bil.Codice && c.NrMisc == currMisc).OrderBy(l => l.NrComp).ToList();
+            //odl.Ingredienti.Filter = CriteriaOperator.Parse("ApparatoLavorazione=? AND NrMisc=? AND Silos IS NOT NULL", bil,currMisc);  
+            //odl.Ingredienti.Sorting.Add(new SortProperty("QtàTeo",DevExpress.Xpo.DB.SortingDirection.Descending));
+            for (int j = 0; j < cNRINGR; j++)
+            {
+                if (ingr.Count <= j)
+                {
+                    Qtà = 0;
+                    iSilos = 0;
+                }
+                else
+                {
+                    Lotto c = ingr[j];
+                    Qtà = (short)c.QtàTeo;
+                    if (bil.kMult != 0)
+                        Qtà = (short)(c.QtàTeo * bil.kMult);
+                    iSilos = (short)((Apparato)c.Silos).Numero;
+                    lStart[iBil] = true;
+                }
+                WriteDBW(51 + iBil, 102 + j * 4, iSilos);
+                WriteDBW(51 + iBil, 104 + j * 4, Qtà);
+
+            }
+            return;
+        }
+
+        private void LeggeStatoProduzione(UnitOfWork unitOfWork)
         {
             bool inCorso = false;
             bool fineLotto = true;
 
             try
             {
+                idOdl = 0;
                 odl = null;
-                numeroOdp = ReadDBW(51, 44);
+                //numeroOdp = ReadDBW(51, 44);
                 odp = unitOfWork.FindObject<OrdineProduzione>(new BinaryOperator("NumeroOrdine", numeroOdp));
                 if (odp != null)
                     odl = odp.Odls.FirstOrDefault(o => o.Lavorazione != null && o.Lavorazione.Codice == OdlDosaggio.IDLavorazione);
                 else
+                {
                     numeroOdp = 0;
-
+                    //WriteDBW(51, 44, 0);    //Azzera produzioni in corso sconosciute.
+                }
                 do
                 {
                     if (odl == null)
@@ -404,6 +440,7 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
                         break;
 
                 } while (false);
+                 
 
                 for (int iBil = 0; iBil < cNRBIL; iBil++)
                 {
@@ -432,7 +469,7 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
                         inCorso = true;
                         for (int j = 0; j < cNRINGR; j++)
                         {
-                            float qtà = System.Convert.ToSingle(ReadDBW(db, 202 + j * 2));
+                            decimal qtà = System.Convert.ToDecimal(ReadDBW(db, 202 + j * 2));
                             int silos = ReadDBW(db, 102 + j * 4);       // Silos da cui ho estratto
                             if (bil.kMult != 0)
                                 qtà = qtà / bil.kMult;
@@ -442,6 +479,9 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
                                 qtàTot += qtà;
                                 lottoIngrediente.Stato = StatoLotto.Eseguito;
                                 lottoIngrediente.Quantità = qtà;
+                                //Azzera pesi estratti
+                                //WriteDBW(db, 202 + j * 2, 0);
+                                //WriteDBW(db, 102 + j * 4, 0);
                                 LogMessage(@"Fine dosaggio da bilancia {0} - Ordine di produzione nr. {1} - Silos {2} {3} ""{4}"" Quantità Teorica {5:n3} Quantità estratta {6:n3}", bil.Codice,numeroOdp,lottoIngrediente.Silos.Codice,lottoIngrediente.Articolo.Codice,lottoIngrediente.Articolo.Descrizione,lottoIngrediente.QtàTeo,lottoIngrediente.Quantità);
                             }
                         }
@@ -458,15 +498,17 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
                         lotto.Quantità = qtàTot;
                         lotto.Stato = StatoLotto.Eseguito;
                         odl.QuantitàEffettiva += qtàTot;
+                        if (odl.OrdineProduzione != null)
+                            odl.OrdineProduzione.QuantitàEffettiva = odl.QuantitàEffettiva;
                         odl.NumeroMiscelateEseguite++;
                         LogMessage(@"Fine miscelata nr {0} di {1} - Ordine di produzione nr. {2}",currMisc,odl.NumeroMiscelate, numeroOdp);
                         currMisc++;
                     }
 
-                    if (currMisc <= odl.NumeroMiscelate && !bAbort)
+                    if (currMisc <= odl.NumeroMiscelate && !bAbort && (iStopMisc == 0 || currMisc<=iStopMisc))
                     {
-                        double fEnable = 0;
-                        qtàTot = 0F;
+                        //double fEnable = 0;
+                        qtàTot = 0m;
                         for (int iBil = 0; iBil < cNRBIL; iBil++)
                         {
                             Bilancia bil = Bilancia(iBil);
@@ -478,24 +520,34 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
                                     lotto = odl.Prodotti.FirstOrDefault<Lotto>(p => p.NrMisc == currMisc && p.NrComp == 1);
                                     lotto.Stato = StatoLotto.InEsecuzione;
                                     idCompProd = lotto.Oid;
-                                    WriteDBW(109, (iBil + 1) * 10 + 4, 0);                 //Flag reset
-                                    WriteDBW(109, (iBil + 1) * 10, 1);                      //Flag avvio dosaggio bilancia
-                                    WriteDBW(109, (iBil + 1) * 10 + 2, 0);                 //Flag fine dosaggio
-                                    fEnable = fEnable + Math.Pow(2, iBil);
+
+                                    InviaIngredienti(iBil);
+                                    AvviaBilancia(iBil);
+
+                                    WriteDBW(109, 2, 1);        //EOT
+                                    //fEnable = fEnable + Math.Pow(2, iBil);
                                 }
                             }
                         }
-                        short flag = System.Convert.ToInt16(fEnable);
-                        WriteDBW(109, 4, flag);             //Abilitazione bilance
-                        WriteDBW(109, 2, 1);                   //EOT Avvia dosaggio
+                        //short flag = System.Convert.ToInt16(fEnable);
+                        //WriteDBW(109, 4, flag);             //Abilitazione bilance
+                        //WriteDBW(109, 2, 1);                   //EOT Avvia dosaggio
                         LogMessage(@"Avvio miscelata nr {0} di {1} - Ordine di produzione nr. {2}", currMisc, odl.NumeroMiscelate, numeroOdp);
                     }
                     else
                     {
+                        if (bAbort)
+                            LogMessage(@"Ordine di produzione nr. {0} annullato - Quantità Totale {1:n0}", numeroOdp, odl.QuantitàEffettiva);
+                        else
+                            LogMessage(@"Fine Ordine di produzione nr. {0} - Quantità Totale {1:n0}", numeroOdp, odl.QuantitàEffettiva);
                         odl.Stato = bAbort ? StatoOdL.Annullato : StatoOdL.Eseguito;
-                        WriteDBW(51, 44, 0);
-                        LogMessage(@"Fine Ordine di produzione nr. {1} - Quantità Totale {1:n0}", numeroOdp,odl.QuantitàEffettiva);
+                        //WriteDBW(51, 44, 0);
+                        numeroOdp = 0;
                         bRunning = false;
+                        bAbort = false;
+                        iStopMisc = 0;
+                        currMisc = 0;
+                        nrMisc = 0;
                     }
                 }
                 unitOfWork.CommitChanges();
@@ -579,7 +631,7 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
             try
             {
                 ushort res = (tag.Value == null ? (ushort)0 : System.Convert.ToUInt16(tag.Value));
-                return (short)(res <= short.MaxValue ? res : res - UInt16.MaxValue); 
+                return (short)(res <= short.MaxValue ? res : res - UInt16.MaxValue-1); 
             }
             catch
             {
@@ -591,7 +643,7 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
         {
             PLCTag tag = GetPLCTagDBW(db, dw);
             //short shortValue = System.Convert.ToInt16(value);
-            tag.Value = (ushort)(shortValue >= 0 ? shortValue : UInt16.MaxValue + shortValue);
+            tag.Value = (ushort)(shortValue >= 0 ? shortValue : UInt16.MaxValue + shortValue+1);
             WriteTag(tag);
         }
 

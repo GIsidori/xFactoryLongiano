@@ -129,12 +129,12 @@ namespace XFactoryNET.Module.Win.Controllers
 
        public static void LoadLayout(ColumnView view, Stream stream)
        {
-           //DevExpress.Utils.OptionsLayoutGrid options = new OptionsLayoutGrid();
-           //options.StoreAppearance = true;
-           //options.StoreDataSettings = false;
-           //options.StoreVisualOptions = false;
-           //options.Columns.StoreAppearance = true;
-           view.RestoreLayoutFromStream(stream, DevExpress.Utils.OptionsLayoutGrid.FullLayout);
+           DevExpress.Utils.OptionsLayoutGrid options = new OptionsLayoutGrid();
+           options.StoreAppearance = true;
+           options.StoreDataSettings = false;
+           options.StoreVisualOptions = false;
+           options.Columns.StoreAppearance = true;
+           view.RestoreLayoutFromStream(stream, options);
        }
 
        protected XtraPropertyInfoCollection GetFilterProps(ColumnView view)

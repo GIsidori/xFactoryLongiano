@@ -39,13 +39,13 @@ namespace XFactoryNET.Module.BusinessObjects
             get { return fAssoluta; }
             set { SetPropertyValue<bool>("Assoluta", ref fAssoluta, value); }
         }
-        float fValore;
+        decimal fValore;
         [ModelDefault("DisplayFormat", "n4")]
         [ModelDefault("EditFormat", "n4")]
-        public float Valore
+        public decimal Valore
         {
             get { return fValore; }
-            set { SetPropertyValue<float>("Valore", ref fValore, value); }
+            set { SetPropertyValue<decimal>("Valore", ref fValore, value); }
         }
 
         public DettaglioAllegato(Session session) : base(session) { }

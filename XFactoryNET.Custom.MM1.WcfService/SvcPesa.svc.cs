@@ -12,7 +12,7 @@ namespace XFactoryNET.Custom.MM1.WcfService
     public class SvcPesa : XFactoryNET.ServiceLibrary.ISvcPesa
     {
 
-        public float LeggiPeso(string codicePesa)
+        public decimal LeggiPeso(string codicePesa)
         {
             return ThreadPesa.GetPeso(codicePesa);
         }

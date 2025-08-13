@@ -32,42 +32,30 @@ namespace XFactoryNET.Custom.GIMA.Module.Controllers
             DevExpress.ExpressApp.Actions.ChoiceActionItem choiceActionItem1 = new DevExpress.ExpressApp.Actions.ChoiceActionItem();
             DevExpress.ExpressApp.Actions.ChoiceActionItem choiceActionItem2 = new DevExpress.ExpressApp.Actions.ChoiceActionItem();
             DevExpress.ExpressApp.Actions.ChoiceActionItem choiceActionItem3 = new DevExpress.ExpressApp.Actions.ChoiceActionItem();
-            DevExpress.ExpressApp.Actions.ChoiceActionItem choiceActionItem4 = new DevExpress.ExpressApp.Actions.ChoiceActionItem();
-            DevExpress.ExpressApp.Actions.ChoiceActionItem choiceActionItem5 = new DevExpress.ExpressApp.Actions.ChoiceActionItem();
             this.singleChoiceActionImport = new DevExpress.ExpressApp.Actions.SingleChoiceAction(this.components);
             // 
             // singleChoiceActionImport
             // 
             this.singleChoiceActionImport.Caption = "Importa";
             this.singleChoiceActionImport.Category = "Export";
-            this.singleChoiceActionImport.ConfirmationMessage = null;
+            this.singleChoiceActionImport.ConfirmationMessage = "Confermi l\'importazione dei dati ?";
             this.singleChoiceActionImport.Id = "singleChoiceActionImport";
-            choiceActionItem1.Caption = "Articoli";
+            choiceActionItem1.Caption = "Articoli, Formule, Sostituzioni e Allegati";
             choiceActionItem1.ImageName = null;
             choiceActionItem1.Shortcut = null;
             choiceActionItem1.ToolTip = null;
-            choiceActionItem2.Caption = "Formule";
+            choiceActionItem2.Caption = "Ordini di Produzione";
             choiceActionItem2.ImageName = null;
             choiceActionItem2.Shortcut = null;
             choiceActionItem2.ToolTip = null;
-            choiceActionItem3.Caption = "Allegati";
+            choiceActionItem3.BeginGroup = true;
+            choiceActionItem3.Caption = "Importa e aggiorna tutto";
             choiceActionItem3.ImageName = null;
             choiceActionItem3.Shortcut = null;
             choiceActionItem3.ToolTip = null;
-            choiceActionItem4.Caption = "Ordini di Produzione";
-            choiceActionItem4.ImageName = null;
-            choiceActionItem4.Shortcut = null;
-            choiceActionItem4.ToolTip = null;
-            choiceActionItem5.BeginGroup = true;
-            choiceActionItem5.Caption = "Importa e aggiorna tutto";
-            choiceActionItem5.ImageName = null;
-            choiceActionItem5.Shortcut = null;
-            choiceActionItem5.ToolTip = null;
             this.singleChoiceActionImport.Items.Add(choiceActionItem1);
             this.singleChoiceActionImport.Items.Add(choiceActionItem2);
             this.singleChoiceActionImport.Items.Add(choiceActionItem3);
-            this.singleChoiceActionImport.Items.Add(choiceActionItem4);
-            this.singleChoiceActionImport.Items.Add(choiceActionItem5);
             this.singleChoiceActionImport.ItemType = DevExpress.ExpressApp.Actions.SingleChoiceActionItemType.ItemIsOperation;
             this.singleChoiceActionImport.ShowItemsOnClick = true;
             this.singleChoiceActionImport.ToolTip = null;

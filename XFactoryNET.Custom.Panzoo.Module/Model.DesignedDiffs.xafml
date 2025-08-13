@@ -26,11 +26,12 @@
     </DashboardView>
     <DetailView Id="ParametriDosaggio_DetailView">
       <Items>
-        <PropertyEditor Id="Fittizia" PropertyName="Odl.Dummy" Caption="Fittizia" IsNewNode="True" />
+        <PropertyEditor Id="Fittizia" PropertyName="Odl.Hidden" Caption="Fittizia" IsNewNode="True" />
         <PropertyEditor Id="Mixer" PropertyName="Odl.ApparatoLavorazione" Caption="Miscelatore" DataSourceCriteria="Lavorazione.Codice = 'Dosaggio'" IsNewNode="True" />
+        <PropertyEditor Id="Simulata" PropertyName="Odl.Dummy" IsNewNode="True" />
       </Items>
       <Layout>
-        <LayoutGroup Id="Main" RelativeSize="15.24822695035461">
+        <LayoutGroup Id="Main" RelativeSize="20.623501199040767">
           <LayoutGroup Id="SimpleEditors" RelativeSize="100">
             <LayoutGroup Id="ParametriDosaggio" RelativeSize="100">
               <LayoutItem Id="Mixer" ViewItem="Mixer" SizeConstraintsType="Default" Index="0" RelativeSize="37.2093023255814" IsNewNode="True" />
@@ -40,7 +41,8 @@
             </LayoutGroup>
           </LayoutGroup>
         </LayoutGroup>
-        <LayoutItem Id="Fittizia" ViewItem="Fittizia" SizeConstraintsType="Default" Index="1" RelativeSize="84.7517730496454" IsNewNode="True" />
+        <LayoutItem Id="Fittizia" ViewItem="Fittizia" SizeConstraintsType="Default" Index="1" RelativeSize="5.7553956834532372" IsNewNode="True" />
+        <LayoutItem Id="Simulata" ViewItem="Simulata" SizeConstraintsType="Default" Index="2" RelativeSize="73.621103117506" IsNewNode="True" />
       </Layout>
     </DetailView>
     <DetailView Id="StatoDosaggio_DetailView" AllowEdit="False" AllowDelete="False" AllowNew="False">
@@ -92,7 +94,7 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="StatoDosaggio_StatoBilance_ListView">
+    <ListView Id="StatoDosaggio_StatoBilance_ListView" AllowNew="False" AllowDelete="False">
       <Columns>
         <ColumnInfo Id="CurrMisc" Index="-1" />
         <ColumnInfo Id="Stato" Index="-1" />

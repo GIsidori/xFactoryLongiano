@@ -11,8 +11,7 @@ namespace XFactoryNET.Module.BusinessObjects
         Avviato,            //Avviato
         InEsecuzione,       //In esecuzione su PLC
         Annullato,          //Abort
-        Eseguito = -1,      //Eseguito
-        Archiviato = -2     //Archiviato
+        Eseguito = -1      //Eseguito
     }
     
     public enum StatoOdP
@@ -20,7 +19,7 @@ namespace XFactoryNET.Module.BusinessObjects
         Nuovo,
         Disponibile,
         InProduzione,
-        Eseguito
+        Eseguito = -1
     }
 
     //Valori negativi indicano prelievi di materiale
@@ -79,11 +78,11 @@ namespace XFactoryNET.Module.BusinessObjects
         UscitaMerci
     }
 
-    public enum TipoSostituzione
-    {
-        Nessuna,
-        Manuale,
-        Automatica
-    }
+    //public enum TipoSostituzione
+    //{
+    //    Nessuna,
+    //    Manuale,
+    //    Automatica
+    //}
 
 }

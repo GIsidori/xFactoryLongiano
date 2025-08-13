@@ -24,7 +24,7 @@ namespace XFactoryNET.Custom.MM1.ServiceLibrary
         private string settings;
         private string sPortName;
         private int iBaudRate, iDataBit;
-        private float fPeso;
+        private decimal fPeso;
 
         Parity mParity;
         StopBits mStopBit;
@@ -67,11 +67,11 @@ namespace XFactoryNET.Custom.MM1.ServiceLibrary
             thread = null;
         }
 
-        public static float GetPeso(string codicePesa)
+        public static decimal GetPeso(string codicePesa)
         {
             if (threads.ContainsKey(codicePesa))
                 return threads[codicePesa].fPeso;
-            return 0F;
+            return 0m;
         }
 
         public ThreadPesa(string settings)
@@ -87,7 +87,7 @@ namespace XFactoryNET.Custom.MM1.ServiceLibrary
                 while (true)
                 {
                     Thread.Sleep(2000);
-                    fPeso = 1234F; // LeggiPeso();
+                    fPeso = 1234m; // LeggiPeso();
                 }
             }
             catch (ThreadAbortException)
@@ -97,13 +97,13 @@ namespace XFactoryNET.Custom.MM1.ServiceLibrary
             
         }
 
-        private float LeggiPeso()
+        private decimal LeggiPeso()
         {
             const int BLEN = 46;
             byte[] buffer = new Byte[BLEN];
             char[] chars = new Char[5];
             int iRead;
-            float pPeso = 0;
+            decimal pPeso = 0;
             try
             {
                 iRead = Port.Read(buffer,0,BLEN);
@@ -190,12 +190,12 @@ namespace XFactoryNET.Custom.MM1.ServiceLibrary
                 Port.Close();
         }
 
-        private static float Decode(byte[] buffer)
+        private static decimal Decode(byte[] buffer)
         {
             string s;
             const int BLEN = 46;
             char[] chars = new Char[5];
-            float fPeso = 0;
+            decimal fPeso = 0;
 
             for (int i = 0; i < BLEN; i++)
             {
@@ -212,7 +212,7 @@ namespace XFactoryNET.Custom.MM1.ServiceLibrary
             {
                 try
                 {
-                    fPeso = System.Convert.ToSingle(s);
+                    fPeso = System.Convert.ToDecimal(s);
                 }
                 catch (Exception ex)
                 {

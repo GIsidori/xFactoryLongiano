@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.ServiceModel;
 namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
 {
@@ -12,7 +12,7 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
         [OperationContract]
         int CurrMisc();
         [OperationContract]
-        float GetPeso(int iBil);
+        decimal GetPeso(int iBil);
         [OperationContract]
         int IdOdL();
         [OperationContract]
@@ -20,7 +20,7 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
         [OperationContract]
         int NrMisc();
         [OperationContract]
-        float QtàEstratta(int iBil);
+        decimal QtàEstratta(int iBil);
         [OperationContract]
         bool Running();
         [OperationContract]

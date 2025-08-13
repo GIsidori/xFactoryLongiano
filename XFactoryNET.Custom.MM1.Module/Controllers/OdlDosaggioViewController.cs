@@ -61,9 +61,9 @@ namespace XFactoryNET.Custom.MM1.Module.Controllers
         {
             IObjectSpace os = Application.CreateObjectSpace();
             OdlDosaggio odlDosaggio = (OdlDosaggio)os.GetObject(e.CurrentObject);
-            ParametriDosaggio param = os.FindObject<ParametriDosaggio>(new BinaryOperator("Odl", odlDosaggio));
+            ParametriDosaggioMM1 param = os.FindObject<ParametriDosaggioMM1>(new BinaryOperator("Odl", odlDosaggio));
             if (param == null)
-                param = os.CreateObject<ParametriDosaggio>();
+                param = os.CreateObject<ParametriDosaggioMM1>();
             param.Odl = odlDosaggio;
             e.ShowViewParameters.CreatedView = Application.CreateDetailView(os, param, true);
             e.ShowViewParameters.TargetWindow = TargetWindow.NewModalWindow;

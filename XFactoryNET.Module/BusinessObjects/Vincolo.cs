@@ -46,6 +46,17 @@ namespace XFactoryNET.Module.BusinessObjects
             }
         }
 
+        public string Descrizione
+        {
+            get
+            {
+                if (this.Incompatibile)
+                    return string.Format("Articolo {0} incompatibile con articolo {1}", Articolo1.Descrizione, Articolo2.Descrizione);
+                else
+                    return string.Format("Impossibile produrre {0} dopo {1} prima di {2} produzion{3} di pulizia", Articolo1.Descrizione, Articolo2.Descrizione, this.NProduzioni,NProduzioni==1?"e":"i");
+            }
+        }
+
         private int nProduzioni;
         public int NProduzioni
         {

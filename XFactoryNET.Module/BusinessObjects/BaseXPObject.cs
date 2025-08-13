@@ -10,30 +10,16 @@ namespace XFactoryNET.Module.BusinessObjects
 //    [DeferredDeletion(false)]
     [NonPersistent]
     [OptimisticLocking(Enabled=false)]
-    public abstract class BaseXPObject : XPObject
+    public abstract class BaseXPObject : XPCustomObject
     {
         public BaseXPObject(Session session) : base(session) { }
         public BaseXPObject() : base(Session.DefaultSession) { }
-
+        //
+        // Summary:
+        //     Gets or set a value which identifies the persistent object.
+        [Key(AutoGenerate = true)]
+        [Persistent("OID")]
         [System.ComponentModel.Browsable(false)]
-        public new int Oid
-        {
-            get { return base.Oid; }
-            set { base.Oid = value; }
-        }
-
-        //protected override void OnDeleted()
-        //{
-        //    //Emula il comportamento di DELETE RULE: CASCADE 
-        //    var list = Session.CollectReferencingObjects(this);
-        //    foreach (var item in list)
-        //    {
-        //        DevExpress.Xpo.XPBaseObject obj = (DevExpress.Xpo.XPBaseObject)item;
-        //        if (obj.IsDeleted == false)
-        //            obj.Delete();
-        //    }
-        //    base.OnDeleted();
-        //}
-
+        public int Oid { get; set; }
     }
 }

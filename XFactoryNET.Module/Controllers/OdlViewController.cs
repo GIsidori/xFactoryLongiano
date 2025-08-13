@@ -19,6 +19,10 @@ using System.ComponentModel;
 using DevExpress.Xpo;
 using DevExpress.ExpressApp.Validation;
 using DevExpress.ExpressApp.Validation.AllContextsView;
+using DevExpress.ExpressApp.ReportsV2;
+using DevExpress.Persistent.BaseImpl;
+using DevExpress.XtraReports.UI;
+using DevExpress.ExpressApp.Xpo;
 
 namespace XFactoryNET.Module.Controllers
 {
@@ -27,6 +31,7 @@ namespace XFactoryNET.Module.Controllers
     {
 
         ShowAllContextsController showAllContextsController;
+        FilterController filterController;
 
         public OdlViewController()
         {
@@ -36,17 +41,42 @@ namespace XFactoryNET.Module.Controllers
             // Target required Views (via the TargetXXX properties) and create their Actions.
         }
 
-        AllegatoOdl allegatoOdl;
-
         protected override void OnActivated()
         {
             base.OnActivated();
 
             showAllContextsController = Frame.GetController<ShowAllContextsController>();
-
+            filterController = Frame.GetController<FilterController>();
+            if (filterController != null)
+            {
+                filterController.CustomBuildCriteria += new EventHandler<CustomBuildCriteriaEventArgs>(filterController_CustomBuildCriteria);
+            }
             // Perform various tasks depending on the target View.
             if (this.View.CurrentObject as Odl != null)
                 View.ObjectSpace.ObjectChanged+=new EventHandler<ObjectChangedEventArgs>(ObjectSpace_ObjectChanged);
+
+            this.singleChoiceActionSilos.Active["ObjectType"] = 
+                this.View.ObjectTypeInfo.Type == typeof(Silos) || 
+                this.View.ObjectTypeInfo.Type == typeof(Lotto) || 
+                this.View.ObjectTypeInfo.Type == typeof(Articolo) || 
+                this.View.ObjectTypeInfo.Type == typeof(Componente);
+
+            this.singleChoiceActionSacchi.Active["ObjectType"] =
+                this.View.ObjectTypeInfo.Type == typeof(Lotto) ||
+                this.View.ObjectTypeInfo.Type == typeof(Articolo) ||
+                this.View.ObjectTypeInfo.Type == typeof(Componente);
+
+
+        }
+
+        void filterController_CustomBuildCriteria(object sender, CustomBuildCriteriaEventArgs e)
+        {
+            if (View.ObjectTypeInfo.Type == typeof(Silos)  && Frame.Context == TemplateContext.LookupControl)
+            {
+                if (string.IsNullOrEmpty(e.SearchText) == false)    
+                    e.Criteria = new BinaryOperator("Numero", e.SearchText);
+                e.Handled = true;
+            }
         }
 
         protected override void OnViewControlsCreated()
@@ -58,21 +88,27 @@ namespace XFactoryNET.Module.Controllers
         {
             // Unsubscribe from previously subscribed events and release other references and resources.
             base.OnDeactivated();
+
             View.ObjectSpace.ObjectChanged -= new EventHandler<ObjectChangedEventArgs>(ObjectSpace_ObjectChanged);
+            
+            if (filterController != null)
+                filterController.CustomBuildCriteria -= new EventHandler<CustomBuildCriteriaEventArgs>(filterController_CustomBuildCriteria);
         }
+
+
 
         void ObjectSpace_ObjectChanged(object sender, ObjectChangedEventArgs e)
         {
 
-            AllegatoOdl ao = e.Object as AllegatoOdl;
-            if (ao != null)
-            {
-                if (!ao.IsLoading && !ao.IsDeleted)
-                {
-                    ApplicaAllegato(ao.Odl, ao.Allegato);
-                }
-                return;
-            }
+            //AllegatoOdl ao = e.Object as AllegatoOdl;
+            //if (ao != null)
+            //{
+            //    if (!ao.IsLoading && !ao.IsDeleted)
+            //    {
+            //        ApplicaAllegato(ao.Odl, ao.Allegato);
+            //    }
+            //    return;
+            //}
 
             if (e.NewValue == e.OldValue)
                 return;
@@ -131,11 +167,14 @@ namespace XFactoryNET.Module.Controllers
                                 }
                                 else
                                 {
-                                    odl.Articolo = null;
+                                    //odl.Articolo = null;
                                 }
                             }
                         }
                         odl.Stato = StatoOdL.InPreparazione;
+                        break;
+                    case "Quantit‡PerMiscelata":
+                        CalcolaQuantit‡Componenti(odl);
                         break;
                     //case "Quantit‡":
                     //case "Quantit‡PerMiscelata":
@@ -162,12 +201,21 @@ namespace XFactoryNET.Module.Controllers
                         if (comp.OdlIngredientiTeorici.LoadingFormula == false)
                         {
                             comp.OdlIngredientiTeorici.Stato = StatoOdL.InPreparazione;
+                            if (comp.Articolo != null && comp.Articolo.Modalit‡ != null)
+                                comp.Modalit‡ = comp.Articolo.Modalit‡;
+
+                            comp.Quantit‡ = comp.Percentuale * comp.OdlIngredientiTeorici.Quantit‡PerMiscelata / 100;
                             comp.StatoModifica = StatoModificaComponente.Modificato;
                         }
                     }
                 }
             }
 
+        }
+
+        private void CalcolaQuantit‡Componenti(Odl odl)
+        {
+            odl.CalcolaQuantit‡Componenti();
         }
 
         protected void OnChangedOdp(Odl odl)
@@ -204,15 +252,20 @@ namespace XFactoryNET.Module.Controllers
         private void actionSostituisci_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs e)
         {
             e.DialogController.SaveOnAccept = false;
-            e.View = CreateListViewFormuleSostituzione(this.View.ObjectSpace, this.View.CurrentObject as Componente);
+            CollectionSource cs = CreateCollectionSourceSostituzioni(this.View.ObjectSpace, this.View.CurrentObject as Componente);
+            e.View = CreateListViewFormuleSostituzione(cs, this.View.CurrentObject as Componente);
         }
 
-        private View CreateListViewFormuleSostituzione(IObjectSpace os, Componente comp)
+        private CollectionSource CreateCollectionSourceSostituzioni(IObjectSpace os,Componente comp)
         {
-            //IObjectSpace os = this.View.ObjectSpace;
-            //IObjectSpace os = Utils.GetSecondObjectSpace(comp);
             CollectionSource cs = new CollectionSource(os, typeof(Formula));
-            cs.Criteria["Criteria"] = new ContainsOperator("Articoli", new BinaryOperator("Codice", comp.Articolo.Codice));
+            //cs.Criteria["Criteria"] = new ContainsOperator("Articoli", new BinaryOperator("Codice", comp.Articolo.Codice));
+            cs.Criteria["Criteria"] = new ContainsOperator("Sostituzioni", CriteriaOperator.Parse("Ingrediente=? AND Abilitata AND NOT Applica", comp.Articolo.Codice));
+            return cs;
+        }
+
+        private View CreateListViewFormuleSostituzione(CollectionSource cs, Componente comp)
+        {
             ListView lv = Application.CreateListView("Formula_ListViewAndDetailView", cs, false);
             lv.Caption = string.Format("Sostituzione materiale {0}: {1}", comp.Articolo.Codice, comp.Articolo.Descrizione);
             return lv;
@@ -234,21 +287,27 @@ namespace XFactoryNET.Module.Controllers
 
         public void SostituisciComponente(Componente componente, Formula form)
         {
-            internalSostituisciComponente(componente, form);
-            componente.OdlIngredientiTeorici.FormuleSostituzione.Add(form);
+            if (componente.OdlIngredientiTeorici != null)
+            {
+                componente.OdlIngredientiTeorici.FormuleSostituzione.Add(form);
+                internalSostituisciComponente(componente, form);
+            }
 
         }
 
         internal void internalSostituisciComponente(Componente componente, Formula form)
         {
-            float perc = componente.Percentuale;
-            componente.StatoModifica = StatoModificaComponente.Eliminato;
-            componente.Percentuale = 0;
-            //componente.Delete();
+            decimal perc = componente.Percentuale;
+            //componente.StatoModifica = StatoModificaComponente.Eliminato;
+            //componente.Percentuale = 0;
             Odl odl = componente.OdlIngredientiTeorici;
+            componente.Delete();
 
             foreach (var comp in form.Ingredienti)
             {
+                if (comp.Percentuale == 0)
+                    continue;
+
                 Componente newComp;
                 newComp = odl.IngredientiTeorici.FirstOrDefault<Componente>(c => c.Articolo == comp.Articolo);
                 if (newComp == null)
@@ -261,7 +320,8 @@ namespace XFactoryNET.Module.Controllers
                     newComp.Modalit‡ = comp.Articolo.Modalit‡;          //Modalit‡ predefinita del materiale
                     newComp.StatoModifica = StatoModificaComponente.Aggiunto;
                     odl.IngredientiTeorici.Add(newComp);
-                    ApplicaSostituzioneComponente(comp);
+                    if (componente.Articolo != comp.Articolo)
+                        ApplicaSostituzioneComponente(newComp);
                 }
                 else
                 {
@@ -271,60 +331,44 @@ namespace XFactoryNET.Module.Controllers
             }
         }
 
-        bool sostituzioniApplicate = false;
+        //bool sostituzioniApplicate = false;
 
-        public void Avvia(Odl odl)
+        public bool Avvia(Odl odl)
         {
 
-            if (!sostituzioniApplicate)
+            if (!odl.SostituzioniApplicate)
             {
-                sostituzioniApplicate = true;
+                odl.SostituzioniApplicate = true;
+                ApplicaAllegati(odl);
                 ApplicaSostituzioni(odl);
             }
 
             if (Predisponi(odl) == false)
-                return;
-
-            if (odl.OnInAvvio() == false)
             {
-
-                foreach (var lot in odl.Prodotti)
-                {
-                    if (odl.Destinazione != null)
-                        odl.Destinazione.RegistraMovimento(lot);            //Qui la quantit‡ del lotto Ë ancora a zero ma il silos viene gi‡ impegnato.
-                    if (odl.MagazzinoDestinazione != null)
-                        odl.MagazzinoDestinazione.RegistraMovimento(lot);
-
-                    lot.CodiceEsterno = odl.CodiceEsterno;
-                }
-                odl.Stato = StatoOdL.Avviato;
-
-                GetOrCreateOdp(odl);
-
-                //odl.Session.CommitTransaction();
-
-                if (odl.Dummy)
-                    odl.EseguiTeorico();
-                else
-                    odl.OnAvviato();
+                return false;
             }
-            this.View.ObjectSpace.CommitChanges();
-            this.View.Close();
+
+            odl.Data = System.DateTime.Now;
+
+
+            return true;
+        }
+
+        public void ApplicaAllegati(Odl odl)
+        {
+            foreach (var item in odl.AllegatiOdl)
+            {
+                ApplicaAllegato(odl, item.Allegato);
+            }
         }
 
         public void ApplicaAllegato(Odl odl, Allegato allegato)
         {
-            ApplicaAllegato(odl, allegato, 1);
-        }
-
-        public void ApplicaAllegato(Odl odl,Allegato allegato,int count)
-        {
-            for (int i = 0; i < count; i++)
+            if (allegato == null)
+                return;
+            foreach (var item in allegato.DettagliAllegato)
             {
-                foreach (var item in allegato.DettagliAllegato)
-                {
-                    ApplicaVariazione(odl, item);
-                }
+                ApplicaVariazione(odl, item);
             }
         }
 
@@ -344,7 +388,8 @@ namespace XFactoryNET.Module.Controllers
 
         private void innerApplicaFormula(Odl odl)
         {
-            sostituzioniApplicate = false;
+            odl.Stato = StatoOdL.InPreparazione;
+            odl.SostituzioniApplicate = false;
             ApplicaFormula(odl);
             ApplicaAllegatiArticolo(odl);
         }
@@ -394,7 +439,11 @@ namespace XFactoryNET.Module.Controllers
                 {
                     odl.IngredientiTeorici.Add(ingr.Clona());
                 }
+
             }
+
+            CalcolaQuantit‡Componenti(odl);
+
 
             if (odl.Articolo != null)
             {
@@ -426,7 +475,38 @@ namespace XFactoryNET.Module.Controllers
 
         public void ApplicaSostituzioneComponente(Componente item)
         {
-            if (item.Articolo.TipoSostituzione == TipoSostituzione.Manuale)
+            //if (item.Articolo.TipoSostituzione == TipoSostituzione.Manuale)
+            //{
+            //    ShowViewParameters svp = new ShowViewParameters();
+            //    DialogController dlc = Application.CreateController<DialogController>();
+            //    dlc.SaveOnAccept = false;
+            //    dlc.AcceptAction.Execute += new SimpleActionExecuteEventHandler(AcceptAction_Execute);
+            //    svp.Controllers.Add(dlc);
+            //    svp.TargetWindow = TargetWindow.NewModalWindow;
+            //    svp.CreatedView = CreateListViewFormuleSostituzione(this.View.ObjectSpace,item);
+            //    svp.CreatedView.CurrentObjectChanged += new EventHandler(CreatedView_CurrentObjectChanged);
+            //    Application.ShowViewStrategy.ShowView(svp, new ShowViewSource(this.Frame,null));
+            //}
+            //else if (item.Articolo.TipoSostituzione == TipoSostituzione.Automatica)
+            //{
+            //    foreach (Formula formula in item.Articolo.Formule.Where(f => (f.ArticoloSostituzione == null || f.ArticoloSostituzione == item.OdlIngredientiTeorici.Articolo || item.OdlIngredientiTeorici.Classi.Contains(f.ArticoloSostituzione)) && (f.ClasseMateriali == null || item.OdlIngredientiTeorici.Classi.Contains(f.ClasseMateriali))))
+            //    {
+            //        SostituisciComponente(item, formula);
+            //    }
+            //}
+            foreach (var sost in item.Articolo.Sostituzioni.Where(s => s.Abilitata && s.Applica))
+            {
+
+                if ((sost.Categoria == null || item.OdlIngredientiTeorici.Categorie.Contains(sost.Categoria)) &&
+                    (sost.BaseArticolo == null || sost.BaseArticolo == item.OdlIngredientiTeorici.Articolo || item.OdlIngredientiTeorici.Categorie.Contains(sost.BaseArticolo)))
+                {
+                    SostituisciComponente(item, sost.Formula);
+                }
+
+            }
+
+            CollectionSource cs = CreateCollectionSourceSostituzioni(this.View.ObjectSpace, item);
+            if (cs.GetCount() > 0)
             {
                 ShowViewParameters svp = new ShowViewParameters();
                 DialogController dlc = Application.CreateController<DialogController>();
@@ -434,16 +514,9 @@ namespace XFactoryNET.Module.Controllers
                 dlc.AcceptAction.Execute += new SimpleActionExecuteEventHandler(AcceptAction_Execute);
                 svp.Controllers.Add(dlc);
                 svp.TargetWindow = TargetWindow.NewModalWindow;
-                svp.CreatedView = CreateListViewFormuleSostituzione(this.View.ObjectSpace,item);
+                svp.CreatedView = CreateListViewFormuleSostituzione(cs, item);
                 svp.CreatedView.CurrentObjectChanged += new EventHandler(CreatedView_CurrentObjectChanged);
-                Application.ShowViewStrategy.ShowView(svp, new ShowViewSource(this.Frame,null));
-            }
-            else if (item.Articolo.TipoSostituzione == TipoSostituzione.Automatica)
-            {
-                foreach (Formula formula in item.Articolo.Formule.Where(f => item.OdlIngredientiTeorici.Classi.Contains(f.ClasseMateriali)))
-                {
-                    SostituisciComponente(item, formula);
-                }
+                Application.ShowViewStrategy.ShowView(svp, new ShowViewSource(this.Frame, null));
             }
 
         }
@@ -485,7 +558,7 @@ namespace XFactoryNET.Module.Controllers
             if (item.ArticoloIngrediente == null)
                 return;
 
-            Componente comp = odl.IngredientiTeorici.FirstOrDefault<Componente>(c => c.Articolo == item.Articolo);
+            Componente comp = odl.IngredientiTeorici.FirstOrDefault<Componente>(c => c.Articolo == item.ArticoloIngrediente);
             if (comp == null)
             {
                 comp = new Componente(odl.Session) { StatoModifica = StatoModificaComponente.Aggiunto, Articolo = item.ArticoloIngrediente };
@@ -503,6 +576,9 @@ namespace XFactoryNET.Module.Controllers
             else
                 comp.Percentuale += item.Valore;
 
+            if (comp.Percentuale == 0)
+                comp.Delete();
+
         }
 
         public bool Predisponi(Odl odl)
@@ -511,7 +587,8 @@ namespace XFactoryNET.Module.Controllers
             IObjectSpace os = View.ObjectSpace;
             if (Validator.RuleSet.ValidateTarget(os, odl, "AvviaOdl").State != ValidationState.Valid)
             {
-                showAllContextsController.Action.DoExecute();
+                if (this.View.IsRoot)
+                    showAllContextsController.Action.DoExecute();
                 return false;
             }
 
@@ -519,7 +596,8 @@ namespace XFactoryNET.Module.Controllers
 
             if (!eFattibile || Validator.RuleSet.ValidateAll(os, odl.Ingredienti, "Verifica Ingredienti") == false)
             {
-                showAllContextsController.Action.DoExecute();
+                if (this.View.IsRoot)
+                    showAllContextsController.Action.DoExecute();
                 return false;
             }
 
@@ -567,15 +645,25 @@ namespace XFactoryNET.Module.Controllers
         {
             bool eFattibile = true;
 
-            while (odl.Ingredienti.Count > 0)
+            foreach (var i in odl.Ingredienti)
             {
-                odl.Ingredienti[0].Delete();
+                i.Delete();
             }
 
-            while (odl.Prodotti.Count > 0)
+            foreach (var i in odl.Prodotti)
             {
-                odl.Prodotti[0].Delete();
+                i.Delete();
             }
+
+            //while (odl.Ingredienti.Count > 0)
+            //{
+            //    odl.Ingredienti[0].Delete();
+            //}
+
+            //while (odl.Prodotti.Count > 0)
+            //{
+            //    odl.Prodotti[0].Delete();
+            //}
             //for (int nrLotto = 1; nrLotto <= this.NumeroMiscelate; nrLotto++)
             {
                 int nrProdotto = 0;
@@ -583,7 +671,7 @@ namespace XFactoryNET.Module.Controllers
                 {
                     nrProdotto++;
 
-                    float qt‡Ingr = comp.Percentuale * odl.Quantit‡PerMiscelata / 100;
+                    decimal qt‡Ingr = comp.Percentuale * odl.Quantit‡PerMiscelata / 100;
 
                     for (int nrMisc = 1; nrMisc <= odl.NumeroMiscelate; nrMisc++)
                     {
@@ -607,47 +695,167 @@ namespace XFactoryNET.Module.Controllers
                 }
 
                 Dictionary<string, int> nrIngrediente = new Dictionary<string, int>();
-                foreach (Componente comp in new List<Componente>(odl.IngredientiTeorici))
+                /*
+                foreach (Componente comp in new List<Componente>(odl.IngredientiTeorici).OrderByDescending(c => c.Percentuale))
                 {
-                    float qt‡Ingr = comp.Percentuale * odl.Quantit‡ / 100;
+                    decimal qt‡Ingr = comp.Percentuale * odl.Quantit‡ / 100;
+
+                    if (qt‡Ingr > 0)
+                    {
+                        bool sacchi = (comp.Modalit‡ != null && comp.Modalit‡.Sacchi);
+                        comp.Stato = StatoComponente.Assente;
+                        var giacenze = comp.Articolo.Giacenza;
+                        var giac = giacenze.Where(l => l.Quantit‡Disponibile > 0).OrderBy(l => l.Quantit‡Disponibile);
+                        foreach (var lot in giac)
+                        {
+                            string codiceApparatoLavorazione=string.Empty;
+                            Apparato apparatoLavorazione = null;
+                            Percorso percorso = null;
+                            if (sacchi == false)
+                            {
+                                if (lot.Silos == null)
+                                    continue;
+                                if (lot.Silos.ScaricoAbilitato == false)
+                                    continue;
+                                if (lot.Silos.Destinazioni.Count == 0)
+                                    continue;
+                                foreach (var perc in lot.Silos.Destinazioni)
+                                {
+                                    if (perc.ApparatoTo == odl.ApparatoLavorazione || perc.ApparatoTo.ApparatiDestinazione.Contains(odl.ApparatoLavorazione))
+                                    {
+                                        //Silos valido
+                                        percorso = perc;
+                                        apparatoLavorazione = perc.ApparatoTo;
+                                        codiceApparatoLavorazione = apparatoLavorazione.Codice;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (lot.Magazzino == null)
+                                    continue;
+                                codiceApparatoLavorazione = lot.Magazzino.Codice;
+                            }
+
+                            decimal qt‡Teo;
+                            if (lot.Quantit‡Disponibile<qt‡Ingr)
+                                qt‡Teo = lot.Quantit‡Disponibile;
+                            else
+                                qt‡Teo = qt‡Ingr;
+
+                            int nrIngr = 0;
+                            if (nrIngrediente.ContainsKey(codiceApparatoLavorazione) == false)
+                                nrIngrediente.Add(codiceApparatoLavorazione, 1);
+                            nrIngr = nrIngrediente[codiceApparatoLavorazione];
+                            nrIngrediente[codiceApparatoLavorazione]++;
+                            
+                            for (int nrMisc = 1; nrMisc <= odl.NumeroMiscelate; nrMisc++)
+                            {
+                                Lotto ingr = new Lotto(odl.Session)
+                                {
+                                    Articolo = comp.Articolo,
+                                    Qt‡Teo = qt‡Teo / odl.NumeroMiscelate,
+                                    NrMisc = nrMisc,
+                                    NrComp = nrIngr,
+                                    TipoMovimento = BusinessObjects.TipoMovimento.Consumo,
+                                    Modalit‡ = comp.Modalit‡,
+                                    Stato = StatoLotto.Pronto,
+                                    Odl = odl
+                                };
+ 
+                                if (sacchi)
+                                {
+                                    ingr.Magazzino = lot.Magazzino;
+                                    ingr.Confezione = lot.Confezione;
+                                    ingr.Magazzino.RegistraMovimento(ingr);
+                                }
+                                else
+                                {
+                                    comp.Silos = lot.Silos;
+                                    lot.Silos.RegistraMovimento(ingr);
+                                    ingr.ApparatoLavorazione = apparatoLavorazione;        //ad esempio: Bilancia di dosaggio
+                                    if (percorso.Modalit‡ != null)
+                                        ingr.Modalit‡ = percorso.Modalit‡;
+                                }
+
+                                ingr.Tolleranza = System.Math.Max(comp.Tolleranza, comp.TolleranzaPerc * qt‡Teo);
+                            }
+                            qt‡Ingr -= qt‡Teo;
+                            if (qt‡Ingr <= 0)
+                            {
+                                comp.Stato = StatoComponente.Pronto;
+                                break;
+                            }
+
+                        }
+                        if (qt‡Ingr > 0)
+                        {
+                            comp.Stato = StatoComponente.Insufficiente;
+                            eFattibile = false;
+                        }
+
+                    }
+
+                }   //end foreach ingredientiTeorici
+                */
+
+                
+                XPCollection<Lotto> lotti = new XPCollection<Lotto>(odl.Session);
+                XPCollection<Silos> silos = new XPCollection<Silos>(odl.Session);
+                XPCollection<Magazzino> magazzini = new XPCollection<Magazzino>(odl.Session);
+                XPCollection<Percorso> percorsi = new XPCollection<Percorso>(odl.Session);
+
+                foreach (Componente comp in new List<Componente>(odl.IngredientiTeorici).OrderByDescending(c => c.Percentuale))
+                {
+                    decimal qt‡Ingr = comp.Percentuale * odl.Quantit‡ / 100;
                     if (qt‡Ingr > 0)
                     {
                         //Ingredienti
                         comp.Stato = StatoComponente.Assente;
-                        XPCollection<Lotto> lotti = new XPCollection<Lotto>(odl.Session);
-                        XPCollection<Silos> silos = new XPCollection<Silos>(odl.Session);
-                        XPCollection<Magazzino> magazzini = new XPCollection<Magazzino>(odl.Session);
-                        XPCollection<Percorso> percorsi = new XPCollection<Percorso>(odl.Session);
                         Magazzino mNullo = null;
+
                         var query = from app in silos
                                     join perc in percorsi on app equals perc.ApparatoFrom
                                     where (app.Articolo == comp.Articolo &&
+                                        app.Quantit‡ > 0 &&
                                         //(comp.Modalit‡ == null || perc.Modalit‡ == null || perc.Modalit‡ == comp.Modalit‡) &&
                                         perc.ApparatoFrom.ScaricoAbilitato &&
                                         perc.ApparatoTo.CaricoAbilitato
                                         )
-                                    select new { Apparato = app, Magazzino = mNullo, Percorso = perc, Sacchi = false, Qta = app.Quantit‡,Lot=app.Lotto};
+                                    select new { Apparato = app, Magazzino = mNullo, Percorso = perc, Sacchi = false, QtaDisp = app.Quantit‡, Lot = app.Lotto };
+
+                        //var query = from lot in comp.Articolo.Giacenza
+                        //            join app in silos on lot.Silos equals app
+                        //            join perc in percorsi on app equals perc.ApparatoFrom
+                        //            where (perc.ApparatoFrom.ScaricoAbilitato && perc.ApparatoTo.CaricoAbilitato && app.Quantit‡>0)
+                        //            select new { Apparato = app, Magazzino = mNullo, Percorso = perc, Sacchi = false, QtaDisp = app.Quantit‡, Lot = app.Lotto };
 
                         if (comp.Modalit‡ != null && comp.Modalit‡.Sacchi)
                         {
                             Percorso pNullo = null;
                             Silos aNull = null;
-                            var query2 = from lot in lotti
-                                            join maga in magazzini on lot.Magazzino equals maga
-                                            where (lot.Articolo == comp.Articolo)
-                                            select new { Apparato = aNull, Magazzino = maga, Percorso = pNullo, Sacchi = true, Qta = lot.Quantit‡,Lot = lot };
+                            //var query2 = from lot in lotti
+                            //                join maga in magazzini on lot.Magazzino equals maga
+                            //                where (lot.Articolo == comp.Articolo && lot.TipoMovimento >= 0 && lot.Quantit‡Disponibile>0)
+                            //                select new { Apparato = aNull, Magazzino = maga, Percorso = pNullo, Sacchi = true, QtaDisp = lot.Quantit‡Disponibile,Lot = lot };
+                            
+                            var query2 = from lot in comp.Articolo.Giacenza
+                                         join maga in magazzini on lot.Magazzino equals maga
+                                         where lot.Quantit‡Residua>0
+                                         select new { Apparato = aNull, Magazzino = maga, Percorso = pNullo, Sacchi = true, QtaDisp = lot.Quantit‡Residua, Lot = lot };
+
                             if (comp.Modalit‡ == null)
                                 query = query.Union(query2);
                             else
                                 query = query2;
                         }
 
-                        float qt‡Teo;
-                        foreach (var item in query.OrderByDescending(a => a.Qta))
+                        decimal qt‡Teo;
+                        foreach (var item in query.OrderByDescending(a => a.QtaDisp))
                         {
                             Apparato apparatoLavorazione = null;
                             string codiceApparatoLavorazione;
-                            float qt‡Disp = 0;
+                            decimal qt‡Disp = 0;
                             if (item.Sacchi == false)
                             {
                                 //Just One Step Beyond
@@ -656,12 +864,13 @@ namespace XFactoryNET.Module.Controllers
                                     continue;
                                 apparatoLavorazione = item.Percorso.ApparatoTo;
                                 codiceApparatoLavorazione = apparatoLavorazione.Codice;       //Codice Bilancia
-                                qt‡Disp = item.Apparato.Quantit‡;
+                                //qt‡Disp = item.Apparato.Quantit‡;
+                                qt‡Disp = item.QtaDisp;
                             }
                             else
                             {
                                 codiceApparatoLavorazione = item.Magazzino.Codice;
-                                qt‡Disp = item.Qta;
+                                qt‡Disp = item.QtaDisp;
                             }
 
                             if (qt‡Disp < qt‡Ingr)
@@ -684,26 +893,28 @@ namespace XFactoryNET.Module.Controllers
                                     NrMisc = nrMisc,
                                     NrComp = nrIngr,
                                     TipoMovimento = BusinessObjects.TipoMovimento.Consumo,
+                                    Modalit‡ = comp.Modalit‡,
                                     Stato = StatoLotto.Pronto,
                                     Odl = odl
                                 };
-
+ 
                                 if (item.Sacchi)
                                 {
                                     ingr.Magazzino = item.Magazzino;
-                                    ingr.Modalit‡ = comp.Modalit‡;
                                     ingr.Confezione = item.Lot.Confezione;
                                     ingr.Magazzino.RegistraMovimento(ingr);
                                 }
                                 else
                                 {
+                                    comp.Silos = item.Apparato;
                                     item.Apparato.RegistraMovimento(ingr);
                                     ingr.ApparatoLavorazione = apparatoLavorazione;        //ad esempio: Bilancia di dosaggio
-                                    ingr.Modalit‡ = item.Percorso.Modalit‡;
+                                    if (item.Percorso.Modalit‡ != null)
+                                        ingr.Modalit‡ = item.Percorso.Modalit‡;
                                 }
-
                                 ingr.Tolleranza = System.Math.Max(comp.Tolleranza, comp.TolleranzaPerc * qt‡Teo);
                             }
+
                             qt‡Ingr -= qt‡Teo;
                             if (qt‡Ingr <= 0)
                             {
@@ -711,6 +922,7 @@ namespace XFactoryNET.Module.Controllers
                                 break;
                             }
                         }
+
                         if (qt‡Ingr > 0)
                         {
                             comp.Stato = StatoComponente.Insufficiente;
@@ -718,7 +930,8 @@ namespace XFactoryNET.Module.Controllers
                         }
 
                     }
-                }
+                }//end foreach ingredienti
+                
             }
 
             return eFattibile;
@@ -857,7 +1070,7 @@ namespace XFactoryNET.Module.Controllers
 
                 Lotto lot = new Lotto(odl.Session)
                     {
-                        Articolo = odl.Articolo,
+                        Articolo = odl.Prelievo.Articolo,
                         Silos = odl.Prelievo,
                         TipoMovimento = TipoMovimento.Consumo,
                         Qt‡Teo = odl.Quantit‡,
@@ -899,7 +1112,7 @@ namespace XFactoryNET.Module.Controllers
                 while (odl.Prodotti.Count > 0)
                     odl.Prodotti[0].Delete();
 
-                Lotto lot = new Lotto(odl.Session) { Articolo = odl.Articolo, Silos = odl.Prelievo, TipoMovimento = TipoMovimento.Consumo };
+                Lotto lot = new Lotto(odl.Session) { Articolo = odl.Prelievo.Articolo, Silos = odl.Prelievo, TipoMovimento = TipoMovimento.Consumo };
                 lot.Qt‡Teo = odl.Quantit‡;
                 lot.NrComp = 1;
                 lot.NrMisc = 1;
@@ -1001,6 +1214,7 @@ namespace XFactoryNET.Module.Controllers
                 lp.Quantit‡ = odl.Quantit‡;
                 lp.Confezione = odl.Confezione;
                 lp.FormaFisica = odl.Articolo.FormaFisica;
+                lp.CodiceEsterno = odl.CodiceEsterno;
             }
             return lp;
 
@@ -1014,16 +1228,30 @@ namespace XFactoryNET.Module.Controllers
             OrdineProduzione odp = odl.OrdineProduzione;
             if (odp == null)
             {
-                if (odl.Prelievo == null || odl.Prelievo.Lotto == null || odl.Prelievo.Lotto.Odl == null || odl.Prelievo.Lotto.Odl.OrdineProduzione == null)
-                {
-                    if (odl.Lavorazione.Codice == OdlDosaggio.IDLavorazione)
-                        odp = CreaOrdineProduzione(odl);
-                }
-                else
+                if (odl.Prelievo != null && odl.Prelievo.Lotto != null && odl.Prelievo.Lotto.Odl != null && odl.Prelievo.Lotto.Odl.OrdineProduzione != null)
                 {
                     odl.Prelievo.Lotto.Odl.OrdineProduzione.Odls.Add(odl);
                     odp =  odl.Prelievo.Lotto.Odl.OrdineProduzione;
                 }
+                else if (odl.MagazzinoPrelievo != null && odl.Lotti.Count == 1)
+                {
+                    Lotto lIngr = odl.Lotti[0];
+                    if (lIngr.Utilizzi.Count == 1)
+                    {
+                        lIngr = lIngr.Utilizzi[0];
+                        if (lIngr.Odl != null && lIngr.Odl.OrdineProduzione != null)
+                        {
+                            lIngr.Odl.OrdineProduzione.Odls.Add(odl);
+                            odp = lIngr.Odl.OrdineProduzione;
+                        }
+                    }
+                }
+                else
+                {
+                    if (odl.Lavorazione.Codice == OdlDosaggio.IDLavorazione)
+                        odp = CreaOrdineProduzione(odl);
+                }
+
             }
 
             if (odp != null)
@@ -1072,10 +1300,12 @@ namespace XFactoryNET.Module.Controllers
             Odl odl = (Odl)this.View.CurrentObject;
             if (odl.Lavorazione != null)
             {
-                session.ExecuteSproc("ArchiviaProduzione", odl.Lavorazione.Codice);
+                session.ExecuteSproc("ArchiviaProduzione",odl.Lavorazione.Codice);
+                session.PurgeDeletedObjects();
             }
 
             ShowMessageBox(e, "Produzioni archiviate");
+            View.ObjectSpace.Refresh();
 
         }
 
@@ -1089,8 +1319,19 @@ namespace XFactoryNET.Module.Controllers
             MessageBoxClass msg = new MessageBoxClass() { Text = text };
             e.DialogController.SaveOnAccept = false;
             e.DialogController.CancelAction.Active["NothingToCancel"] = enableCancel;
+            if (enableCancel)
+                e.DialogController.Cancelling += new EventHandler(DialogController_Cancelling);
             e.View = Application.CreateDetailView(Application.CreateObjectSpace(), msg);
             
+        }
+
+        void DialogController_Cancelling(object sender, EventArgs e)
+        {
+            //ModificationsController mod = Frame.GetController<ModificationsController>();
+            //mod.ModificationsHandlingMode = ModificationsHandlingMode.AutoRollback;
+            //this.View.ObjectSpace.Rollback();
+            //mod.ModificationsHandlingMode = ModificationsHandlingMode.Confirmation;
+
         }
 
         private void simpleActionAvviaOdp_Execute(object sender, SimpleActionExecuteEventArgs e)
@@ -1124,15 +1365,22 @@ namespace XFactoryNET.Module.Controllers
 
             odl.Articolo = odp.Articolo;
             OnChangedArticolo(odl);
-            odl.Formula = odp.Formula;
-            innerApplicaFormula(odl);
+            if (odp.Formula != null && odp.Formula.Lavorazione == odl.Lavorazione)
+            {
+                odl.Formula = odp.Formula;
+                innerApplicaFormula(odl);
+            }
 
             odl.Quantit‡ = odp.Quantit‡;
+            if (odp.Quantit‡Effettiva != 0)
+                odl.Quantit‡ = odp.Quantit‡Effettiva;
+
+
             foreach (var item in odp.AllegatiOrdineProduzione)
             {
                 Allegato all = item.Allegato;
                 odl.AllegatiOdl.Add(new AllegatoOdl(odl.Session) { Allegato = all });
-                ApplicaAllegato(odl, all);
+                //ApplicaAllegato(odl, all);
             }
 
 
@@ -1140,94 +1388,338 @@ namespace XFactoryNET.Module.Controllers
 
         private void singleChoiceActionSilos_Execute(object sender, SingleChoiceActionExecuteEventArgs e)
         {
-            switch (e.SelectedChoiceActionItem.Id)
+            Odl odl = null;
+            IObjectSpace os = Application.CreateObjectSpace(); //this.View.ObjectSpace;
+            os.Committed+=new EventHandler(os_Committed);
+
+            object currentObject = this.View.CurrentObject;
+            switch ((string)e.SelectedChoiceActionItem.Data)
             {
                 case "Insacco":
-                    CreaOdlPrelievo<OdlInsacco>(e);
+                    odl = CreaOdlInsacco(os,currentObject);
                     break;
                 case "Pellet":
-                    CreaOdlPrelievo<OdlPellet>(e);
+                    odl = CreaOdlPellet(os,currentObject);
                     break;
-                case "Scarico Rinfusa":
-                    CreaOdlPrelievo<OdlScaricoRinfusa>(e);
+                case "ScaricoRinfusa":
+                    odl = CreaOdlScaricoRinfusa(os,currentObject);
                     break;
-                case "Carico Rinfusa":
-                    CreaOdlDestinazione<OdlCaricoRinfusa>(e);
+                case "CaricoRinfusa":
+                    odl = CreaOdlCaricoRinfusa(os,currentObject);
                     break;
-                case "Insila":
-                    CreaOdlDestinazione<OdlInsilaggio>(e);
+                case "Insilaggio":
+                    odl = CreaOdlInsilaggio(os,currentObject);
+                    break;
+                case "Trasferimento":
+                    odl = CreaOdlTrasferimento(os,currentObject);
                     break;
                 default:
                     break;
             }
-        }
 
-        private T CreaOdlDestinazione<T>(ActionBaseEventArgs e)
-            where T : Odl
-        {
-            IObjectSpace os = Application.CreateObjectSpace();
-            T odl = os.CreateObject<T>();
-            if (this.View.CurrentObject is Silos)
-            {
-                Silos app = (Silos)os.GetObject(this.View.CurrentObject);
-                odl.Destinazione = app;
-                odl.Articolo = app.Articolo;
-            }
-            if (this.View.CurrentObject is Lotto)
-            {
-                Lotto lot = (Lotto)os.GetObject(this.View.CurrentObject);
-                odl.MagazzinoDestinazione = lot.Magazzino;
-            }
             e.ShowViewParameters.CreatedView = Application.CreateDetailView(os, odl, true);
             e.ShowViewParameters.CreateAllControllers = true;
-            e.ShowViewParameters.TargetWindow = TargetWindow.NewWindow;
+            e.ShowViewParameters.TargetWindow = TargetWindow.NewModalWindow;
+
+        }
+
+        void os_Committed(object sender, EventArgs e)
+        {
+            ObjectSpace.Refresh();
+        }
+
+
+        private OdlInsacco CreaOdlInsacco(IObjectSpace os, object currentObject)
+        {
+            OdlInsacco odl = CreaOdlPrelievo<OdlInsacco>(os,currentObject);
+            if(odl.MagazzinoDestinazione == null)
+                odl.MagazzinoDestinazione = os.GetObjectByKey<Magazzino>("MAGPF");
+            if (odl.Confezione == null)
+                odl.Confezione = os.GetObjectByKey<Confezione>("SAC25");
             return odl;
         }
 
-        private T CreaOdlPrelievo<T>(ActionBaseEventArgs e)
+        private OdlPellet CreaOdlPellet(IObjectSpace os, object currentObject)
+        {
+            OdlPellet odl = CreaOdlPrelievo<OdlPellet>(os,currentObject);
+            return odl;
+        }
+
+        private OdlTrasferimento CreaOdlTrasferimento(IObjectSpace os, object currentObject)
+        {
+            OdlTrasferimento odl = CreaOdlPrelievo<OdlTrasferimento>(os, currentObject);
+            return odl;
+        }
+
+        private OdlScaricoRinfusa CreaOdlScaricoRinfusa(IObjectSpace os, object currentObject)
+        {
+            OdlScaricoRinfusa odl = CreaOdlPrelievo<OdlScaricoRinfusa>(os,currentObject);
+            return odl;
+        }
+
+        private OdlInsilaggio CreaOdlInsilaggio(IObjectSpace os,object currentObject)
+        {
+            OdlInsilaggio odl = CreaOdlDestinazione<OdlInsilaggio>(os,currentObject);
+            return odl;
+        }
+
+
+        private OdlCaricoRinfusa CreaOdlCaricoRinfusa(IObjectSpace os,object currentObject)
+        {
+            OdlCaricoRinfusa odl = CreaOdlDestinazione<OdlCaricoRinfusa>(os,currentObject);
+            return odl;
+        }
+
+        private T CreaOdlDestinazione<T>(IObjectSpace os,object currentObject)
+            where T : Odl
+        {
+            T odl = os.CreateObject<T>();
+            if (currentObject is Silos)
+            {
+                Silos app = (Silos)os.GetObject(currentObject);
+                odl.Destinazione = app;
+                odl.Articolo = app.Articolo;
+            }
+            if (currentObject is Lotto)
+            {
+                Lotto lot = (Lotto)os.GetObject(currentObject);
+                if (lot.Magazzino != null)
+                    odl.MagazzinoDestinazione = lot.Magazzino;
+                if (lot.Silos != null)
+                    odl.Destinazione = lot.Silos;
+                odl.Articolo = lot.Articolo;
+                odl.Confezione = lot.Confezione;
+            }
+            if (currentObject is Articolo)
+            {
+                Articolo art = (Articolo)os.GetObject(currentObject);
+                odl.Articolo = art;
+                SetDest(odl);
+            }
+            if (currentObject is Componente)
+            {
+                Componente compo = (Componente)currentObject;
+                Articolo art = (Articolo)os.GetObject(compo.Articolo);
+                odl.Articolo = art;
+                SetDest(odl);
+            }
+            return odl;
+        }
+
+        private void SetDest(Odl odl)
+        {
+            if (odl.Articolo.Giacenza.Count > 0)
+            {
+                Lotto last = odl.Articolo.Giacenza.OrderBy(l => l.DataInizio).Last();
+                odl.Destinazione = last.Silos;
+                odl.MagazzinoDestinazione = last.Magazzino;
+            }
+
+        }
+        private T CreaOdlPrelievo<T>(IObjectSpace os,object currentObject)
             where T:Odl
         {
-            IObjectSpace os = Application.CreateObjectSpace();
+
             T odl = os.CreateObject<T>();
-            if (this.View.CurrentObject is Silos)
+            if (currentObject is Silos)
             {
-                Silos app = (Silos)os.GetObject(this.View.CurrentObject);
+                Silos app = (Silos)os.GetObject(currentObject);
                 odl.Prelievo = app;
                 odl.Articolo = app.Articolo;
+                if (app.Lotto != null && app.Lotto.Odl != null && app.Lotto.Odl.OrdineProduzione != null)
+                    odl.Confezione = app.Lotto.Odl.OrdineProduzione.Confezione;
                 odl.Quantit‡ = app.Quantit‡;
             }
-            if (this.View.CurrentObject is Lotto)
+            if (currentObject is Lotto)
             {
-                Lotto lot = (Lotto)os.GetObject(this.View.CurrentObject);
+                Lotto lot = (Lotto)os.GetObject(currentObject);
                 odl.MagazzinoPrelievo = lot.Magazzino;
                 odl.Articolo = lot.Articolo;
                 odl.Confezione = lot.Confezione;
             }
-            e.ShowViewParameters.CreatedView = Application.CreateDetailView(os, odl, true);
-            e.ShowViewParameters.CreateAllControllers = true;
-            e.ShowViewParameters.TargetWindow = TargetWindow.NewWindow;
+            if (currentObject is Articolo)
+            {
+                odl.Articolo = (Articolo)os.GetObject(currentObject);
+                SetPrel(odl);
+            }
+
+            //e.ShowViewParameters.CreatedView = Application.CreateDetailView(os, odl, true);
+            //e.ShowViewParameters.CreateAllControllers = true;
+            //e.ShowViewParameters.TargetWindow = TargetWindow.NewWindow;
+
             return odl;
         }
 
-        private void simpleActionAvviaOdl_Execute(object sender, SimpleActionExecuteEventArgs e)
+
+        private void SetPrel(Odl odl)
         {
-            Odl odl = (Odl)this.View.CurrentObject;
-            Avvia(odl);
+            if (odl.Articolo.Giacenza.Count > 0)
+            {
+                Lotto last = odl.Articolo.Giacenza.OrderBy(l => l.DataInizio).Last();
+                odl.Prelievo = last.Silos;
+                odl.MagazzinoPrelievo = last.Magazzino;
+            }
+
         }
 
         private void singleChoiceActionSacchi_Execute(object sender, SingleChoiceActionExecuteEventArgs e)
         {
+            Odl odl = null;
+            IObjectSpace os = this.View.ObjectSpace;     // Application.CreateObjectSpace();
+
             switch (e.SelectedChoiceActionItem.Id)
             {
                 case "Entrata sacchi":
-                    CreaOdlDestinazione<OdlEntrataSacchi>(e);
+                    odl = CreaOdlDestinazione<OdlEntrataSacchi>(os,View.CurrentObject);
                     break;
                 case "Uscita sacchi":
-                    CreaOdlPrelievo<OdlUscitaSacchi>(e);
+                    odl = CreaOdlPrelievo<OdlUscitaSacchi>(os,View.CurrentObject);
                     break;
                 default:
                     break;
             }
+
+            e.ShowViewParameters.CreatedView = Application.CreateDetailView(os, odl, false);
+            e.ShowViewParameters.CreateAllControllers = true;
+            e.ShowViewParameters.TargetWindow = TargetWindow.NewWindow;
         }
+
+        bool cancel = false;
+        private void popupWindowShowAction1_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs e)
+        {
+            Odl odl = (Odl)this.View.CurrentObject;
+
+            cancel = !Avvia(odl);
+            if (!cancel)
+                ShowMessageBox(e, "Confermi l'avvio della lavorazione?", true);
+            else
+            {
+                ShowMessageBox(e, "Lavorazione annullata", false);
+                //ModificationsController mod = Frame.GetController<ModificationsController>();
+                //mod.ModificationsHandlingMode = ModificationsHandlingMode.AutoRollback;
+                //this.View.ObjectSpace.Rollback();
+                //mod.ModificationsHandlingMode = ModificationsHandlingMode.Confirmation;
+            }
+
+        }
+
+        private void popupWindowShowAction1_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
+        {
+            if (!cancel)
+            {
+                Odl odl = this.View.CurrentObject as Odl;
+                if (odl.OnInAvvio())
+                {
+                    foreach (var lot in odl.Prodotti)
+                    {
+                        if (odl.Destinazione != null)
+                            odl.Destinazione.RegistraMovimento(lot);            //Qui la quantit‡ del lotto Ë ancora a zero ma il silos viene gi‡ impegnato.
+                        if (odl.MagazzinoDestinazione != null)
+                            odl.MagazzinoDestinazione.RegistraMovimento(lot);
+
+                        lot.CodiceEsterno = odl.CodiceEsterno;
+                    }
+                    odl.Stato = StatoOdL.Avviato;
+
+                    GetOrCreateOdp(odl);
+
+                    if (odl.Dummy)
+                        odl.EseguiTeorico();
+
+                    this.View.ObjectSpace.CommitChanges();
+
+                    StampaMedicati(odl);
+
+                    odl.OnAvviato();
+
+                    this.View.Close();
+
+                    return;
+                }
+            }
+
+            //ModificationsController mod = Frame.GetController<ModificationsController>();
+            //mod.ModificationsHandlingMode = ModificationsHandlingMode.AutoRollback;
+            //this.View.ObjectSpace.Rollback();
+            //mod.ModificationsHandlingMode = ModificationsHandlingMode.Confirmation;
+
+        }
+
+        private void StampaMedicati(Odl odl)
+        {
+            if (odl.Lotti.Any(l => l.Modalit‡ != null && l.Modalit‡.Codice == "ADD"))
+            {
+                Reports.ReportMedicati report = new Reports.ReportMedicati();
+                List<Odl> list = new List<Odl>();
+                list.Add(odl);
+                report.DataSource = list;
+                using (DevExpress.XtraReports.UI.ReportPrintTool printTool = new DevExpress.XtraReports.UI.ReportPrintTool(report))
+                {
+                    printTool.Print();
+                }
+            }
+
+        }
+
+        private void simpleActionSvuota_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            object currentObject = e.CurrentObject;
+            IObjectSpace os = View.ObjectSpace;
+            if (currentObject is Silos)
+            {
+                ((Silos)this.View.CurrentObject).Svuota();
+                os.CommitChanges();
+                return;
+            }
+
+        }
+
+        private void simpleActionForwardOdl_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            IObjectSpace os = this.ObjectSpace; // Application.CreateObjectSpace();
+            Odl odl = (Odl)e.CurrentObject;
+            odl = os.GetObject(odl);
+            e.ShowViewParameters.CreatedView = Application.CreateDetailView(os,"Odl_DetailView_Tracking",false,odl);
+            e.ShowViewParameters.CreateAllControllers = true;
+        }
+
+        private void simpleActionStampaConsumiTurno_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            IObjectSpace os = this.ObjectSpace; // Application.CreateObjectSpace();
+            Odl odl = (Odl)e.CurrentObject;
+            odl = os.GetObject(odl);
+
+            Reports.ReportConsumi rpt = new Reports.ReportConsumi();
+            using (ReportPrintTool printTool = new ReportPrintTool(rpt))
+            {
+                //rpt.Parameters[0].Value = odl.Turno;
+                rpt.DataSource = os.GetObjects<Lotto>(CriteriaOperator.Parse("Odl.Turno=? AND TipoMovimento=?", odl.Turno, TipoMovimento.Consumo));
+                // Invoke the Print dialog.
+                //printTool.PrintDialog();
+
+                //// Send the report to the default printer.
+                //printTool.Print();
+
+                //// Send the report to the specified printer.
+                //printTool.Print("myPrinter");
+
+                //printTool.AutoShowParametersPanel = false;
+                printTool.ShowPreviewDialog();
+            }
+
+        }
+
+        private void popupWindowShowActionArchivia_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
+        {
+
+        }
+
+        private void simpleActionAbortOdL_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            Odl odl = e.CurrentObject as Odl;
+            odl.Stato = StatoOdL.Annullato;
+            this.ObjectSpace.CommitChanges();
+        }
+
     }
 }

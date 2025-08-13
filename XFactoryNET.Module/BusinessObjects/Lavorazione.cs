@@ -23,12 +23,13 @@ namespace XFactoryNET.Module.BusinessObjects
             get { return GetCollection<Apparato>("Apparato"); }
         }
 
-        private short nArch;
-        public short NArch
+        private int turnoCorrente;
+        public int TurnoCorrente
         {
-            get { return nArch; }
-            set { SetPropertyValue<short>("NArch", ref nArch, value); }
+            get { return turnoCorrente; }
+            set { SetPropertyValue<int>("TurnoCorrente", ref turnoCorrente, value); }
         }
+
 
         //private int currentOdl;
         //public int CurrentOdl

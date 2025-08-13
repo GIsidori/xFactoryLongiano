@@ -4,11 +4,13 @@ using System.Linq;
 using DevExpress.Xpo;
 using XFactoryNET.Module.BusinessObjects;
 using System.ComponentModel;
+using DevExpress.ExpressApp.ConditionalAppearance;
 
 namespace XFactoryNET.Custom.Panzoo.Module.BusinessObjects
 {
 
-    public class ParametriDosaggio:BaseXPObject
+    [Appearance(null, AppearanceItemType = "ViewItem", Criteria = "NOT Odl.Stato IS NULL AND NOT Odl.Stato IN ('InPreparazione','Pronto')", TargetItems = "*", Enabled = false)]
+    public class ParametriDosaggio : BaseXPObject
     {
         public ParametriDosaggio(Session session):base(session)
         {

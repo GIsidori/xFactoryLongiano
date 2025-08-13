@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.ServiceModel;
 
-namespace XFactoryNET.ServiceLibrary
+namespace XFactoryNET.Custom.MM1.ServiceLibrary
 {
     [ServiceContract]
     public interface ISvcPesa
     {
         [OperationContract]
-        float LeggiPeso(string codicePesa);
+        decimal LeggiPeso(string codicePesa);
     }
 }

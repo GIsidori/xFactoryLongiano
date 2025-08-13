@@ -14,29 +14,28 @@ namespace XFactoryNET.Module.BusinessObjects
     public class Bilancia : Apparato
     {
 
-        float fPesoMax;
-        public float PesoMax
-        {
-            get { return fPesoMax; }
-            set { SetPropertyValue<float>("PesoMax", ref fPesoMax, value); }
-        }
-        float fFondoScala;
-        public float FondoScala
+        decimal fFondoScala;
+        [ModelDefault("DisplayFormat", "n3")][ModelDefault("EditMask","n3")]
+        public decimal FondoScala
         {
             get { return fFondoScala; }
-            set { SetPropertyValue<float>("FondoScala", ref fFondoScala, value); }
+            set { SetPropertyValue<decimal>("FondoScala", ref fFondoScala, value); }
         }
-        float fTaraMax;
-        public float TaraMax
+
+        decimal fTaraMax;
+        [ModelDefault("DisplayFormat", "n3")][ModelDefault("EditMask","n3")]
+        public decimal TaraMax
         {
             get { return fTaraMax; }
-            set { SetPropertyValue<float>("TaraMax", ref fTaraMax, value); }
+            set { SetPropertyValue<decimal>("TaraMax", ref fTaraMax, value); }
         }
-        float fkMult;
-        public float kMult
+
+        decimal fkMult;
+        [ModelDefault("DisplayFormat", "n0")][ModelDefault("EditMask","n0")]
+        public decimal kMult
         {
             get { return fkMult; }
-            set { SetPropertyValue<float>("kMult", ref fkMult, value); }
+            set { SetPropertyValue<decimal>("kMult", ref fkMult, value); }
         }
         int ftMin;
         public int tMin
@@ -50,29 +49,35 @@ namespace XFactoryNET.Module.BusinessObjects
             get { return ftMax; }
             set { SetPropertyValue<int>("tMax", ref ftMax, value); }
         }
-        float fPrecisione;
-        public float Precisione
+        decimal fPrecisione;
+        [ModelDefault("DisplayFormat", "n3")][ModelDefault("EditMask","n3")]
+        public decimal Precisione
         {
             get { return fPrecisione; }
-            set { SetPropertyValue<float>("Precisione", ref fPrecisione, value); }
+            set { SetPropertyValue<decimal>("Precisione", ref fPrecisione, value); }
         }
-        float fMaxVar;
-        public float MaxVar
+        decimal fMaxVar;
+        [ModelDefault("DisplayFormat", "n3")][ModelDefault("EditMask","n3")]
+        public decimal MaxVar
         {
             get { return fMaxVar; }
-            set { SetPropertyValue<float>("MaxVar", ref fMaxVar, value); }
+            set { SetPropertyValue<decimal>("MaxVar", ref fMaxVar, value); }
         }
-        float fMinVar;
-        public float MinVar
+
+        decimal fMinVar;
+        [ModelDefault("DisplayFormat", "n3")][ModelDefault("EditMask","n3")]
+        public decimal MinVar
         {
             get { return fMinVar; }
-            set { SetPropertyValue<float>("MinVar", ref fMinVar, value); }
+            set { SetPropertyValue<decimal>("MinVar", ref fMinVar, value); }
         }
-        float fVoloMassimo;
-        public float VoloMassimo
+
+        decimal fVoloMassimo;
+        [ModelDefault("DisplayFormat", "n3")][ModelDefault("EditMask","n3")]
+        public decimal VoloMassimo
         {
             get { return fVoloMassimo; }
-            set { SetPropertyValue<float>("VoloMassimo", ref fVoloMassimo, value); }
+            set { SetPropertyValue<decimal>("VoloMassimo", ref fVoloMassimo, value); }
         }
         bool fVolumetrica;
         public bool Volumetrica

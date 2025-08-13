@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <ListView Id="Gruppo_Silos_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="Lotto" Index="-1" />
+        <ColumnInfo Id="Lotto.Odl.OrdineProduzione.OrdineCarico.Vettore.Descrizione" PropertyName="Lotto.Odl.OrdineProduzione.OrdineCarico.Vettore.Descrizione" Index="8" Width="20" Caption="Vettore" SortIndex="-1" SortOrder="None" />
+        <ColumnInfo Id="Lotto.Odl.OrdineProduzione.OrdineCliente.Cliente.Descrizione" PropertyName="Lotto.Odl.OrdineProduzione.OrdineCliente.Cliente.Descrizione" Index="7" Width="20" Caption="Cliente" />
+        <ColumnInfo Id="Lotto.Odl.OrdineProduzione" PropertyName="Lotto.Odl.OrdineProduzione" Index="5" Width="58" />
+        <ColumnInfo Id="Lotto.Odl.OrdineProduzione.Formula" PropertyName="Lotto.Odl.OrdineProduzione.Formula" Index="2" Width="49" />
+      </Columns>
+    </ListView>
+    <ListView Id="Silos_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="Lotto" Width="133" Index="-1" />
+        <ColumnInfo Id="Lotto.Odl.OrdineProduzione.OrdineCarico.Vettore.Descrizione" PropertyName="Lotto.Odl.OrdineProduzione.OrdineCarico.Vettore.Descrizione" Index="9" Width="207" Caption="Vettore" />
+        <ColumnInfo Id="Lotto.Odl.OrdineProduzione.OrdineCarico" PropertyName="Lotto.Odl.OrdineProduzione.OrdineCarico" Index="8" Width="77" />
+        <ColumnInfo Id="Lotto.Odl.OrdineProduzione.OrdineCliente.Cliente.Descrizione" PropertyName="Lotto.Odl.OrdineProduzione.OrdineCliente.Cliente.Descrizione" Index="7" Width="163" Caption="Cliente" />
+        <ColumnInfo Id="Lotto.Odl.OrdineProduzione.OrdineCliente" PropertyName="Lotto.Odl.OrdineProduzione.OrdineCliente" Index="6" Width="80" />
+        <ColumnInfo Id="Lotto.Odl.OrdineProduzione.Formula" PropertyName="Lotto.Odl.OrdineProduzione.Formula" Index="3" />
+        <ColumnInfo Id="Lotto.Odl.OrdineProduzione.NumeroOrdine" PropertyName="Lotto.Odl.OrdineProduzione.NumeroOrdine" Index="1" Width="94" SortIndex="-1" SortOrder="None" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Silos_DetailView">
+      <Items Id="Items">
+        <PropertyEditor Id="Allegati" PropertyName="Lotto.AllegatiLotto" View="Lotto_AllegatiLotto_ListView" />
+      </Items>
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Item6">
+              <LayoutItem Id="Allegati" ViewItem="Allegati" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

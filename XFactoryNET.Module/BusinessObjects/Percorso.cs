@@ -34,11 +34,13 @@ namespace XFactoryNET.Module.BusinessObjects
         }
 
         Trasporto fTrasporto;
+        [Association]
         public Trasporto Trasporto
         {
             get { return fTrasporto; }
             set { SetPropertyValue<Trasporto>("Trasporto", ref fTrasporto, value); }
         }
+
         bool fAbilitato;
         public bool Abilitato
         {

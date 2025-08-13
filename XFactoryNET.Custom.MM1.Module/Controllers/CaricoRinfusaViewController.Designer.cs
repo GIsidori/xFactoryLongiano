@@ -39,11 +39,7 @@ namespace XFactoryNET.Custom.MM1.Module.Controllers
             this.mostraParametri.Category = "View";
             this.mostraParametri.ConfirmationMessage = null;
             this.mostraParametri.Id = "actionMostraParametriCaricoRinfusa";
-            this.mostraParametri.ImageName = null;
-            this.mostraParametri.Shortcut = null;
-            this.mostraParametri.Tag = null;
             this.mostraParametri.TargetObjectType = typeof(XFactoryNET.Module.BusinessObjects.OdlCaricoRinfusa);
-            this.mostraParametri.TargetViewId = null;
             this.mostraParametri.TargetViewType = DevExpress.ExpressApp.ViewType.DetailView;
             this.mostraParametri.ToolTip = "Visualizza parametri di lavorazione";
             this.mostraParametri.TypeOfView = typeof(DevExpress.ExpressApp.DetailView);
@@ -54,13 +50,8 @@ namespace XFactoryNET.Custom.MM1.Module.Controllers
             this.leggiTara.Caption = "Tara";
             this.leggiTara.ConfirmationMessage = null;
             this.leggiTara.Id = "leggiTara";
-            this.leggiTara.ImageName = null;
             this.leggiTara.SelectionDependencyType = DevExpress.ExpressApp.Actions.SelectionDependencyType.RequireSingleObject;
-            this.leggiTara.Shortcut = null;
-            this.leggiTara.Tag = null;
-            this.leggiTara.TargetObjectsCriteria = null;
             this.leggiTara.TargetObjectType = typeof(XFactoryNET.Module.BusinessObjects.OdlCaricoRinfusa);
-            this.leggiTara.TargetViewId = null;
             this.leggiTara.TargetViewType = DevExpress.ExpressApp.ViewType.DetailView;
             this.leggiTara.ToolTip = null;
             this.leggiTara.TypeOfView = typeof(DevExpress.ExpressApp.DetailView);
@@ -71,15 +62,10 @@ namespace XFactoryNET.Custom.MM1.Module.Controllers
             this.caricaRinfusa.Caption = "Carica Rinfusa";
             this.caricaRinfusa.ConfirmationMessage = null;
             this.caricaRinfusa.Id = "caricaRinfusa";
-            this.caricaRinfusa.ImageName = null;
             this.caricaRinfusa.SelectionDependencyType = DevExpress.ExpressApp.Actions.SelectionDependencyType.RequireSingleObject;
-            this.caricaRinfusa.Shortcut = null;
-            this.caricaRinfusa.Tag = null;
             this.caricaRinfusa.TargetObjectsCriteria = "[Lotto] Is Null";
             this.caricaRinfusa.TargetObjectType = typeof(XFactoryNET.Module.BusinessObjects.Silos);
-            this.caricaRinfusa.TargetViewId = null;
             this.caricaRinfusa.ToolTip = "Carica materiale alla rinfusa";
-            this.caricaRinfusa.TypeOfView = null;
             this.caricaRinfusa.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.caricaRinfusa_Execute);
             // 
             // CaricoRinfusaViewController

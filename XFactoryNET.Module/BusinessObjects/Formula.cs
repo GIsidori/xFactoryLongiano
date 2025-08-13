@@ -5,6 +5,8 @@ using DevExpress.Xpo;
 using DevExpress.Persistent.Base;
 using System.ComponentModel;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.ConditionalAppearance;
+using DevExpress.ExpressApp.Editors;
 
 namespace XFactoryNET.Module.BusinessObjects
 {
@@ -17,6 +19,8 @@ namespace XFactoryNET.Module.BusinessObjects
     [MapInheritance(MapInheritanceType.OwnTable)]
     [NavigationItem("Formule e Materiali")]
     [DefaultProperty("Codice")]
+    [Appearance(null, AppearanceItemType = "LayoutItem", TargetItems = "Prodotti,Articoli", Visibility = ViewItemVisibility.Hide, Criteria = "TipoFormula='Sostituzione'")]
+    [Appearance(null, AppearanceItemType = "LayoutItem", TargetItems = "Sostituzioni", Visibility = ViewItemVisibility.Hide, Criteria = "TipoFormula<>'Sostituzione'")]
     public class Formula : BaseXPCustomObject
     {
 
@@ -63,6 +67,25 @@ namespace XFactoryNET.Module.BusinessObjects
             set { SetPropertyValue<Lavorazione>("Lavorazione", ref fLavorazione, value); }
         }
 
+        public string ElencoArticoli
+        {
+            get
+            {
+                string codice = string.Empty;
+                if (Articoli != null)
+                {
+                    foreach (var art in Articoli)
+                    {
+                        if (string.IsNullOrEmpty(codice) == false)
+                            codice += ", ";
+                        codice += art.Codice;
+                    }
+                }
+                return codice;
+
+            }
+        }
+
 
         [Association("FormulaIngredienti"), Aggregated]
         public DevExpress.Xpo.XPCollection<Componente> Ingredienti
@@ -77,18 +100,20 @@ namespace XFactoryNET.Module.BusinessObjects
         }
 
         TipoFormula tipoFormula;
+        [ImmediatePostData]
         public TipoFormula TipoFormula
         {
             get {return tipoFormula ;}
             set { SetPropertyValue<TipoFormula>("TipoFormula", ref tipoFormula, value); }
         }
 
-        private Classe classeMateriali;
-        public Classe ClasseMateriali
-        {
-            get { return classeMateriali; }
-            set { SetPropertyValue<Classe>("ClasseMateriali", ref classeMateriali, value); }
-        }
+        //private Classe classeMateriali;
+        //[Appearance(null,Enabled=false,Criteria="TipoFormula<>'Sostituzione'")]
+        //public Classe ClasseMateriali
+        //{
+        //    get { return classeMateriali; }
+        //    set { SetPropertyValue<Classe>("ClasseMateriali", ref classeMateriali, value); }
+        //}
 
         [Association("FormulaOdl"),Browsable(false)]
         public XPCollection<Odl> Odl
@@ -110,6 +135,12 @@ namespace XFactoryNET.Module.BusinessObjects
             {
                 return GetCollection<Articolo>("Articoli");
             }
+        }
+
+        [Association]
+        public XPCollection<Sostituzione> Sostituzioni
+        {
+            get { return GetCollection<Sostituzione>("Sostituzioni"); }
         }
 
         //protected override XPCollection<T> CreateCollection<T>(DevExpress.Xpo.Metadata.XPMemberInfo property)

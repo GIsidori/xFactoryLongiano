@@ -47,6 +47,7 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
             return ThreadDosaggio.CurrMisc();
         }
 
+
         public int NrMisc()
         {
             return ThreadDosaggio.NrMisc();
@@ -57,12 +58,12 @@ namespace XFactoryNET.Custom.Panzoo.ServiceLibrary
             return ThreadDosaggio.Running();
         }
 
-        public float GetPeso(int iBil)
+        public decimal GetPeso(int iBil)
         {
             return ThreadDosaggio.GetPeso(iBil);
         }
 
-        public float QtàEstratta(int iBil)
+        public decimal QtàEstratta(int iBil)
         {
             return ThreadDosaggio.QtàEstratta(iBil);
         }

@@ -33,22 +33,24 @@ namespace XFactoryNET.Module.BusinessObjects
 
         private TipoMovimento tipoMovimento;
         [ModelDefault("AllowEdit", "False")]
+        [Indexed(Unique=false)]
         public TipoMovimento TipoMovimento
         {
             get { return tipoMovimento; }
             set { SetPropertyValue<TipoMovimento>("TipoMovimento", ref tipoMovimento, value); }
         }
 
-        float fQuantit‡;
-        public float Quantit‡
+        decimal fQuantit‡;
+        [ModelDefault("DisplayFormat", "n0")][ModelDefault("EditMask","n0")]
+        public decimal Quantit‡
         {
             get { return fQuantit‡; }
             set {
-                float qPrec = fQuantit‡;
-                SetPropertyValue<float>("Quantit‡", ref fQuantit‡, value);
-                if (qPrec != fQuantit‡)
+                decimal qPrec = fQuantit‡;
+                SetPropertyValue<decimal>("Quantit‡", ref fQuantit‡, value);
+                if (!this.IsLoading && !this.IsDeleted && qPrec != fQuantit‡)
                 {
-                    float deltaQ = fQuantit‡ - qPrec;
+                    decimal deltaQ = fQuantit‡ - qPrec;
                     if (Silos != null)
                         Silos.RegistraMovimento(this,deltaQ);
                     if (Magazzino != null)
@@ -57,23 +59,22 @@ namespace XFactoryNET.Module.BusinessObjects
             }
         }
 
-        float fQuantit‡Prelevata;
+        decimal fQuantit‡Prelevata;
         [ModelDefault("AllowEdit","False")]
-        public float Quantit‡Prelevata
+        [ModelDefault("DisplayFormat", "n0")][ModelDefault("EditMask","n0")]
+        public decimal Quantit‡Prelevata
         {
             get { return fQuantit‡Prelevata; }
-            set { SetPropertyValue<float>("Quantit‡Prelevata", ref fQuantit‡Prelevata, value); }
+            set { SetPropertyValue<decimal>("Quantit‡Prelevata", ref fQuantit‡Prelevata, value); }
         }
 
-        [NonPersistent]
-        public float Quantit‡Residua
+        [ModelDefault("DisplayFormat", "n0")][ModelDefault("EditMask","n0")]
+        [PersistentAlias("Quantit‡ - Quantit‡Prelevata")]
+        public decimal Quantit‡Residua
         {
-            get { return Quantit‡ - Quantit‡Prelevata; }
-            set
-            {
-                Quantit‡Prelevata = Quantit‡ - value;
-            }
+            get { return (decimal)EvaluateAlias("Quantit‡Residua");}
         }
+
 
         [Appearance(null, Criteria = "Confezione IS NULL OR Confezione.TipoConfezione <> 'Sacchi'", Enabled = false)]
         public int NumeroSacchiResidui
@@ -84,11 +85,11 @@ namespace XFactoryNET.Module.BusinessObjects
             }
         }
 
-        private int GetNumeroSacchi(float quantit‡)
+        private int GetNumeroSacchi(decimal quantit‡)
         {
             if (Confezione != null)
             {
-                float pesoSacco = 0;
+                decimal pesoSacco = 0;
                 if (Confezione.TipoConfezione == TipoConfezione.Sacchi && Confezione.PesoSacco != 0)
                     pesoSacco = Confezione.PesoSacco;
                 if (pesoSacco != 0)
@@ -98,14 +99,14 @@ namespace XFactoryNET.Module.BusinessObjects
 
         }
 
-        float fQt‡Teo;
+        decimal fQt‡Teo;
 
         [ModelDefault("DisplayFormat", "n4")]
         [ModelDefault("EditFormat", "n4")]
-        public float Qt‡Teo
+        public decimal Qt‡Teo
         {
             get { return fQt‡Teo; }
-            set { SetPropertyValue<float>("Qt‡Teo", ref fQt‡Teo, value); }
+            set { SetPropertyValue<decimal>("Qt‡Teo", ref fQt‡Teo, value); }
         }
 
         Modalit‡ fModalit‡;
@@ -115,11 +116,12 @@ namespace XFactoryNET.Module.BusinessObjects
             set { SetPropertyValue<Modalit‡>("Modalit‡", ref fModalit‡, value); }
         }
 
-        float fTolleranza;
-        public float Tolleranza
+        decimal fTolleranza;
+        [ModelDefault("DisplayFormat", "n3")][ModelDefault("EditMask","n3")]
+        public decimal Tolleranza
         {
             get { return fTolleranza; }
-            set { SetPropertyValue<float>("Tolleranza", ref fTolleranza, value); }
+            set { SetPropertyValue<decimal>("Tolleranza", ref fTolleranza, value); }
         }
 
         Articolo fArticolo;
@@ -176,7 +178,7 @@ namespace XFactoryNET.Module.BusinessObjects
             set { SetPropertyValue<Odl>("Odl", ref odl, value); }
         }
 
-        [Association("UtilizzoLotti"),Browsable(false)]
+        [Association("UtilizzoLotti"),Browsable(true)]
         public XPCollection<Lotto> Prodotti
         {
             get
@@ -186,7 +188,7 @@ namespace XFactoryNET.Module.BusinessObjects
             }
         }
 
-        [Association("UtilizzoLotti"),Browsable(false)]
+        [Association("UtilizzoLotti"),Browsable(true)]
         public XPCollection<Lotto> Utilizzi
         {
             get
@@ -195,27 +197,8 @@ namespace XFactoryNET.Module.BusinessObjects
                 //return Odl.Ingredienti.Contains(this) ? null : Odl.Ingredienti;
             }
         }
-
-        //public XPCollection<Lotto> LottiUtilizzatiDirettamente
-        //{
-        //    get
-        //    {
-        //        if (odl != null)
-        //            return this.Odl.Ingredienti.Contains(this) ? null : this.Odl.Ingredienti;
-        //        return null;
-        //    }
-        //}
-
-        //private XPCollection<Lotto> LottiProdottiDirettamente
-        //{
-        //    get
-        //    {
-        //        if (odl != null)
-        //            return Odl.Prodotti.Contains(this) ? null : Odl.Prodotti;
-        //        return null;
-        //    }
-        //}
-
+        
+        [Browsable(true)]
         public IList<Odl> OdlProdotti
         {
             get
@@ -223,14 +206,17 @@ namespace XFactoryNET.Module.BusinessObjects
                 List<Odl> list = new List<Odl>();
                 foreach (var odl in Prodotti.Select<Lotto, Odl>(l => l.Odl))
                 {
-                    list.Add(odl);
-                    list.AddRange(odl.Prodotti.SelectMany<Lotto, Odl>(l => l.OdlProdotti));
-                }
-
+                    if (list.Contains(odl) == false)
+                    {
+                        list.Add(odl);
+                    }
+                }                
                 return list;
             }
         }
 
+        
+        [Browsable(true)]
         public IList<Odl> OdlUtilizzati
         {
             get
@@ -240,38 +226,47 @@ namespace XFactoryNET.Module.BusinessObjects
                 {
                     foreach (var lot in this.Odl.Ingredienti.SelectMany(l => l.Utilizzi))
                     {
-                        if (lot.Odl != null)
+                        if (lot.Odl != null && list.Contains(lot.odl) == false)
                         {
                             list.Add(lot.Odl);
-                            list.AddRange(lot.OdlUtilizzati);
                         }
                     }
+                    if (this.TipoMovimento == BusinessObjects.TipoMovimento.EntrataMerci || this.TipoMovimento == BusinessObjects.TipoMovimento.Produzione)
+                        list.Add(this.odl);
                 }
                 return list;
             }
         }
         
-        public static void UtilizzaLotti(XPCollection<Lotto> lottiPrelievo, Lotto lotto)
+        public static void UtilizzaLotti(IList<Lotto> lottiPrelievo, Lotto lotto)
         {
             //Utilizza i lotti a magazzino con metodo FIFO
-            float qt‡ = lotto.Quantit‡;
+            decimal qt‡ = lotto.Quantit‡;
             int index = 0;
-            var lotti = lottiPrelievo.Where(l => l.TipoMovimento >= 0 && l.DataFine == null && l.Quantit‡Residua > 0).OrderBy(l => l.DataInizio);
-            while (qt‡ > 0 && index < lotti.Count())
+            
+            var lotti = lottiPrelievo.Where(l => l.TipoMovimento >= 0 && l.DataFine == null && l.Quantit‡Residua > 0).OrderBy(l => l.DataInizio).ToList();
+            int count = lotti.Count();
+            while (qt‡ >= 0 && index < count)
             {
                 Lotto lPrel = lotti.ElementAt(index);
                 lotto.Utilizzi.Add(lPrel);
                 if (lPrel.Quantit‡Residua > qt‡)
                 {
-                    lPrel.Quantit‡Residua -= qt‡;
+                    lPrel.Quantit‡Prelevata += qt‡;
                     break;
                 }
                 else
                 {
                     qt‡ -= lPrel.Quantit‡Residua;
-                    lPrel.Quantit‡Residua = 0;
+                    lPrel.Quantit‡Prelevata = lPrel.Quantit‡;
                     lPrel.DataFine = System.DateTime.Now;
                     index++;
+                }
+                //Svuota il magazzino se rimane meno di un sacco.
+                if (lPrel.Confezione != null && lPrel.NumeroSacchiResidui < 1)
+                {
+                    lPrel.Quantit‡Prelevata = lPrel.Quantit‡;
+                    lPrel.DataFine = System.DateTime.Now;
                 }
             }
         }
@@ -284,13 +279,6 @@ namespace XFactoryNET.Module.BusinessObjects
         }
 
 
-        //Apparato apparatoStoccaggio;
-        //[Association,Browsable(false)]
-        //public Apparato ApparatoStoccaggio
-        //{
-        //    get { return apparatoStoccaggio; }
-        //    set { SetPropertyValue<Apparato>("ApparatoStoccaggio", ref apparatoStoccaggio, value); }
-        //}
 
         Silos silos;
         [DataSourceProperty("SilosValidi")]
@@ -313,34 +301,10 @@ namespace XFactoryNET.Module.BusinessObjects
 
                 if (silos != null)
                 {
-                    //apparato.Lotto = this;
                     Magazzino = null;
                 }
 
-                //OnChanged("Apparato");
-
             }
-            //set {
-            //    if (apparato == value)
-            //        return;
-
-            //    //Memorizza il riferimento all'apparato precedente
-            //    Apparato pApp = apparato;
-            //    apparato = value;
-
-            //    if (IsLoading)
-            //        return;
-
-            //    if (pApp != null && pApp.Lotto == this)
-            //        pApp.Lotto = null;
-
-            //    if (apparato != null)
-            //    {
-            //        apparato.Lotto = this;
-            //        Magazzino = null;
-            //    }
-            //    OnChanged("Apparato");
-            //}
         }
 
         [NonPersistent, Browsable(false)]
@@ -375,6 +339,7 @@ namespace XFactoryNET.Module.BusinessObjects
 
         private DateTime? dataFine;
         [ModelDefault("AllowEdit", "False")]
+        [Indexed(Unique=false)]
         public DateTime? DataFine
         {
             get { return dataFine; }
@@ -412,22 +377,6 @@ namespace XFactoryNET.Module.BusinessObjects
             get { return fNrLotto; }
             set { SetPropertyValue<int>("NrMisc", ref fNrLotto, value); }
         }
-
-        //private Odl fOdlIngredienti;
-        //[Association("OdlIngredienti"), Browsable(false)]
-        //public Odl OdlIngredienti
-        //{
-        //    get { return fOdlIngredienti; }
-        //    set { SetPropertyValue<Odl>("OdlIngredienti", ref fOdlIngredienti, value); }
-        //}
-
-        //private Odl fOdlProdotti;
-        //[Association("OdlProdotti"), Browsable(false)]
-        //public Odl OdlProdotti
-        //{
-        //    get { return fOdlProdotti; }
-        //    set { SetPropertyValue<Odl>("OdlProdotti", ref fOdlProdotti, value); }
-        //}
 
         int fNrComp;
 

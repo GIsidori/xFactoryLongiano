@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using DevExpress.Data.Filtering;
 using System.Collections.Generic;
+using DevExpress.ExpressApp.Model;
 
 namespace XFactoryNET.Module.BusinessObjects
 {
@@ -25,18 +26,20 @@ namespace XFactoryNET.Module.BusinessObjects
             set { SetPropertyValue<TipoConfezione>("TipoConfezione", ref fTipoConfezione, value); }
         }
 
-        float fPesoSacco;
-        public float PesoSacco
+        decimal fPesoSacco;
+        [ModelDefault("DisplayFormat", "n0")][ModelDefault("EditMask","n0")]
+        public decimal PesoSacco
         {
             get { return fPesoSacco; }
-            set { SetPropertyValue<float>("PesoSacco", ref fPesoSacco, value); }
+            set { SetPropertyValue<decimal>("PesoSacco", ref fPesoSacco, value); }
         }
 
-        float fCapacità;
-        public float Capacità
+        decimal fCapacità;
+        [ModelDefault("DisplayFormat", "n0")][ModelDefault("EditMask","n0")]
+        public decimal Capacità
         {
             get { return fCapacità; }
-            set { SetPropertyValue<float>("Capacità", ref fCapacità, value); }
+            set { SetPropertyValue<decimal>("Capacità", ref fCapacità, value); }
         }
 
         public Confezione(Session session) : base(session) { }

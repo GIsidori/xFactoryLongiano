@@ -14,7 +14,6 @@ using DevExpress.Persistent.Validation;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.ExpressApp.Model.NodeGenerators;
 using DevExpress.Xpo;
-using XFactoryNET.Custom.GIMA.Module.BusinessObjects;
 using DevExpress.ExpressApp.Xpo;
 
 namespace XFactoryNET.Custom.GIMA.Module.Controllers
@@ -44,33 +43,15 @@ namespace XFactoryNET.Custom.GIMA.Module.Controllers
             IObjectSpace objectSpace = Application.CreateObjectSpace();
             Session session = ((XPObjectSpace)objectSpace).Session;
 
-            switch (e.SelectedChoiceActionItem.Id)
-            {
-                case "Formule":
-                    //e.ShowViewParameters.TargetWindow = TargetWindow.NewModalWindow;
-                    //e.ShowViewParameters.CreatedView = Application.CreateListView(objectSpace, typeof(TBFormula), true);     // ShowListView<QFormula>(QFormula.GetObjects(session),objectSpace);
-                    session.ExecuteSproc("ImportaFormule");
-                    break;
-                case "Articoli":
-                    //e.ShowViewParameters.TargetWindow = TargetWindow.NewModalWindow;
-                    //e.ShowViewParameters.CreatedView = Application.CreateListView(objectSpace, typeof(TBArticolo), true);    // ShowListView<QArticolo>(QArticolo.GetObjects(session),objectSpace);
-                    session.ExecuteSproc("ImportaArticoli");
-                    break;
-                case "Allegati":
-                    //e.ShowViewParameters.TargetWindow = TargetWindow.NewModalWindow;
-                    //e.ShowViewParameters.CreatedView = Application.CreateListView(objectSpace, typeof(TBAllegato), true);    // ShowListView<QAllegato>(QAllegato.GetObjects(session),objectSpace);
-                    session.ExecuteSproc("ImportaAllegati");
-                    break;
-                case "Ordini di Produzione":
-                    session.ExecuteSproc("ImportaOrdini");
-                    break;
-                case "Importa e aggiorna tutto":
-                    session.ExecuteSproc("ImportaTutto");
-                    break;
-
-            }
+            if (e.SelectedChoiceActionItem == singleChoiceActionImport.Items[0])
+                session.ExecuteSproc("ImportaArticoliFormule");
+            else if (e.SelectedChoiceActionItem == singleChoiceActionImport.Items[1])
+                session.ExecuteSproc("ImportaOrdini");
+            else if (e.SelectedChoiceActionItem == singleChoiceActionImport.Items[2])
+                session.ExecuteSproc("ImportaTutto");
 
         }
+
 
     }
 }

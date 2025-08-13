@@ -33,6 +33,7 @@ namespace XFactoryNET.Custom.Panzoo.Module
             // 
             this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Validation.ValidationModule));
             this.RequiredModuleTypes.Add(typeof(XFactoryNET.Module.XFactoryNETModule));
+            this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.ConditionalAppearance.ConditionalAppearanceModule));
 
         }
 

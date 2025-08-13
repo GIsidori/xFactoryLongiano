@@ -48,5 +48,12 @@ namespace XFactoryNET.Module.Win.Controllers
             base.OnDeactivated();
             BarActionItemsFactory.CustomizeActionControl -= new EventHandler<DevExpress.ExpressApp.Win.Templates.ActionContainers.CustomizeActionControlEventArgs>(BarActionItemsFactory_CustomizeActionControl);
         }
+
+        private void ShowSettingsAction_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            frmSettings frm = new frmSettings();
+            frm.ShowDialog();
+
+        }
     }
 }

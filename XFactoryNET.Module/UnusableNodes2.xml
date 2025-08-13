@@ -1,53 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
   <Views Id="Views">
-    <ListView Id="Articolo_Lotti_ListView">
-      <Columns Id="Columns">
-        <ColumnInfo Id="Fornitore" Width="94" Index="-1" />
-      </Columns>
-    </ListView>
-    <DetailView Id="Lotto_DetailView">
+    <ListView Id="Articolo_Odl_ListView" PageIndex="0" />
+    <ListView Id="Odl_IngredientiTeorici_ListView" PageIndex="0" />
+    <ListView Id="OdlCaricoRinfusa_ListView" PageSize="50" />
+    <DetailView Id="Silos_DetailView">
       <Layout Id="Layout">
         <LayoutGroup Id="Main">
-          <LayoutGroup Id="SimpleEditors">
-            <LayoutGroup Id="Lotto_col1">
-              <LayoutGroup Id="Auto5da9188d-cb21-41f5-be5e-3bdcd637ae26">
-                <LayoutItem Id="Fornitore" ViewItem="Fornitore" />
-              </LayoutGroup>
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Item6">
+              <LayoutItem Id="Allegati" ViewItem="Allegati" />
             </LayoutGroup>
-          </LayoutGroup>
+          </TabbedGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="Lotto_LottiProdotti_ListView">
-      <Columns Id="Columns">
-        <ColumnInfo Id="Fornitore" Width="69" Index="-1" />
-      </Columns>
-    </ListView>
-    <ListView Id="Lotto_LottiUtilizzati_ListView">
-      <Columns Id="Columns">
-        <ColumnInfo Id="Fornitore" Width="83" Index="-1" />
-      </Columns>
-    </ListView>
-    <ListView Id="Magazzino_Lotti_ListView">
-      <Columns Id="Columns">
-        <ColumnInfo Id="Fornitore" Width="69" Index="-1" />
-      </Columns>
-    </ListView>
-    <ListView Id="Odl_Ingredienti_ListView">
-      <Columns Id="Columns">
-        <ColumnInfo Id="Fornitore" Width="92" Index="-1" />
-      </Columns>
-    </ListView>
-    <ListView Id="Odl_Prodotti_ListView">
-      <Columns Id="Columns">
-        <ColumnInfo Id="Fornitore" Index="-1" />
-      </Columns>
-    </ListView>
-    <ListView Id="Silos_Lotti_ListView">
-      <Columns Id="Columns">
-        <ColumnInfo Id="Fornitore" Width="40" Index="-1" />
-      </Columns>
-    </ListView>
   </Views>
 </Application>

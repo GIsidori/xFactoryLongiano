@@ -32,6 +32,7 @@ namespace XFactoryNET.Module.BusinessObjects
 
         private DateTime dataCarico;
         
+        [ModelDefault("DisplayFormat","g")]
         public DateTime DataCarico
         {
             get { return dataCarico; }

@@ -10,7 +10,8 @@ using DevExpress.ExpressApp.Model;
 namespace XFactoryNET.Module.BusinessObjects
 {
     [DefaultProperty("Codice")]
-    public abstract class Apparato : BaseXPCustomObject
+    [NavigationItem("Apparati")]
+    public class Apparato : BaseXPCustomObject
     {
         public Apparato(Session session) : base(session) { }
         public Apparato() : base(Session.DefaultSession) { }
@@ -123,6 +124,17 @@ namespace XFactoryNET.Module.BusinessObjects
                 SetPropertyValue<Lavorazione>("Lavorazione", ref fLavorazione, value);
             }
         }
+
+        private decimal quantit‡Max;
+        [ModelDefault("DisplayFormat", "n0")]
+        [ModelDefault("EditMask", "n0")]
+        public decimal Quantit‡Max
+        {
+            get { return quantit‡Max; }
+            set { SetPropertyValue<decimal>("Quantit‡Max", ref quantit‡Max, value); }
+        }
+
+
         //[PersistentAlias("Lotti[NOT DataCarico IS NULL AND  DataScarico IS NULL].SUM(Quantit‡) - Lotti[DataCarico IS NULL AND NOT DataScarico IS NULL].SUM(Quantit‡)")]
 
 

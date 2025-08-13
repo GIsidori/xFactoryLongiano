@@ -16,5 +16,8 @@ namespace XFactoryNET.Module.BusinessObjects
         public Mixer(Session session) : base(session) { }
         public Mixer() : base(Session.DefaultSession) { }
         public override void AfterConstruction() { base.AfterConstruction(); }
+
+
+
     }
 }

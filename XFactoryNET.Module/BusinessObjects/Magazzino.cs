@@ -39,9 +39,12 @@ namespace XFactoryNET.Module.BusinessObjects
             get { return GetCollection<Lotto>("Lotti"); }
         }
 
-        public XPCollection<Lotto> Giacenze
+        public IList<Lotto> Giacenze
         {
-            get { return new XPCollection<Lotto>(Lotti, CriteriaOperator.Parse("TipoMovimento>=0 AND DataFine IS NULL")); }
+            get {
+                return Lotti.Where(l => l.TipoMovimento >= 0 && l.DataFine == null).ToList();
+                //return new XPCollection<Lotto>(Lotti, CriteriaOperator.Parse("TipoMovimento>=0 AND DataFine IS NULL")); 
+            }
         }
 
 
@@ -49,13 +52,15 @@ namespace XFactoryNET.Module.BusinessObjects
         {
             if (lotto != null)
             {
-                this.Reload();
+                //this.Reload();
                 lotto.Magazzino = this;
                 if (lotto.DataInizio == System.DateTime.MinValue)
                     lotto.DataInizio = System.DateTime.Now;
                 if (lotto.TipoMovimento < 0)
                 {
-                    XPCollection<Lotto> lotti = new XPCollection<Lotto>(this.Lotti, CriteriaOperator.Parse("(Confezione=? OR ? OR Confezione IS NULL) AND Articolo=?", lotto.Confezione,lotto.Confezione == null, lotto.Articolo));
+                    //XPCollection<Lotto> lotti = new XPCollection<Lotto>(this.Lotti, CriteriaOperator.Parse("(Confezione=? OR ? OR Confezione IS NULL) AND Articolo=?", lotto.Confezione,lotto.Confezione == null, lotto.Articolo));
+                    //XPCollection<Lotto> lotti = new XPCollection<Lotto>(lotto.Articolo.Giacenza, CriteriaOperator.Parse("(Confezione=? OR ? OR Confezione IS NULL)", lotto.Confezione, lotto.Confezione == null));
+                    IList<Lotto> lotti = lotto.Articolo.Giacenza.Where(l => l.Confezione == null || l.Confezione == lotto.Confezione).ToList();
                     Lotto.UtilizzaLotti(lotti, lotto);
                 }
             }

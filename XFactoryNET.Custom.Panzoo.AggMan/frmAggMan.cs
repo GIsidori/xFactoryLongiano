@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using XFactoryNET.Module.BusinessObjects;
 using System.Reflection;
+using System.Data.SqlClient;
+using System.Security;
 
 namespace XFactoryNET.Custom.Panzoo.AggMan
 {
@@ -32,7 +34,6 @@ namespace XFactoryNET.Custom.Panzoo.AggMan
             this.odlTableAdapter.Connection = conn;
             this.lottoTableAdapter.Connection = conn;
             this.silosTableAdapter.Connection = conn;
-
 
             this.serialPort1.PortName = Properties.Settings.Default.PortName;
             this.serialPort1.Parity = Properties.Settings.Default.Parity;
@@ -447,7 +448,27 @@ namespace XFactoryNET.Custom.Panzoo.AggMan
             {
                 xFactoryNETDataSet.Lotto[currIngr - 1].Stato = (int)StatoLotto.Eseguito;
             }
-            lottoTableAdapter.Update(xFactoryNETDataSet.Lotto);
+            int retries = 0;
+            bool success = false;
+            while (!success && retries<10)
+            {
+
+                try
+                {
+                    lottoTableAdapter.Update(xFactoryNETDataSet.Lotto);
+                    success = true;
+                }
+                catch (SqlException ex)
+                {
+                    if (ex.Number == 1205 && retries<10)
+                    {
+                        retries++;
+                        System.Threading.Thread.Sleep(1000);
+                    }
+                    else
+                        throw;
+                }
+            }
             Next();
             //LeggiPeso(true);
         }
@@ -476,32 +497,51 @@ namespace XFactoryNET.Custom.Panzoo.AggMan
             //Incrementa giacenza prodotto finito;
             using (XFactoryNETDataSet ds = new XFactoryNETDataSet())
             {
-                lottoTableAdapter.FillProdottiOdl(ds.Lotto, odl.OID, currMisc);
-                odlTableAdapter.FillByKey(ds.Odl, cRow.Odl);
-
-                //Gestire la produzione dei sottoprodotti
-                XFactoryNETDataSet.LottoRow prod = ds.Lotto[0];
-                double qtàProd = 0;
-                foreach (var lotto in xFactoryNETDataSet.Lotto)
+                bool success = false;
+                int retries = 0;
+                while (!success && retries<10)
                 {
-                    lotto.Stato = (int)StatoLotto.Eseguito;
+                    try
+                    {
+                        lottoTableAdapter.FillProdottiOdl(ds.Lotto, odl.OID, currMisc);
+                        odlTableAdapter.FillByKey(ds.Odl, cRow.Odl);
 
-                    qtàProd+=lotto.Quantità;
+                        //Gestire la produzione dei sottoprodotti
+                        XFactoryNETDataSet.LottoRow prod = ds.Lotto[0];
+                        double qtàProd = 0;
+                        foreach (var lotto in xFactoryNETDataSet.Lotto)
+                        {
+                            lotto.Stato = (int)StatoLotto.Eseguito;
 
-                    lottoTableAdapter.Update(lotto);
-                    lottoTableAdapter.RegistraConsumoMagazzino(lotto.OID);
+                            qtàProd += lotto.Quantità;
 
+                            lottoTableAdapter.Update(lotto);
+                            lottoTableAdapter.RegistraConsumoMagazzino(lotto.OID);
+
+                        }
+
+                        prod.Quantità += qtàProd;
+                        silosTableAdapter.FillByCodice(ds.Silos, prod.Silos);
+                        if (prod.SilosRow != null)
+                            prod.SilosRow.Quantità += qtàProd;
+                        ds.Odl[0].QuantitàEffettiva += qtàProd;
+
+                        lottoTableAdapter.Update(ds);
+                        silosTableAdapter.Update(ds);
+                        odlTableAdapter.Update(ds);
+                        success = true;
+                    }
+                    catch (SqlException ex)
+                    {
+                        if (ex.Number == 1205)
+                        {
+                            retries++;
+                            System.Threading.Thread.Sleep(1000);
+                        }
+                        else
+                            throw;
+                    }
                 }
-
-                prod.Quantità += qtàProd;
-                silosTableAdapter.FillByCodice(ds.Silos, prod.Silos);
-                if (prod.SilosRow != null)
-                    prod.SilosRow.Quantità += qtàProd;
-                ds.Odl[0].QuantitàEffettiva += qtàProd;
-
-                lottoTableAdapter.Update(ds);
-                silosTableAdapter.Update(ds);
-                odlTableAdapter.Update(ds);
             }
 
 

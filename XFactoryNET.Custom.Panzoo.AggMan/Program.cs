@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace XFactoryNET.Custom.Panzoo.AggMan
 {
@@ -19,8 +20,16 @@ namespace XFactoryNET.Custom.Panzoo.AggMan
             ConnectionString = frmSettings.GetConnectionString();
             if (ConnectionString != null)
             {
-                frmAggMan = new frmAggMan();
-                Application.Run(frmAggMan);
+                try
+                {
+                    frmAggMan = new frmAggMan();
+                    Application.Run(frmAggMan);
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show($"{ex.Message}\n{ex.Number}\n{ex.Procedure}\n{ex.InnerException}\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    throw;
+                }
             }
             else
                 Application.Exit();

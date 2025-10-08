@@ -1,6 +1,6 @@
 ﻿namespace XFactoryNET.Custom.Panzoo.AggMan
 {
-    partial class Form1
+    partial class frmAggMan
     {
         /// <summary>
         /// Required designer variable.
@@ -29,212 +29,270 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
+            System.Windows.Forms.Label label2;
+            System.Windows.Forms.Label label1;
+            System.Windows.Forms.Label lottoInCorsoLabel;
+            System.Windows.Forms.Label numeroLottiLabel;
+            System.Windows.Forms.Label noteLabel;
+            System.Windows.Forms.Label articoloLabel;
+            System.Windows.Forms.Label nrOrdLabel;
+            System.Windows.Forms.Label label5;
+            System.Windows.Forms.Label label8;
+            System.Windows.Forms.Label label9;
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.lblSetpoint = new System.Windows.Forms.Label();
             this.lblSac = new System.Windows.Forms.Label();
-            this.lblStatoBilancia = new System.Windows.Forms.Label();
-            this.lblFasePesatura = new System.Windows.Forms.Label();
-            this.txtPesoDiff = new System.Windows.Forms.TextBox();
-            this.txtPesoBilancia = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnTeorico = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox6 = new System.Windows.Forms.TextBox();
             this.ingredientiBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.odlBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.xFactoryNETDataSet = new XFactoryNET.Custom.Panzoo.AggMan.XFactoryNETDataSet();
-            this.odlBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
-            this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
-            this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
-            this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.quantitàPerLottoLabel = new System.Windows.Forms.Label();
-            this.quantitàPerLottoTextBox = new System.Windows.Forms.TextBox();
-            this.destinazioneLabel = new System.Windows.Forms.Label();
-            this.destinazioneTextBox = new System.Windows.Forms.TextBox();
-            this.numeroLottiEseguitiLabel = new System.Windows.Forms.Label();
-            this.inCorsoTextBox = new System.Windows.Forms.TextBox();
-            this.numeroMiscelateLabel = new System.Windows.Forms.Label();
-            this.numeroLottiTextBox = new System.Windows.Forms.TextBox();
-            this.noteLabel = new System.Windows.Forms.Label();
-            this.noteTextBox = new System.Windows.Forms.TextBox();
-            this.dataLabel = new System.Windows.Forms.Label();
-            this.dataDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.formulaLabel = new System.Windows.Forms.Label();
-            this.formulaTextBox = new System.Windows.Forms.TextBox();
-            this.descrizioneTextBox = new System.Windows.Forms.TextBox();
-            this.articoloLabel = new System.Windows.Forms.Label();
-            this.articoloTextBox = new System.Windows.Forms.TextBox();
-            this.nrOrdLabel = new System.Windows.Forms.Label();
-            this.nrOrdTextBox = new System.Windows.Forms.TextBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.btnFineMisc = new System.Windows.Forms.Button();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.btnDone = new System.Windows.Forms.Button();
+            this.lblStatoBilancia = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.lblDiff = new System.Windows.Forms.Label();
+            this.lblPesoBilancia = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblQtàIngr = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
-            this.odlTableAdapter = new XFactoryNET.Custom.Panzoo.AggMan.XFactoryNETDataSetTableAdapters.OdlTableAdapter();
-            this.tableAdapterManager = new XFactoryNET.Custom.Panzoo.AggMan.XFactoryNETDataSetTableAdapters.TableAdapterManager();
-            this.componenteTableAdapter = new XFactoryNET.Custom.Panzoo.AggMan.XFactoryNETDataSetTableAdapters.ComponenteTableAdapter();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timerBlink = new System.Windows.Forms.Timer(this.components);
-            this.articoloDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descrizioneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.qtàDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.qtàTeoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.modalitàDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.areaStoccaggioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.statoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel1.SuspendLayout();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.txtCurrMisc = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.lottoInCorsoTextBox = new System.Windows.Forms.TextBox();
+            this.numeroLottiTextBox = new System.Windows.Forms.TextBox();
+            this.noteTextBox = new System.Windows.Forms.TextBox();
+            this.descrizioneTextBox = new System.Windows.Forms.TextBox();
+            this.articoloTextBox = new System.Windows.Forms.TextBox();
+            this.nrOrdTextBox = new System.Windows.Forms.TextBox();
+            this.dataGrid1 = new System.Windows.Forms.DataGrid();
+            this.dataGridTableStyle1 = new System.Windows.Forms.DataGridTableStyle();
+            this.dataGridTextBoxColumn1 = new System.Windows.Forms.DataGridTextBoxColumn();
+            this.dataGridTextBoxColumn2 = new System.Windows.Forms.DataGridTextBoxColumn();
+            this.dataGridTextBoxColumn3 = new System.Windows.Forms.DataGridTextBoxColumn();
+            this.dataGridTextBoxColumn4 = new System.Windows.Forms.DataGridTextBoxColumn();
+            this.dataGridTextBoxColumn5 = new System.Windows.Forms.DataGridTextBoxColumn();
+            this.timerKey = new System.Windows.Forms.Timer(this.components);
+            this.odlTableAdapter = new XFactoryNET.Custom.Panzoo.AggMan.XFactoryNETDataSetTableAdapters.OdlTableAdapter();
+            this.lottoTableAdapter = new XFactoryNET.Custom.Panzoo.AggMan.XFactoryNETDataSetTableAdapters.LottoTableAdapter();
+            this.silosTableAdapter = new XFactoryNET.Custom.Panzoo.AggMan.XFactoryNETDataSetTableAdapters.SilosTableAdapter();
+            label2 = new System.Windows.Forms.Label();
+            label1 = new System.Windows.Forms.Label();
+            lottoInCorsoLabel = new System.Windows.Forms.Label();
+            numeroLottiLabel = new System.Windows.Forms.Label();
+            noteLabel = new System.Windows.Forms.Label();
+            articoloLabel = new System.Windows.Forms.Label();
+            nrOrdLabel = new System.Windows.Forms.Label();
+            label5 = new System.Windows.Forms.Label();
+            label8 = new System.Windows.Forms.Label();
+            label9 = new System.Windows.Forms.Label();
+            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ingredientiBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.odlBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xFactoryNETDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.odlBindingNavigator)).BeginInit();
-            this.odlBindingNavigator.SuspendLayout();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(4, 12);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(168, 24);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Quantità da pesare";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label2
             // 
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(178, 12);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(168, 24);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Peso su bilancia";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            label2.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            label2.Location = new System.Drawing.Point(621, 41);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(107, 17);
+            label2.TabIndex = 61;
+            label2.Text = "Destinazione:";
+            label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // label3
+            // label1
             // 
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(352, 12);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(168, 24);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Differenza";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            label1.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            label1.Location = new System.Drawing.Point(681, 10);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(47, 17);
+            label1.TabIndex = 62;
+            label1.Text = "Q.tà:";
+            label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // panel1
+            // lottoInCorsoLabel
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.Control;
-            this.panel1.Controls.Add(this.lblSac);
-            this.panel1.Controls.Add(this.lblStatoBilancia);
-            this.panel1.Controls.Add(this.lblFasePesatura);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.txtPesoDiff);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.txtPesoBilancia);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 435);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(838, 86);
-            this.panel1.TabIndex = 1;
+            lottoInCorsoLabel.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            lottoInCorsoLabel.Location = new System.Drawing.Point(419, 8);
+            lottoInCorsoLabel.Name = "lottoInCorsoLabel";
+            lottoInCorsoLabel.Size = new System.Drawing.Size(74, 17);
+            lottoInCorsoLabel.TabIndex = 63;
+            lottoInCorsoLabel.Text = "In mixer:";
+            // 
+            // numeroLottiLabel
+            // 
+            numeroLottiLabel.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            numeroLottiLabel.Location = new System.Drawing.Point(339, 9);
+            numeroLottiLabel.Name = "numeroLottiLabel";
+            numeroLottiLabel.Size = new System.Drawing.Size(40, 20);
+            numeroLottiLabel.TabIndex = 64;
+            numeroLottiLabel.Text = "Nr. misc.:";
+            // 
+            // noteLabel
+            // 
+            noteLabel.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            noteLabel.Location = new System.Drawing.Point(5, 72);
+            noteLabel.Name = "noteLabel";
+            noteLabel.Size = new System.Drawing.Size(47, 17);
+            noteLabel.TabIndex = 65;
+            noteLabel.Text = "Note:";
+            // 
+            // articoloLabel
+            // 
+            articoloLabel.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            articoloLabel.Location = new System.Drawing.Point(5, 40);
+            articoloLabel.Name = "articoloLabel";
+            articoloLabel.Size = new System.Drawing.Size(66, 17);
+            articoloLabel.TabIndex = 66;
+            articoloLabel.Text = "Articolo:";
+            // 
+            // nrOrdLabel
+            // 
+            nrOrdLabel.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            nrOrdLabel.Location = new System.Drawing.Point(5, 10);
+            nrOrdLabel.Name = "nrOrdLabel";
+            nrOrdLabel.Size = new System.Drawing.Size(60, 17);
+            nrOrdLabel.TabIndex = 67;
+            nrOrdLabel.Text = "Nr Ord:";
+            // 
+            // label5
+            // 
+            label5.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            label5.Location = new System.Drawing.Point(177, 8);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(49, 20);
+            label5.TabIndex = 60;
+            label5.Text = "Data:";
+            // 
+            // label8
+            // 
+            label8.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            label8.Location = new System.Drawing.Point(6, 10);
+            label8.Name = "label8";
+            label8.Size = new System.Drawing.Size(66, 17);
+            label8.TabIndex = 31;
+            label8.Text = "Articolo:";
+            // 
+            // label9
+            // 
+            label9.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            label9.Location = new System.Drawing.Point(535, 8);
+            label9.Name = "label9";
+            label9.Size = new System.Drawing.Size(86, 20);
+            label9.TabIndex = 0;
+            label9.Text = "Da pesare:";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.label10);
+            this.panel2.Controls.Add(this.lblSetpoint);
+            this.panel2.Controls.Add(this.lblSac);
+            this.panel2.Controls.Add(this.btnTeorico);
+            this.panel2.Controls.Add(label8);
+            this.panel2.Controls.Add(this.label6);
+            this.panel2.Controls.Add(this.textBox6);
+            this.panel2.Controls.Add(this.textBox4);
+            this.panel2.Controls.Add(this.btnFineMisc);
+            this.panel2.Controls.Add(this.textBox5);
+            this.panel2.Controls.Add(this.btnDone);
+            this.panel2.Controls.Add(this.lblStatoBilancia);
+            this.panel2.Controls.Add(this.label7);
+            this.panel2.Controls.Add(this.lblDiff);
+            this.panel2.Controls.Add(this.lblPesoBilancia);
+            this.panel2.Controls.Add(this.label4);
+            this.panel2.Controls.Add(this.lblQtàIngr);
+            this.panel2.Controls.Add(this.label3);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 611);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1032, 130);
+            this.panel2.TabIndex = 15;
+            // 
+            // label10
+            // 
+            this.label10.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            this.label10.Location = new System.Drawing.Point(289, 67);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(136, 24);
+            this.label10.TabIndex = 68;
+            this.label10.Text = "Setpoint";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.label10.Click += new System.EventHandler(this.label10_Click);
+            // 
+            // lblSetpoint
+            // 
+            this.lblSetpoint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblSetpoint.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.lblSetpoint.ForeColor = System.Drawing.Color.Lime;
+            this.lblSetpoint.Location = new System.Drawing.Point(289, 95);
+            this.lblSetpoint.Name = "lblSetpoint";
+            this.lblSetpoint.Size = new System.Drawing.Size(136, 32);
+            this.lblSetpoint.TabIndex = 69;
+            this.lblSetpoint.Text = "0.000";
+            this.lblSetpoint.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lblSac
             // 
-            this.lblSac.AutoSize = true;
-            this.lblSac.BackColor = System.Drawing.Color.Black;
-            this.lblSac.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblSac.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSac.ForeColor = System.Drawing.Color.Yellow;
-            this.lblSac.Location = new System.Drawing.Point(526, 51);
+            this.lblSac.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.lblSac.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold);
+            this.lblSac.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.lblSac.Location = new System.Drawing.Point(839, 3);
             this.lblSac.Name = "lblSac";
-            this.lblSac.Size = new System.Drawing.Size(59, 26);
-            this.lblSac.TabIndex = 8;
-            this.lblSac.Text = "SAC.";
-            this.lblSac.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblSac.Size = new System.Drawing.Size(136, 27);
+            this.lblSac.TabIndex = 0;
+            this.lblSac.Text = "Additivo";
+            this.lblSac.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblSac.Visible = false;
             // 
-            // lblStatoBilancia
+            // btnTeorico
             // 
-            this.lblStatoBilancia.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatoBilancia.Location = new System.Drawing.Point(589, 12);
-            this.lblStatoBilancia.Name = "lblStatoBilancia";
-            this.lblStatoBilancia.Size = new System.Drawing.Size(246, 24);
-            this.lblStatoBilancia.TabIndex = 7;
-            this.lblStatoBilancia.Text = "Stato bilancia";
-            this.lblStatoBilancia.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnTeorico.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+            this.btnTeorico.Location = new System.Drawing.Point(839, 30);
+            this.btnTeorico.Name = "btnTeorico";
+            this.btnTeorico.Size = new System.Drawing.Size(136, 48);
+            this.btnTeorico.TabIndex = 30;
+            this.btnTeorico.Text = "Peso teorico";
+            this.btnTeorico.Click += new System.EventHandler(this.btnTeorico_Click);
             // 
-            // lblFasePesatura
+            // label6
             // 
-            this.lblFasePesatura.BackColor = System.Drawing.Color.Black;
-            this.lblFasePesatura.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFasePesatura.ForeColor = System.Drawing.Color.Red;
-            this.lblFasePesatura.Location = new System.Drawing.Point(592, 42);
-            this.lblFasePesatura.Name = "lblFasePesatura";
-            this.lblFasePesatura.Size = new System.Drawing.Size(243, 41);
-            this.lblFasePesatura.TabIndex = 6;
-            this.lblFasePesatura.Text = "Eseguire tara";
-            this.lblFasePesatura.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label6.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            this.label6.Location = new System.Drawing.Point(183, 10);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(75, 20);
+            this.label6.TabIndex = 32;
+            this.label6.Text = "Lotto";
             // 
-            // txtPesoDiff
+            // textBox6
             // 
-            this.txtPesoDiff.BackColor = System.Drawing.Color.Black;
-            this.txtPesoDiff.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPesoDiff.ForeColor = System.Drawing.Color.Lime;
-            this.txtPesoDiff.Location = new System.Drawing.Point(352, 39);
-            this.txtPesoDiff.Name = "txtPesoDiff";
-            this.txtPesoDiff.ReadOnly = true;
-            this.txtPesoDiff.Size = new System.Drawing.Size(168, 44);
-            this.txtPesoDiff.TabIndex = 4;
-            this.txtPesoDiff.Text = "0";
-            this.txtPesoDiff.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txtPesoBilancia
-            // 
-            this.txtPesoBilancia.BackColor = System.Drawing.Color.Black;
-            this.txtPesoBilancia.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPesoBilancia.ForeColor = System.Drawing.Color.Lime;
-            this.txtPesoBilancia.Location = new System.Drawing.Point(178, 39);
-            this.txtPesoBilancia.Name = "txtPesoBilancia";
-            this.txtPesoBilancia.ReadOnly = true;
-            this.txtPesoBilancia.Size = new System.Drawing.Size(168, 44);
-            this.txtPesoBilancia.TabIndex = 2;
-            this.txtPesoBilancia.Text = "0";
-            this.txtPesoBilancia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.Color.Black;
-            this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.ingredientiBindingSource, "QtàTeo", true));
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.Color.Lime;
-            this.textBox1.Location = new System.Drawing.Point(4, 39);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(168, 44);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "0";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBox6.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.ingredientiBindingSource, "CodiceEsterno", true));
+            this.textBox6.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.textBox6.Location = new System.Drawing.Point(264, 5);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(161, 27);
+            this.textBox6.TabIndex = 60;
+            this.textBox6.Validated += new System.EventHandler(this.textBox6_Validated);
             // 
             // ingredientiBindingSource
             // 
             this.ingredientiBindingSource.DataMember = "Ingredienti";
             this.ingredientiBindingSource.DataSource = this.odlBindingSource;
-            this.ingredientiBindingSource.CurrentChanged += new System.EventHandler(this.ingredientiBindingSource_CurrentChanged);
             // 
             // odlBindingSource
             // 
-            this.odlBindingSource.AllowNew = false;
             this.odlBindingSource.DataMember = "Odl";
             this.odlBindingSource.DataSource = this.xFactoryNETDataSet;
             // 
@@ -243,566 +301,415 @@
             this.xFactoryNETDataSet.DataSetName = "XFactoryNETDataSet";
             this.xFactoryNETDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
-            // odlBindingNavigator
+            // textBox4
             // 
-            this.odlBindingNavigator.AddNewItem = null;
-            this.odlBindingNavigator.BindingSource = this.odlBindingSource;
-            this.odlBindingNavigator.CountItem = this.bindingNavigatorCountItem;
-            this.odlBindingNavigator.DeleteItem = null;
-            this.odlBindingNavigator.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bindingNavigatorMoveFirstItem,
-            this.bindingNavigatorMovePreviousItem,
-            this.bindingNavigatorSeparator,
-            this.bindingNavigatorPositionItem,
-            this.bindingNavigatorCountItem,
-            this.bindingNavigatorSeparator1,
-            this.bindingNavigatorMoveNextItem,
-            this.bindingNavigatorMoveLastItem,
-            this.bindingNavigatorSeparator2});
-            this.odlBindingNavigator.Location = new System.Drawing.Point(0, 0);
-            this.odlBindingNavigator.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
-            this.odlBindingNavigator.MoveLastItem = this.bindingNavigatorMoveLastItem;
-            this.odlBindingNavigator.MoveNextItem = this.bindingNavigatorMoveNextItem;
-            this.odlBindingNavigator.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
-            this.odlBindingNavigator.Name = "odlBindingNavigator";
-            this.odlBindingNavigator.PositionItem = this.bindingNavigatorPositionItem;
-            this.odlBindingNavigator.Size = new System.Drawing.Size(838, 25);
-            this.odlBindingNavigator.TabIndex = 7;
-            this.odlBindingNavigator.Text = "bindingNavigator1";
+            this.textBox4.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.ingredientiBindingSource, "Descrizione", true));
+            this.textBox4.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.textBox4.Location = new System.Drawing.Point(6, 38);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(419, 27);
+            this.textBox4.TabIndex = 59;
             // 
-            // bindingNavigatorCountItem
+            // btnFineMisc
             // 
-            this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 22);
-            this.bindingNavigatorCountItem.Text = "of {0}";
-            this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
+            this.btnFineMisc.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+            this.btnFineMisc.Location = new System.Drawing.Point(839, 79);
+            this.btnFineMisc.Name = "btnFineMisc";
+            this.btnFineMisc.Size = new System.Drawing.Size(136, 48);
+            this.btnFineMisc.TabIndex = 50;
+            this.btnFineMisc.Text = "Fine misc.";
+            this.btnFineMisc.Click += new System.EventHandler(this.btnFineMisc_Click);
             // 
-            // bindingNavigatorMoveFirstItem
+            // textBox5
             // 
-            this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
-            this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
-            this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMoveFirstItem.Text = "Move first";
+            this.textBox5.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.ingredientiBindingSource, "Articolo", true));
+            this.textBox5.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.textBox5.Location = new System.Drawing.Point(78, 5);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(100, 27);
+            this.textBox5.TabIndex = 58;
             // 
-            // bindingNavigatorMovePreviousItem
+            // btnDone
             // 
-            this.bindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
-            this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
-            this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMovePreviousItem.Text = "Move previous";
+            this.btnDone.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+            this.btnDone.Location = new System.Drawing.Point(620, 30);
+            this.btnDone.Name = "btnDone";
+            this.btnDone.Size = new System.Drawing.Size(206, 97);
+            this.btnDone.TabIndex = 9;
+            this.btnDone.Text = "Pesa/Tara";
+            this.btnDone.Click += new System.EventHandler(this.btnDone_Click);
             // 
-            // bindingNavigatorSeparator
+            // lblStatoBilancia
             // 
-            this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 25);
+            this.lblStatoBilancia.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.lblStatoBilancia.Location = new System.Drawing.Point(620, 3);
+            this.lblStatoBilancia.Name = "lblStatoBilancia";
+            this.lblStatoBilancia.Size = new System.Drawing.Size(204, 24);
+            this.lblStatoBilancia.TabIndex = 61;
+            this.lblStatoBilancia.Text = "Stato bilancia";
+            this.lblStatoBilancia.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // bindingNavigatorPositionItem
+            // label7
             // 
-            this.bindingNavigatorPositionItem.AccessibleName = "Position";
-            this.bindingNavigatorPositionItem.AutoSize = false;
-            this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
-            this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 23);
-            this.bindingNavigatorPositionItem.Text = "0";
-            this.bindingNavigatorPositionItem.ToolTipText = "Current position";
+            this.label7.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            this.label7.Location = new System.Drawing.Point(431, 67);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(136, 24);
+            this.label7.TabIndex = 62;
+            this.label7.Text = "Differenza";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // bindingNavigatorSeparator1
+            // lblDiff
             // 
-            this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
-            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.lblDiff.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblDiff.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.lblDiff.ForeColor = System.Drawing.Color.Lime;
+            this.lblDiff.Location = new System.Drawing.Point(431, 95);
+            this.lblDiff.Name = "lblDiff";
+            this.lblDiff.Size = new System.Drawing.Size(136, 32);
+            this.lblDiff.TabIndex = 63;
+            this.lblDiff.Text = "0.000";
+            this.lblDiff.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // bindingNavigatorMoveNextItem
+            // lblPesoBilancia
             // 
-            this.bindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
-            this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
-            this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMoveNextItem.Text = "Move next";
+            this.lblPesoBilancia.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblPesoBilancia.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.lblPesoBilancia.ForeColor = System.Drawing.Color.Lime;
+            this.lblPesoBilancia.Location = new System.Drawing.Point(147, 95);
+            this.lblPesoBilancia.Name = "lblPesoBilancia";
+            this.lblPesoBilancia.Size = new System.Drawing.Size(136, 32);
+            this.lblPesoBilancia.TabIndex = 64;
+            this.lblPesoBilancia.Text = "0.000";
+            this.lblPesoBilancia.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // bindingNavigatorMoveLastItem
+            // label4
             // 
-            this.bindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
-            this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
-            this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMoveLastItem.Text = "Move last";
+            this.label4.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            this.label4.Location = new System.Drawing.Point(147, 67);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(136, 24);
+            this.label4.TabIndex = 65;
+            this.label4.Text = "Bilancia";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // bindingNavigatorSeparator2
+            // lblQtàIngr
             // 
-            this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
+            this.lblQtàIngr.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblQtàIngr.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.ingredientiBindingSource, "QtàTeo", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N3"));
+            this.lblQtàIngr.Font = new System.Drawing.Font("Tahoma", 18F);
+            this.lblQtàIngr.ForeColor = System.Drawing.Color.Lime;
+            this.lblQtàIngr.Location = new System.Drawing.Point(5, 95);
+            this.lblQtàIngr.Name = "lblQtàIngr";
+            this.lblQtàIngr.Size = new System.Drawing.Size(136, 32);
+            this.lblQtàIngr.TabIndex = 66;
+            this.lblQtàIngr.Text = "0.000";
+            this.lblQtàIngr.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // panel2
+            // label3
             // 
-            this.panel2.Controls.Add(this.quantitàPerLottoLabel);
-            this.panel2.Controls.Add(this.quantitàPerLottoTextBox);
-            this.panel2.Controls.Add(this.destinazioneLabel);
-            this.panel2.Controls.Add(this.destinazioneTextBox);
-            this.panel2.Controls.Add(this.numeroLottiEseguitiLabel);
-            this.panel2.Controls.Add(this.inCorsoTextBox);
-            this.panel2.Controls.Add(this.numeroMiscelateLabel);
-            this.panel2.Controls.Add(this.numeroLottiTextBox);
-            this.panel2.Controls.Add(this.noteLabel);
-            this.panel2.Controls.Add(this.noteTextBox);
-            this.panel2.Controls.Add(this.dataLabel);
-            this.panel2.Controls.Add(this.dataDateTimePicker);
-            this.panel2.Controls.Add(this.formulaLabel);
-            this.panel2.Controls.Add(this.formulaTextBox);
-            this.panel2.Controls.Add(this.descrizioneTextBox);
-            this.panel2.Controls.Add(this.articoloLabel);
-            this.panel2.Controls.Add(this.articoloTextBox);
-            this.panel2.Controls.Add(this.nrOrdLabel);
-            this.panel2.Controls.Add(this.nrOrdTextBox);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 25);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(838, 177);
-            this.panel2.TabIndex = 23;
-            // 
-            // quantitàPerLottoLabel
-            // 
-            this.quantitàPerLottoLabel.AutoSize = true;
-            this.quantitàPerLottoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.quantitàPerLottoLabel.Location = new System.Drawing.Point(638, 84);
-            this.quantitàPerLottoLabel.Name = "quantitàPerLottoLabel";
-            this.quantitàPerLottoLabel.Size = new System.Drawing.Size(84, 24);
-            this.quantitàPerLottoLabel.TabIndex = 18;
-            this.quantitàPerLottoLabel.Text = "Quantità:";
-            // 
-            // quantitàPerLottoTextBox
-            // 
-            this.quantitàPerLottoTextBox.BackColor = System.Drawing.Color.White;
-            this.quantitàPerLottoTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "QuantitàPerLotto", true));
-            this.quantitàPerLottoTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.quantitàPerLottoTextBox.Location = new System.Drawing.Point(728, 81);
-            this.quantitàPerLottoTextBox.Name = "quantitàPerLottoTextBox";
-            this.quantitàPerLottoTextBox.ReadOnly = true;
-            this.quantitàPerLottoTextBox.Size = new System.Drawing.Size(100, 29);
-            this.quantitàPerLottoTextBox.TabIndex = 19;
-            this.quantitàPerLottoTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // destinazioneLabel
-            // 
-            this.destinazioneLabel.AutoSize = true;
-            this.destinazioneLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.destinazioneLabel.Location = new System.Drawing.Point(599, 119);
-            this.destinazioneLabel.Name = "destinazioneLabel";
-            this.destinazioneLabel.Size = new System.Drawing.Size(123, 24);
-            this.destinazioneLabel.TabIndex = 16;
-            this.destinazioneLabel.Text = "Destinazione:";
-            // 
-            // destinazioneTextBox
-            // 
-            this.destinazioneTextBox.BackColor = System.Drawing.Color.White;
-            this.destinazioneTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "Destinazione", true));
-            this.destinazioneTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.destinazioneTextBox.Location = new System.Drawing.Point(728, 116);
-            this.destinazioneTextBox.Name = "destinazioneTextBox";
-            this.destinazioneTextBox.ReadOnly = true;
-            this.destinazioneTextBox.Size = new System.Drawing.Size(100, 29);
-            this.destinazioneTextBox.TabIndex = 17;
-            // 
-            // numeroLottiEseguitiLabel
-            // 
-            this.numeroLottiEseguitiLabel.AutoSize = true;
-            this.numeroLottiEseguitiLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numeroLottiEseguitiLabel.Location = new System.Drawing.Point(570, 50);
-            this.numeroLottiEseguitiLabel.Name = "numeroLottiEseguitiLabel";
-            this.numeroLottiEseguitiLabel.Size = new System.Drawing.Size(152, 24);
-            this.numeroLottiEseguitiLabel.TabIndex = 14;
-            this.numeroLottiEseguitiLabel.Text = "Miscelata attuale:";
-            // 
-            // inCorsoTextBox
-            // 
-            this.inCorsoTextBox.BackColor = System.Drawing.Color.White;
-            this.inCorsoTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "MiscelataInCorso", true));
-            this.inCorsoTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.inCorsoTextBox.Location = new System.Drawing.Point(728, 47);
-            this.inCorsoTextBox.Name = "inCorsoTextBox";
-            this.inCorsoTextBox.ReadOnly = true;
-            this.inCorsoTextBox.Size = new System.Drawing.Size(100, 29);
-            this.inCorsoTextBox.TabIndex = 15;
-            this.inCorsoTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // numeroMiscelateLabel
-            // 
-            this.numeroMiscelateLabel.AutoSize = true;
-            this.numeroMiscelateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numeroMiscelateLabel.Location = new System.Drawing.Point(554, 18);
-            this.numeroMiscelateLabel.Name = "numeroMiscelateLabel";
-            this.numeroMiscelateLabel.Size = new System.Drawing.Size(168, 24);
-            this.numeroMiscelateLabel.TabIndex = 12;
-            this.numeroMiscelateLabel.Text = "Numero miscelate:";
-            // 
-            // numeroLottiTextBox
-            // 
-            this.numeroLottiTextBox.BackColor = System.Drawing.Color.White;
-            this.numeroLottiTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "NumeroMiscelate", true));
-            this.numeroLottiTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numeroLottiTextBox.Location = new System.Drawing.Point(728, 15);
-            this.numeroLottiTextBox.Name = "numeroLottiTextBox";
-            this.numeroLottiTextBox.ReadOnly = true;
-            this.numeroLottiTextBox.Size = new System.Drawing.Size(100, 29);
-            this.numeroLottiTextBox.TabIndex = 13;
-            this.numeroLottiTextBox.Text = "0";
-            this.numeroLottiTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // noteLabel
-            // 
-            this.noteLabel.AutoSize = true;
-            this.noteLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.noteLabel.Location = new System.Drawing.Point(6, 116);
-            this.noteLabel.Name = "noteLabel";
-            this.noteLabel.Size = new System.Drawing.Size(55, 24);
-            this.noteLabel.TabIndex = 10;
-            this.noteLabel.Text = "Note:";
-            // 
-            // noteTextBox
-            // 
-            this.noteTextBox.BackColor = System.Drawing.Color.White;
-            this.noteTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "Note", true));
-            this.noteTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.noteTextBox.Location = new System.Drawing.Point(88, 116);
-            this.noteTextBox.Multiline = true;
-            this.noteTextBox.Name = "noteTextBox";
-            this.noteTextBox.ReadOnly = true;
-            this.noteTextBox.Size = new System.Drawing.Size(476, 46);
-            this.noteTextBox.TabIndex = 11;
-            // 
-            // dataLabel
-            // 
-            this.dataLabel.AutoSize = true;
-            this.dataLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataLabel.Location = new System.Drawing.Point(194, 15);
-            this.dataLabel.Name = "dataLabel";
-            this.dataLabel.Size = new System.Drawing.Size(46, 24);
-            this.dataLabel.TabIndex = 8;
-            this.dataLabel.Text = "Ora:";
-            // 
-            // dataDateTimePicker
-            // 
-            this.dataDateTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.odlBindingSource, "Data", true));
-            this.dataDateTimePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dataDateTimePicker.Location = new System.Drawing.Point(246, 12);
-            this.dataDateTimePicker.Name = "dataDateTimePicker";
-            this.dataDateTimePicker.Size = new System.Drawing.Size(137, 29);
-            this.dataDateTimePicker.TabIndex = 9;
-            // 
-            // formulaLabel
-            // 
-            this.formulaLabel.AutoSize = true;
-            this.formulaLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.formulaLabel.Location = new System.Drawing.Point(6, 84);
-            this.formulaLabel.Name = "formulaLabel";
-            this.formulaLabel.Size = new System.Drawing.Size(85, 24);
-            this.formulaLabel.TabIndex = 6;
-            this.formulaLabel.Text = "Formula:";
-            // 
-            // formulaTextBox
-            // 
-            this.formulaTextBox.BackColor = System.Drawing.Color.White;
-            this.formulaTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "Formula", true));
-            this.formulaTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.formulaTextBox.Location = new System.Drawing.Point(88, 81);
-            this.formulaTextBox.Name = "formulaTextBox";
-            this.formulaTextBox.ReadOnly = true;
-            this.formulaTextBox.Size = new System.Drawing.Size(100, 29);
-            this.formulaTextBox.TabIndex = 7;
-            // 
-            // descrizioneTextBox
-            // 
-            this.descrizioneTextBox.BackColor = System.Drawing.Color.White;
-            this.descrizioneTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "Descrizione", true));
-            this.descrizioneTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.descrizioneTextBox.Location = new System.Drawing.Point(194, 47);
-            this.descrizioneTextBox.Name = "descrizioneTextBox";
-            this.descrizioneTextBox.ReadOnly = true;
-            this.descrizioneTextBox.Size = new System.Drawing.Size(370, 29);
-            this.descrizioneTextBox.TabIndex = 5;
-            // 
-            // articoloLabel
-            // 
-            this.articoloLabel.AutoSize = true;
-            this.articoloLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.articoloLabel.Location = new System.Drawing.Point(6, 50);
-            this.articoloLabel.Name = "articoloLabel";
-            this.articoloLabel.Size = new System.Drawing.Size(78, 24);
-            this.articoloLabel.TabIndex = 2;
-            this.articoloLabel.Text = "Articolo:";
-            // 
-            // articoloTextBox
-            // 
-            this.articoloTextBox.BackColor = System.Drawing.Color.White;
-            this.articoloTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "Articolo", true));
-            this.articoloTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.articoloTextBox.Location = new System.Drawing.Point(88, 47);
-            this.articoloTextBox.Name = "articoloTextBox";
-            this.articoloTextBox.ReadOnly = true;
-            this.articoloTextBox.Size = new System.Drawing.Size(100, 29);
-            this.articoloTextBox.TabIndex = 3;
-            // 
-            // nrOrdLabel
-            // 
-            this.nrOrdLabel.AutoSize = true;
-            this.nrOrdLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nrOrdLabel.Location = new System.Drawing.Point(6, 15);
-            this.nrOrdLabel.Name = "nrOrdLabel";
-            this.nrOrdLabel.Size = new System.Drawing.Size(72, 24);
-            this.nrOrdLabel.TabIndex = 0;
-            this.nrOrdLabel.Text = "Nr Ord:";
-            // 
-            // nrOrdTextBox
-            // 
-            this.nrOrdTextBox.BackColor = System.Drawing.Color.White;
-            this.nrOrdTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "NrOrd", true));
-            this.nrOrdTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nrOrdTextBox.Location = new System.Drawing.Point(88, 12);
-            this.nrOrdTextBox.Name = "nrOrdTextBox";
-            this.nrOrdTextBox.ReadOnly = true;
-            this.nrOrdTextBox.Size = new System.Drawing.Size(100, 29);
-            this.nrOrdTextBox.TabIndex = 1;
-            this.nrOrdTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.articoloDataGridViewTextBoxColumn,
-            this.descrizioneDataGridViewTextBoxColumn,
-            this.qtàDataGridViewTextBoxColumn,
-            this.qtàTeoDataGridViewTextBoxColumn,
-            this.modalitàDataGridViewTextBoxColumn,
-            this.areaStoccaggioDataGridViewTextBoxColumn,
-            this.statoDataGridViewTextBoxColumn});
-            this.dataGridView1.DataSource = this.ingredientiBindingSource;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Enabled = false;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 202);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(838, 233);
-            this.dataGridView1.TabIndex = 24;
+            this.label3.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            this.label3.Location = new System.Drawing.Point(6, 67);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(135, 21);
+            this.label3.TabIndex = 67;
+            this.label3.Text = "Da pesare";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // serialPort1
             // 
-            this.serialPort1.BaudRate = global::XFactoryNET.Custom.Panzoo.AggMan.Properties.Settings.Default.BaudRate;
-            this.serialPort1.DataBits = global::XFactoryNET.Custom.Panzoo.AggMan.Properties.Settings.Default.DataBits;
-            this.serialPort1.Parity = global::XFactoryNET.Custom.Panzoo.AggMan.Properties.Settings.Default.Parity;
-            this.serialPort1.PortName = global::XFactoryNET.Custom.Panzoo.AggMan.Properties.Settings.Default.PortName;
-            this.serialPort1.StopBits = global::XFactoryNET.Custom.Panzoo.AggMan.Properties.Settings.Default.StopBits;
             this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 2000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // timerBlink
+            // 
+            this.timerBlink.Interval = 500;
+            this.timerBlink.Tick += new System.EventHandler(this.timerBlink_Tick);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(label9);
+            this.panel1.Controls.Add(this.txtCurrMisc);
+            this.panel1.Controls.Add(label5);
+            this.panel1.Controls.Add(this.textBox3);
+            this.panel1.Controls.Add(label2);
+            this.panel1.Controls.Add(this.textBox2);
+            this.panel1.Controls.Add(label1);
+            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(lottoInCorsoLabel);
+            this.panel1.Controls.Add(this.lottoInCorsoTextBox);
+            this.panel1.Controls.Add(numeroLottiLabel);
+            this.panel1.Controls.Add(this.numeroLottiTextBox);
+            this.panel1.Controls.Add(noteLabel);
+            this.panel1.Controls.Add(this.noteTextBox);
+            this.panel1.Controls.Add(this.descrizioneTextBox);
+            this.panel1.Controls.Add(articoloLabel);
+            this.panel1.Controls.Add(this.articoloTextBox);
+            this.panel1.Controls.Add(this.nrOrdTextBox);
+            this.panel1.Controls.Add(nrOrdLabel);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1032, 104);
+            this.panel1.TabIndex = 13;
+            // 
+            // txtCurrMisc
+            // 
+            this.txtCurrMisc.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.txtCurrMisc.Location = new System.Drawing.Point(627, 6);
+            this.txtCurrMisc.Name = "txtCurrMisc";
+            this.txtCurrMisc.Size = new System.Drawing.Size(48, 27);
+            this.txtCurrMisc.TabIndex = 59;
+            // 
+            // textBox3
+            // 
+            this.textBox3.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "Data", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "t"));
+            this.textBox3.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.textBox3.Location = new System.Drawing.Point(232, 5);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(101, 27);
+            this.textBox3.TabIndex = 50;
+            // 
+            // textBox2
+            // 
+            this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "Destinazione", true));
+            this.textBox2.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.textBox2.Location = new System.Drawing.Point(734, 36);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(72, 27);
+            this.textBox2.TabIndex = 18;
+            // 
+            // textBox1
+            // 
+            this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "QuantitàPerMiscelata", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N0"));
+            this.textBox1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.textBox1.Location = new System.Drawing.Point(734, 6);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(72, 27);
+            this.textBox1.TabIndex = 15;
+            // 
+            // lottoInCorsoTextBox
+            // 
+            this.lottoInCorsoTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "NumeroMiscelateEseguite", true));
+            this.lottoInCorsoTextBox.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.lottoInCorsoTextBox.Location = new System.Drawing.Point(499, 5);
+            this.lottoInCorsoTextBox.Name = "lottoInCorsoTextBox";
+            this.lottoInCorsoTextBox.Size = new System.Drawing.Size(30, 27);
+            this.lottoInCorsoTextBox.TabIndex = 13;
+            // 
+            // numeroLottiTextBox
+            // 
+            this.numeroLottiTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "NumeroMiscelate", true));
+            this.numeroLottiTextBox.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.numeroLottiTextBox.Location = new System.Drawing.Point(385, 5);
+            this.numeroLottiTextBox.Name = "numeroLottiTextBox";
+            this.numeroLottiTextBox.Size = new System.Drawing.Size(28, 27);
+            this.numeroLottiTextBox.TabIndex = 12;
+            // 
+            // noteTextBox
+            // 
+            this.noteTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "Note", true));
+            this.noteTextBox.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.noteTextBox.Location = new System.Drawing.Point(71, 67);
+            this.noteTextBox.Name = "noteTextBox";
+            this.noteTextBox.Size = new System.Drawing.Size(715, 27);
+            this.noteTextBox.TabIndex = 11;
+            // 
+            // descrizioneTextBox
+            // 
+            this.descrizioneTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "Descrizione", true));
+            this.descrizioneTextBox.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.descrizioneTextBox.Location = new System.Drawing.Point(177, 35);
+            this.descrizioneTextBox.Name = "descrizioneTextBox";
+            this.descrizioneTextBox.Size = new System.Drawing.Size(418, 27);
+            this.descrizioneTextBox.TabIndex = 7;
+            // 
+            // articoloTextBox
+            // 
+            this.articoloTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "Articolo", true));
+            this.articoloTextBox.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.articoloTextBox.Location = new System.Drawing.Point(71, 35);
+            this.articoloTextBox.Name = "articoloTextBox";
+            this.articoloTextBox.Size = new System.Drawing.Size(100, 27);
+            this.articoloTextBox.TabIndex = 5;
+            // 
+            // nrOrdTextBox
+            // 
+            this.nrOrdTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.odlBindingSource, "NumeroOrdine", true));
+            this.nrOrdTextBox.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.nrOrdTextBox.Location = new System.Drawing.Point(71, 5);
+            this.nrOrdTextBox.Name = "nrOrdTextBox";
+            this.nrOrdTextBox.Size = new System.Drawing.Size(100, 27);
+            this.nrOrdTextBox.TabIndex = 1;
+            // 
+            // dataGrid1
+            // 
+            this.dataGrid1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.dataGrid1.DataMember = "";
+            this.dataGrid1.DataSource = this.ingredientiBindingSource;
+            this.dataGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGrid1.Enabled = false;
+            this.dataGrid1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.dataGrid1.HeaderForeColor = System.Drawing.SystemColors.ControlText;
+            this.dataGrid1.Location = new System.Drawing.Point(0, 104);
+            this.dataGrid1.Name = "dataGrid1";
+            this.dataGrid1.PreferredRowHeight = 32;
+            this.dataGrid1.RowHeadersVisible = false;
+            this.dataGrid1.Size = new System.Drawing.Size(1032, 507);
+            this.dataGrid1.TabIndex = 12;
+            this.dataGrid1.TableStyles.AddRange(new System.Windows.Forms.DataGridTableStyle[] {
+            this.dataGridTableStyle1});
+            // 
+            // dataGridTableStyle1
+            // 
+            this.dataGridTableStyle1.DataGrid = this.dataGrid1;
+            this.dataGridTableStyle1.GridColumnStyles.AddRange(new System.Windows.Forms.DataGridColumnStyle[] {
+            this.dataGridTextBoxColumn1,
+            this.dataGridTextBoxColumn2,
+            this.dataGridTextBoxColumn3,
+            this.dataGridTextBoxColumn4,
+            this.dataGridTextBoxColumn5});
+            this.dataGridTableStyle1.HeaderForeColor = System.Drawing.SystemColors.ControlText;
+            this.dataGridTableStyle1.MappingName = "IBindingList";
+            // 
+            // dataGridTextBoxColumn1
+            // 
+            this.dataGridTextBoxColumn1.Format = "";
+            this.dataGridTextBoxColumn1.FormatInfo = null;
+            this.dataGridTextBoxColumn1.HeaderText = "Codice";
+            this.dataGridTextBoxColumn1.MappingName = "Articolo";
+            this.dataGridTextBoxColumn1.Width = 150;
+            // 
+            // dataGridTextBoxColumn2
+            // 
+            this.dataGridTextBoxColumn2.Format = "";
+            this.dataGridTextBoxColumn2.FormatInfo = null;
+            this.dataGridTextBoxColumn2.HeaderText = "Descrizione";
+            this.dataGridTextBoxColumn2.MappingName = "Descrizione";
+            this.dataGridTextBoxColumn2.Width = 590;
+            // 
+            // dataGridTextBoxColumn3
+            // 
+            this.dataGridTextBoxColumn3.Format = "n3";
+            this.dataGridTextBoxColumn3.FormatInfo = null;
+            this.dataGridTextBoxColumn3.HeaderText = "Teorico";
+            this.dataGridTextBoxColumn3.MappingName = "QtàTeo";
+            this.dataGridTextBoxColumn3.Width = 75;
+            // 
+            // dataGridTextBoxColumn4
+            // 
+            this.dataGridTextBoxColumn4.Format = "n3";
+            this.dataGridTextBoxColumn4.FormatInfo = null;
+            this.dataGridTextBoxColumn4.HeaderText = "Pesato";
+            this.dataGridTextBoxColumn4.MappingName = "Quantità";
+            this.dataGridTextBoxColumn4.Width = 75;
+            // 
+            // dataGridTextBoxColumn5
+            // 
+            this.dataGridTextBoxColumn5.Format = "n3";
+            this.dataGridTextBoxColumn5.FormatInfo = null;
+            this.dataGridTextBoxColumn5.HeaderText = "Tolleranza";
+            this.dataGridTextBoxColumn5.MappingName = "Tolleranza";
+            this.dataGridTextBoxColumn5.Width = 75;
+            // 
+            // timerKey
+            // 
+            this.timerKey.Interval = 1500;
+            this.timerKey.Tick += new System.EventHandler(this.timerKey_Tick);
             // 
             // odlTableAdapter
             // 
             this.odlTableAdapter.ClearBeforeFill = true;
             // 
-            // tableAdapterManager
+            // lottoTableAdapter
             // 
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.ComponenteTableAdapter = null;
-            this.tableAdapterManager.Connection = null;
-            this.tableAdapterManager.LottoTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = XFactoryNET.Custom.Panzoo.AggMan.XFactoryNETDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
+            this.lottoTableAdapter.ClearBeforeFill = true;
             // 
-            // componenteTableAdapter
+            // silosTableAdapter
             // 
-            this.componenteTableAdapter.ClearBeforeFill = true;
+            this.silosTableAdapter.ClearBeforeFill = true;
             // 
-            // timer1
+            // frmAggMan
             // 
-            this.timer1.Interval = 10000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // timerBlink
-            // 
-            this.timerBlink.Interval = 800;
-            this.timerBlink.Tick += new System.EventHandler(this.timerBlink_Tick);
-            // 
-            // articoloDataGridViewTextBoxColumn
-            // 
-            this.articoloDataGridViewTextBoxColumn.DataPropertyName = "Articolo";
-            this.articoloDataGridViewTextBoxColumn.HeaderText = "Articolo";
-            this.articoloDataGridViewTextBoxColumn.Name = "articoloDataGridViewTextBoxColumn";
-            this.articoloDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // descrizioneDataGridViewTextBoxColumn
-            // 
-            this.descrizioneDataGridViewTextBoxColumn.DataPropertyName = "Descrizione";
-            this.descrizioneDataGridViewTextBoxColumn.HeaderText = "Descrizione";
-            this.descrizioneDataGridViewTextBoxColumn.Name = "descrizioneDataGridViewTextBoxColumn";
-            this.descrizioneDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // qtàDataGridViewTextBoxColumn
-            // 
-            this.qtàDataGridViewTextBoxColumn.DataPropertyName = "Qtà";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.Format = "N4";
-            dataGridViewCellStyle2.NullValue = null;
-            this.qtàDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.qtàDataGridViewTextBoxColumn.HeaderText = "Qtà";
-            this.qtàDataGridViewTextBoxColumn.Name = "qtàDataGridViewTextBoxColumn";
-            this.qtàDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // qtàTeoDataGridViewTextBoxColumn
-            // 
-            this.qtàTeoDataGridViewTextBoxColumn.DataPropertyName = "QtàTeo";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "N4";
-            dataGridViewCellStyle3.NullValue = null;
-            this.qtàTeoDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
-            this.qtàTeoDataGridViewTextBoxColumn.HeaderText = "QtàTeo";
-            this.qtàTeoDataGridViewTextBoxColumn.Name = "qtàTeoDataGridViewTextBoxColumn";
-            this.qtàTeoDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // modalitàDataGridViewTextBoxColumn
-            // 
-            this.modalitàDataGridViewTextBoxColumn.DataPropertyName = "Modalità";
-            this.modalitàDataGridViewTextBoxColumn.HeaderText = "Modalità";
-            this.modalitàDataGridViewTextBoxColumn.Name = "modalitàDataGridViewTextBoxColumn";
-            this.modalitàDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // areaStoccaggioDataGridViewTextBoxColumn
-            // 
-            this.areaStoccaggioDataGridViewTextBoxColumn.DataPropertyName = "AreaStoccaggio";
-            this.areaStoccaggioDataGridViewTextBoxColumn.HeaderText = "Magazzino";
-            this.areaStoccaggioDataGridViewTextBoxColumn.Name = "areaStoccaggioDataGridViewTextBoxColumn";
-            this.areaStoccaggioDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // statoDataGridViewTextBoxColumn
-            // 
-            this.statoDataGridViewTextBoxColumn.DataPropertyName = "Stato";
-            this.statoDataGridViewTextBoxColumn.HeaderText = "Stato";
-            this.statoDataGridViewTextBoxColumn.Name = "statoDataGridViewTextBoxColumn";
-            this.statoDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // Form1
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(838, 521);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.odlBindingNavigator);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(1032, 741);
+            this.Controls.Add(this.dataGrid1);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel2);
+            this.Font = new System.Drawing.Font("Arial", 14F);
             this.KeyPreview = true;
-            this.Name = "Form1";
+            this.Name = "frmAggMan";
             this.Text = "Aggiunte Manuali";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Closing += new System.ComponentModel.CancelEventHandler(this.frmAggMan_Closing);
+            this.Closed += new System.EventHandler(this.frmAggMan_Closed);
+            this.Load += new System.EventHandler(this.frmAggMan_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ingredientiBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.odlBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xFactoryNETDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.odlBindingNavigator)).EndInit();
-            this.odlBindingNavigator.ResumeLayout(false);
-            this.odlBindingNavigator.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.IO.Ports.SerialPort serialPort1;
-        private System.Windows.Forms.Panel panel1;
         private XFactoryNETDataSet xFactoryNETDataSet;
         private System.Windows.Forms.BindingSource odlBindingSource;
-        private XFactoryNETDataSetTableAdapters.OdlTableAdapter odlTableAdapter;
-        private XFactoryNETDataSetTableAdapters.TableAdapterManager tableAdapterManager;
-        private System.Windows.Forms.Label lblFasePesatura;
-        private System.Windows.Forms.TextBox txtPesoDiff;
-        private System.Windows.Forms.TextBox txtPesoBilancia;
-        private System.Windows.Forms.TextBox textBox1;
-        private XFactoryNETDataSetTableAdapters.ComponenteTableAdapter componenteTableAdapter;
-        private System.Windows.Forms.BindingSource ingredientiBindingSource;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.BindingNavigator odlBindingNavigator;
-        private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem;
-        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator;
-        private System.Windows.Forms.ToolStripTextBox bindingNavigatorPositionItem;
-        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator1;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
-        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
+        private XFactoryNET.Custom.Panzoo.AggMan.XFactoryNETDataSetTableAdapters.OdlTableAdapter odlTableAdapter;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label quantitàPerLottoLabel;
-        private System.Windows.Forms.TextBox quantitàPerLottoTextBox;
-        private System.Windows.Forms.Label destinazioneLabel;
-        private System.Windows.Forms.TextBox destinazioneTextBox;
-        private System.Windows.Forms.Label numeroLottiEseguitiLabel;
-        private System.Windows.Forms.TextBox inCorsoTextBox;
-        private System.Windows.Forms.Label numeroMiscelateLabel;
-        private System.Windows.Forms.TextBox numeroLottiTextBox;
-        private System.Windows.Forms.Label noteLabel;
-        private System.Windows.Forms.TextBox noteTextBox;
-        private System.Windows.Forms.Label dataLabel;
-        private System.Windows.Forms.DateTimePicker dataDateTimePicker;
-        private System.Windows.Forms.Label formulaLabel;
-        private System.Windows.Forms.TextBox formulaTextBox;
-        private System.Windows.Forms.TextBox descrizioneTextBox;
-        private System.Windows.Forms.Label articoloLabel;
-        private System.Windows.Forms.TextBox articoloTextBox;
-        private System.Windows.Forms.Label nrOrdLabel;
-        private System.Windows.Forms.TextBox nrOrdTextBox;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.BindingSource ingredientiBindingSource;
+        private System.IO.Ports.SerialPort serialPort1;
+        private System.Windows.Forms.Label lblQtàIngr;
+        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblStatoBilancia;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblDiff;
+        private System.Windows.Forms.Label lblPesoBilancia;
+        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button btnDone;
+        private System.Windows.Forms.Button btnTeorico;
         private System.Windows.Forms.Timer timerBlink;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox lottoInCorsoTextBox;
+        private System.Windows.Forms.TextBox numeroLottiTextBox;
+        private System.Windows.Forms.TextBox noteTextBox;
+        private System.Windows.Forms.TextBox descrizioneTextBox;
+        private System.Windows.Forms.TextBox articoloTextBox;
+        private System.Windows.Forms.TextBox nrOrdTextBox;
+        private System.Windows.Forms.DataGrid dataGrid1;
+        private System.Windows.Forms.DataGridTableStyle dataGridTableStyle1;
+        private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn1;
+        private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn2;
+        private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn3;
+        private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn4;
+        private System.Windows.Forms.DataGridTextBoxColumn dataGridTextBoxColumn5;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btnFineMisc;
+        private System.Windows.Forms.TextBox txtCurrMisc;
         private System.Windows.Forms.Label lblSac;
-        private System.Windows.Forms.DataGridViewTextBoxColumn articoloDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn descrizioneDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn qtàDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn qtàTeoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn modalitàDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn areaStoccaggioDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn statoDataGridViewTextBoxColumn;
+        private XFactoryNET.Custom.Panzoo.AggMan.XFactoryNETDataSetTableAdapters.LottoTableAdapter lottoTableAdapter;
+        private XFactoryNET.Custom.Panzoo.AggMan.XFactoryNETDataSetTableAdapters.SilosTableAdapter silosTableAdapter;
+        private System.Windows.Forms.Timer timerKey;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label lblSetpoint;
     }
 }
-

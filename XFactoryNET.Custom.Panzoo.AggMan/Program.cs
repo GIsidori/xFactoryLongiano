@@ -1,21 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace XFactoryNET.Custom.Panzoo.AggMan
 {
     static class Program
     {
+        public static string ConnectionString;
+        public static frmAggMan frmAggMan;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        [STAThread]
+        [MTAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            //ConnectionString = Properties.Settings.Default.ConnectionString;
+            ConnectionString = frmSettings.GetConnectionString();
+            if (ConnectionString != null)
+            {
+                frmAggMan = new frmAggMan();
+                Application.Run(frmAggMan);
+            }
+            else
+                Application.Exit();
         }
     }
 }

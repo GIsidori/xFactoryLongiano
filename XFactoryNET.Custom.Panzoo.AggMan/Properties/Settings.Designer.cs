@@ -35,33 +35,6 @@ namespace XFactoryNET.Custom.Panzoo.AggMan.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("9600")]
-        public int BaudRate {
-            get {
-                return ((int)(this["BaudRate"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8")]
-        public int DataBits {
-            get {
-                return ((int)(this["DataBits"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("None")]
-        public global::System.IO.Ports.Parity Parity {
-            get {
-                return ((global::System.IO.Ports.Parity)(this["Parity"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("COM1")]
         public string PortName {
             get {
@@ -71,10 +44,109 @@ namespace XFactoryNET.Custom.Panzoo.AggMan.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("One")]
+        [global::System.Configuration.DefaultSettingValueAttribute("4800")]
+        public int BaudRate {
+            get {
+                return ((int)(this["BaudRate"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        public int DataBits {
+            get {
+                return ((int)(this["DataBits"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Even")]
+        public global::System.IO.Ports.Parity Parity {
+            get {
+                return ((global::System.IO.Ports.Parity)(this["Parity"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Two")]
         public global::System.IO.Ports.StopBits StopBits {
             get {
                 return ((global::System.IO.Ports.StopBits)(this["StopBits"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Server {
+            get {
+                return ((string)(this["Server"]));
+            }
+            set {
+                this["Server"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string UserID {
+            get {
+                return ((string)(this["UserID"]));
+            }
+            set {
+                this["UserID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Password {
+            get {
+                return ((string)(this["Password"]));
+            }
+            set {
+                this["Password"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Database {
+            get {
+                return ((string)(this["Database"]));
+            }
+            set {
+                this["Database"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DontAsk {
+            get {
+                return ((bool)(this["DontAsk"]));
+            }
+            set {
+                this["DontAsk"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SQLAuth {
+            get {
+                return ((bool)(this["SQLAuth"]));
+            }
+            set {
+                this["SQLAuth"] = value;
             }
         }
     }

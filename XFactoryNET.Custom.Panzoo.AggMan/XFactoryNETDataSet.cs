@@ -1,8 +1,9 @@
 ﻿namespace XFactoryNET.Custom.Panzoo.AggMan
 {
-    
-    
-    public partial class XFactoryNETDataSet {
+
+
+    public partial class XFactoryNETDataSet
+    {
         partial class SilosDataTable
         {
         }

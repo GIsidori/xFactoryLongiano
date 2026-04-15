@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>XFactoryNET.Module</RootNamespace>
     <AssemblyName>XFactoryNET.Module</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -418,11 +418,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XFactoryNET.Common\XFactoryNET.Common.csproj">
-      <Project>{2A02CD98-DA52-4B8A-8AC3-EA84243F219A}</Project>
+      <Project>{2a02cd98-da52-4b8a-8ac3-ea84243f219a}</Project>
       <Name>XFactoryNET.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

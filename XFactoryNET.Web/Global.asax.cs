@@ -20,7 +20,7 @@ namespace XFactoryNET.Web
         }
         protected void Application_Start(Object sender, EventArgs e)
         {
-            DevExpress.ExpressApp.FrameworkSettings.DefaultSettingsCompatibilityMode = DevExpress.ExpressApp.FrameworkSettingsCompatibilityMode.v20_1;
+            DevExpress.ExpressApp.FrameworkSettings.DefaultSettingsCompatibilityMode = DevExpress.ExpressApp.FrameworkSettingsCompatibilityMode.Latest;
             ASPxWebControl.CallbackError += new EventHandler(Application_Error);
 
 #if EASYTEST
@@ -40,6 +40,8 @@ namespace XFactoryNET.Web
             {
                 WebApplication.Instance.ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             }
+            WebApplication.Instance.DatabaseUpdateMode = DatabaseUpdateMode.Never;
+            WebApplication.Instance.CheckCompatibilityType = CheckCompatibilityType.DatabaseSchema;
             WebApplication.Instance.Setup(WebApplication.Instance.ApplicationName,WebApplication.Instance.ConnectionString,ConfigurationManager.AppSettings["Modules"].Split(';'));
             WebApplication.Instance.Start();
         }

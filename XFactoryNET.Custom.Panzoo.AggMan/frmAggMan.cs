@@ -452,21 +452,18 @@ namespace XFactoryNET.Custom.Panzoo.AggMan
             bool success = false;
             while (!success && retries<10)
             {
-
+                var tran = lottoTableAdapter.Connection.BeginTransaction();
                 try
                 {
                     lottoTableAdapter.Update(xFactoryNETDataSet.Lotto);
                     success = true;
+                    tran.Commit();
                 }
-                catch (SqlException ex)
+                catch (SqlException)
                 {
-                    if (ex.Number == 1205 && retries<10)
-                    {
-                        retries++;
-                        System.Threading.Thread.Sleep(1000);
-                    }
-                    else
-                        throw;
+                    tran.Rollback();
+                    retries++;
+                    System.Threading.Thread.Sleep(1000);
                 }
             }
             Next();
@@ -499,8 +496,9 @@ namespace XFactoryNET.Custom.Panzoo.AggMan
             {
                 bool success = false;
                 int retries = 0;
-                while (!success && retries<10)
+                while (!success && retries < 10)
                 {
+                    var tran = lottoTableAdapter.Connection.BeginTransaction();
                     try
                     {
                         lottoTableAdapter.FillProdottiOdl(ds.Lotto, odl.OID, currMisc);
@@ -529,23 +527,21 @@ namespace XFactoryNET.Custom.Panzoo.AggMan
                         lottoTableAdapter.Update(ds);
                         silosTableAdapter.Update(ds);
                         odlTableAdapter.Update(ds);
+                        tran.Commit();
                         success = true;
                     }
-                    catch (SqlException ex)
+                    catch (SqlException)
                     {
-                        if (ex.Number == 1205)
-                        {
-                            retries++;
-                            System.Threading.Thread.Sleep(1000);
-                        }
-                        else
-                            throw;
+                        tran.Rollback();
+                        retries++;
+                        System.Threading.Thread.Sleep(1000);
                     }
                 }
             }
 
 
         }
+
 
         private void timerKey_Tick(object sender, EventArgs e)
         {
